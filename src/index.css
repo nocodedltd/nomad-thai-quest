@@ -1,0 +1,136 @@
+@import './styles/futuristic-theme.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Futuristic Design System - High-end, modern aesthetic */
+
+@layer base {
+  :root {
+    /* Futuristic Color Palette - Neon Accents on Dark Base */
+    --background: 0 0% 5%; /* #0e0e10 */
+    --foreground: 0 0% 100%;
+
+    --card: 0 0% 7%; /* #121212 */
+    --card-foreground: 0 0% 100%;
+
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 100%;
+
+    /* Neon Blue Primary */
+    --primary: 180 100% 50%; /* #00ffff */
+    --primary-foreground: 0 0% 5%;
+    --primary-glow: 180 100% 60%;
+
+    /* Neon Purple Secondary */
+    --secondary: 270 100% 71%; /* #b36bff */
+    --secondary-foreground: 0 0% 5%;
+
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 60%;
+
+    /* Neon Green Accent */
+    --accent: 60 100% 50%; /* #aaff00 */
+    --accent-foreground: 0 0% 5%;
+
+    /* Neon Pink Warning */
+    --warning: 300 100% 50%; /* #ff00ff */
+    --warning-foreground: 0 0% 5%;
+
+    --destructive: 0 100% 50%; /* #ff0000 */
+    --destructive-foreground: 0 0% 5%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 180 100% 50%;
+
+    --radius: 0.75rem;
+
+    /* Futuristic Gradients */
+    --gradient-primary: linear-gradient(135deg, #00ffff 0%, #b36bff 100%);
+    --gradient-secondary: linear-gradient(135deg, #aaff00 0%, #00ffff 100%);
+    --gradient-accent: linear-gradient(135deg, #ff00ff 0%, #b36bff 100%);
+    --gradient-hero: linear-gradient(135deg, #00ffff 0%, #aaff00 50%, #ff00ff 100%);
+    
+    /* Glow Shadows */
+    --shadow-glow: 0 0 40px rgba(0, 255, 255, 0.3);
+    --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.5);
+    
+    /* Smooth Transitions */
+    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* Sidebar Colors */
+    --sidebar-background: 0 0% 7%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 180 100% 50%;
+    --sidebar-primary-foreground: 0 0% 5%;
+    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 180 100% 50%;
+  }
+
+  /* Force dark theme for futuristic aesthetic */
+  .dark {
+    --background: 0 0% 5%;
+    --foreground: 0 0% 100%;
+
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 180 100% 50%;
+    --primary-foreground: 0 0% 5%;
+
+    --secondary: 270 100% 71%;
+    --secondary-foreground: 0 0% 5%;
+
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 60 100% 50%;
+    --accent-foreground: 0 0% 5%;
+
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 5%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 180 100% 50%;
+    --sidebar-background: 0 0% 7%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 180 100% 50%;
+    --sidebar-primary-foreground: 0 0% 5%;
+    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 180 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Exo 2', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.025em;
+  }
+
+  .font-display {
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+}

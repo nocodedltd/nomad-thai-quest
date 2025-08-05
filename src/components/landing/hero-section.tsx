@@ -35,9 +35,9 @@ export function HeroSection() {
           {/* Main Heading */}
           <div className="mb-8">
             <h1 className="text-6xl md:text-8xl font-display font-bold mb-6 leading-tight">
-              <span className="text-futuristic-text-primary">LEARN YOUR WAY TO</span>
+              <span className="text-futuristic-text-primary">MOVE TO THAILAND</span>
               <span className="block bg-gradient-futuristic-hero bg-clip-text text-transparent animate-neon-pulse">
-                THAILAND
+                IN 6 MONTHS
               </span>
             </h1>
           </div>

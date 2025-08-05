@@ -1,6 +1,6 @@
-const chokidar = require('chokidar');
-const { execSync } = require('child_process');
-const path = require('path');
+import chokidar from 'chokidar';
+import { execSync } from 'child_process';
+import path from 'path';
 
 // Configuration
 const WATCH_PATTERNS = [

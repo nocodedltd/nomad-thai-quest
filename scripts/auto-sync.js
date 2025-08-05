@@ -1,6 +1,6 @@
-const { execSync } = require('child_process');
-const fs = require('fs');
-const path = require('path');
+import { execSync } from 'child_process';
+import fs from 'fs';
+import path from 'path';
 
 // Function to check if there are any changes
 function hasChanges() {
@@ -42,7 +42,7 @@ function commitAndPush() {
 }
 
 // Main execution
-if (require.main === module) {
+if (import.meta.url === `file://${process.argv[1]}`) {
   if (hasChanges()) {
     console.log('🔄 Changes detected, committing and pushing...');
     commitAndPush();
@@ -51,4 +51,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { hasChanges, commitAndPush }; 
+export { hasChanges, commitAndPush }; 

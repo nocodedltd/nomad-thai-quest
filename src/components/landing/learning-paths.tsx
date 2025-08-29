@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ProgressBar } from "@/components/ui/progress-bar";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "@/contexts/user-context";
 import { 
   DollarSign, 
   FileText, 
@@ -67,6 +69,37 @@ const learningPaths = [
 ];
 
 export function LearningPaths() {
+  const navigate = useNavigate();
+  const { userType, setUserType, isDevelopment } = useUser();
+
+  const handlePathClick = (pathId: string, isLocked: boolean) => {
+    if (isLocked && userType === 'guest') {
+      if (isDevelopment) {
+        setUserType('free');
+      }
+      return;
+    }
+    
+    if (isDevelopment && userType === 'guest') {
+      setUserType('free');
+    }
+    
+    switch (pathId) {
+      case 'income':
+        navigate('/income');
+        break;
+      case 'visa':
+        navigate('/visa');
+        break;
+      case 'accommodation':
+      case 'community':
+        navigate('/living');
+        break;
+      default:
+        navigate('/roadmap');
+    }
+  };
+
   return (
     <section className="py-20 px-6 bg-futuristic-bg-secondary relative overflow-hidden">
       {/* Background Elements */}
@@ -148,18 +181,18 @@ export function LearningPaths() {
                   
                   <Button 
                     className={`btn-futuristic text-sm px-6 py-2 group-hover:scale-105 transition-transform duration-300 ${
-                      path.isLocked ? 'opacity-50 cursor-not-allowed' : ''
+                      path.isLocked && userType === 'guest' ? 'opacity-50' : ''
                     }`}
-                    disabled={path.isLocked}
+                    onClick={() => handlePathClick(path.id, path.isLocked)}
                   >
-                    {path.isLocked ? (
+                    {path.isLocked && userType === 'guest' ? (
                       <>
                         <Shield className="w-4 h-4 mr-2" />
-                        Complete previous paths
+                        {isDevelopment ? 'Sign Up' : 'Create Account'}
                       </>
                     ) : (
                       <>
-                        Continue
+                        {userType === 'guest' ? 'Explore' : 'Continue'}
                         <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                       </>
                     )}

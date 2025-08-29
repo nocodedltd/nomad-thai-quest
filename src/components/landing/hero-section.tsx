@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play, Zap, Target, Users, Globe } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "@/contexts/user-context";
 import heroImage from "@/assets/thailand-hero.jpg";
 
 export function HeroSection() {
   const navigate = useNavigate();
+  const { userType, setUserType, isDevelopment } = useUser();
   
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-futuristic-bg-primary">
@@ -56,29 +58,40 @@ export function HeroSection() {
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
             <Button 
               className="btn-futuristic text-lg px-10 py-4 animate-pulse-glow group"
-              onClick={() => navigate('/onboarding')}
+              onClick={() => {
+                if (isDevelopment && userType === 'guest') {
+                  setUserType('free');
+                } else if (userType === 'guest') {
+                  navigate('/roadmap');
+                } else {
+                  navigate('/roadmap');
+                }
+              }}
             >
               <Target className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform duration-300" />
-              Get Personalized Plan
+              {userType === 'guest' ? 'Get Started Free' : 'Continue Journey'}
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
             </Button>
             
-            <Button 
-              className="btn-futuristic-secondary text-lg px-10 py-4 group"
-              onClick={() => navigate('/dashboard')}
-            >
-              <Zap className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform duration-300" />
-              Start Your Journey
-              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-            </Button>
+            {userType !== 'guest' && (
+              <Button 
+                className="btn-futuristic-secondary text-lg px-10 py-4 group"
+                onClick={() => navigate('/progress')}
+              >
+                <Zap className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform duration-300" />
+                View Progress
+                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+              </Button>
+            )}
             
             <Button 
               variant="outline" 
               size="lg" 
               className="text-lg px-8 py-4 bg-futuristic-bg-glass border-futuristic-neon-purple text-futuristic-text-primary hover:bg-futuristic-bg-elevated hover:border-futuristic-neon-pink transition-all duration-300 group"
+              onClick={() => navigate('/income')}
             >
               <Play className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-300" />
-              Watch Demo
+              {userType === 'guest' ? 'Watch Demo' : 'Explore Courses'}
             </Button>
           </div>
           

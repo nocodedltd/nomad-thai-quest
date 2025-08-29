@@ -1,24 +1,112 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Home, LayoutDashboard, Map, BookOpen, GraduationCap, Target } from "lucide-react";
+import { Menu, X, Home, Map, DollarSign, FileText, Building, Target, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { useUser } from "@/contexts/user-context";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { userType, userState } = useUser();
 
   const navItems = [
-    { path: "/", label: "Home", icon: Home },
-    { path: "/onboarding", label: "Get Started", icon: Target },
-    { path: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-    { path: "/overview", label: "Thailand Roadmap", icon: Map },
-    { path: "/courses", label: "All Courses", icon: BookOpen },
-    { path: "/course/amazon-fba", label: "Amazon FBA", icon: GraduationCap },
+    { 
+      path: "/", 
+      label: "Home", 
+      icon: Home, 
+      access: ['guest', 'free', 'paid'] as const
+    },
+    { 
+      path: "/roadmap", 
+      label: "Roadmap", 
+      icon: Map, 
+      access: ['guest', 'free', 'paid'] as const
+    },
+    { 
+      path: "/income", 
+      label: "Income", 
+      icon: DollarSign, 
+      access: ['free', 'paid'] as const
+    },
+    { 
+      path: "/visa", 
+      label: "Visa", 
+      icon: FileText, 
+      access: ['free', 'paid'] as const
+    },
+    { 
+      path: "/living", 
+      label: "Living", 
+      icon: Building, 
+      access: ['free', 'paid'] as const
+    },
+    { 
+      path: "/progress", 
+      label: "Progress", 
+      icon: Target, 
+      access: ['free', 'paid'] as const
+    },
   ];
 
   const isActive = (path: string) => location.pathname === path;
+  
+  const hasAccess = (item: typeof navItems[0]) => {
+    return item.access.includes(userType);
+  };
+
+  const renderNavItem = (item: typeof navItems[0], isMobile = false) => {
+    const Icon = item.icon;
+    const hasUserAccess = hasAccess(item);
+    
+    if (hasUserAccess) {
+      return (
+        <Link
+          key={item.path}
+          to={item.path}
+          onClick={isMobile ? () => setIsOpen(false) : undefined}
+          className={cn(
+            isMobile 
+              ? "block px-3 py-2 rounded-lg text-base font-medium transition-all duration-300 flex items-center gap-3 group"
+              : "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-2 relative overflow-hidden group",
+            isActive(item.path)
+              ? "bg-gradient-to-r from-futuristic-neon-blue to-futuristic-neon-purple text-futuristic-bg-primary shadow-glow-blue"
+              : "text-futuristic-text-secondary hover:text-futuristic-text-primary hover:bg-futuristic-bg-glass"
+          )}
+        >
+          <Icon className={cn(
+            "transition-transform duration-300 group-hover:scale-110",
+            isMobile ? "h-5 w-5" : "h-4 w-4"
+          )} />
+          {item.label}
+          {!isMobile && (
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
+          )}
+        </Link>
+      );
+    } else if (userType === 'guest') {
+      // Show locked items for guests
+      return (
+        <div
+          key={item.path}
+          className={cn(
+            isMobile 
+              ? "block px-3 py-2 rounded-lg text-base font-medium flex items-center gap-3 opacity-50 cursor-not-allowed"
+              : "px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 opacity-50 cursor-not-allowed",
+            "text-futuristic-text-secondary"
+          )}
+        >
+          <Icon className={cn(isMobile ? "h-5 w-5" : "h-4 w-4")} />
+          {item.label}
+          <Lock className={cn(isMobile ? "h-4 w-4" : "h-3 w-3", "ml-1")} />
+        </div>
+      );
+    }
+    
+    return null;
+  };
 
   return (
     <nav className="nav-futuristic">
@@ -30,31 +118,20 @@ const Navigation = () => {
               to="/" 
               className="text-xl font-display font-bold neon-text animate-neon-pulse"
             >
-              THE FARANG FORGE
+              <div className="flex items-center gap-2">
+                🇹🇭 <span>Nomad Thai Quest</span>
+                {userType !== 'guest' && (
+                  <Badge variant="outline" className="text-xs capitalize">
+                    {userType}
+                  </Badge>
+                )}
+              </div>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-2">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  className={cn(
-                    "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-2 relative overflow-hidden group",
-                    isActive(item.path)
-                      ? "bg-gradient-to-r from-futuristic-neon-blue to-futuristic-neon-purple text-futuristic-bg-primary shadow-glow-blue"
-                      : "text-futuristic-text-secondary hover:text-futuristic-text-primary hover:bg-futuristic-bg-glass"
-                  )}
-                >
-                  <Icon className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
-                  {item.label}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
-                </Link>
-              );
-            })}
+            {navItems.map((item) => renderNavItem(item, false))}
             <div className="ml-4">
               <ThemeToggle />
             </div>
@@ -78,25 +155,7 @@ const Navigation = () => {
         {isOpen && (
           <div className="md:hidden animate-slide-down">
             <div className="px-2 pt-2 pb-3 space-y-1 bg-futuristic-bg-glass backdrop-blur-md border-t border-futuristic-border-primary">
-              {navItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={() => setIsOpen(false)}
-                    className={cn(
-                      "block px-3 py-2 rounded-lg text-base font-medium transition-all duration-300 flex items-center gap-3 group",
-                      isActive(item.path)
-                        ? "bg-gradient-to-r from-futuristic-neon-blue to-futuristic-neon-purple text-futuristic-bg-primary shadow-glow-blue"
-                        : "text-futuristic-text-secondary hover:text-futuristic-text-primary hover:bg-futuristic-bg-glass"
-                    )}
-                  >
-                    <Icon className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
-                    {item.label}
-                  </Link>
-                );
-              })}
+              {navItems.map((item) => renderNavItem(item, true))}
             </div>
           </div>
         )}

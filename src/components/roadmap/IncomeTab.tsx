@@ -24,6 +24,8 @@ import { useUser } from "@/contexts/user-context";
 import { UserContent } from "@/components/shared/user-content";
 import { Paywall } from "@/components/shared/paywall";
 import { UpgradePrompt } from "@/components/shared/upgrade-prompt";
+import CourseViewer from "@/components/lesson/course-viewer";
+import { amazonFBACourse, aiAutomationCourse, consultingCourse } from "@/data/courses/amazon-fba-course";
 
 const courses = [
   {
@@ -179,6 +181,8 @@ export default function IncomeTab() {
   const { userType } = useUser();
   const [selectedTab, setSelectedTab] = useState<'courses' | 'jobs' | 'strategies'>('courses');
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentView, setCurrentView] = useState<'overview' | 'course'>('overview');
+  const [selectedCourseId, setSelectedCourseId] = useState<string>('');
 
   const getCourseAccess = (courseId: string) => {
     if (userType === 'guest') return 'none';
@@ -193,6 +197,56 @@ export default function IncomeTab() {
     job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     job.company.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const getCourseData = (courseId: string) => {
+    switch (courseId) {
+      case 'amazon-fba':
+        return amazonFBACourse;
+      case 'ai-automation':
+        return aiAutomationCourse;
+      case 'remote-consulting':
+        return consultingCourse;
+      default:
+        return [];
+    }
+  };
+
+  const handleCourseSelect = (courseId: string) => {
+    const access = getCourseAccess(courseId);
+    if (access !== 'none') {
+      setSelectedCourseId(courseId);
+      setCurrentView('course');
+    }
+  };
+
+  const handleBackToCourses = () => {
+    setCurrentView('overview');
+    setSelectedCourseId('');
+  };
+
+  // Show course viewer if a course is selected
+  if (currentView === 'course' && selectedCourseId) {
+    const selectedCourse = courses.find(c => c.id === selectedCourseId);
+    const courseData = getCourseData(selectedCourseId);
+    
+    if (selectedCourse && courseData.length > 0) {
+      return (
+        <CourseViewer
+          courseId={selectedCourse.id}
+          courseTitle={selectedCourse.title}
+          courseDescription={selectedCourse.description}
+          mentor={selectedCourse.mentor}
+          mentorBio={selectedCourse.mentorBio}
+          lessons={courseData}
+          onBack={handleBackToCourses}
+          userProgress={{
+            completedLessons: [], // This would come from user context in a real app
+            currentLesson: courseData[0]?.id
+          }}
+        />
+      );
+    }
+  }
 
   return (
     <div>
@@ -402,7 +456,7 @@ export default function IncomeTab() {
                               <div className="text-sm text-muted-foreground">
                                 By {course.mentor} • {course.mentorBio}
                               </div>
-                              <Button>
+                              <Button onClick={() => handleCourseSelect(course.id)}>
                                 {course.completedLessons > 0 ? 'Continue' : 'Start Course'}
                                 <Play className="w-4 h-4 ml-2" />
                               </Button>
@@ -584,7 +638,7 @@ export default function IncomeTab() {
                               <Button variant="outline" size="sm">
                                 Contact Mentor
                               </Button>
-                              <Button>
+                              <Button onClick={() => handleCourseSelect(course.id)}>
                                 {course.completedLessons > 0 ? 'Continue' : 'Start Course'}
                                 <Play className="w-4 h-4 ml-2" />
                               </Button>

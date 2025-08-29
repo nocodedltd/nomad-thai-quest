@@ -9,9 +9,6 @@ import Navigation from "./components/layout/navigation";
 import { DevUserSwitcher } from "./components/layout/dev-user-switcher";
 import Home from "./pages/Home";
 import Roadmap from "./pages/Roadmap";
-import Income from "./pages/Income";
-import Visa from "./pages/Visa";
-import Living from "./pages/Living";
 import Progress from "./pages/Progress";
 import NotFound from "./pages/NotFound";
 
@@ -30,9 +27,6 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/roadmap" element={<Roadmap />} />
-              <Route path="/income" element={<Income />} />
-              <Route path="/visa" element={<Visa />} />
-              <Route path="/living" element={<Living />} />
               <Route path="/progress" element={<Progress />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

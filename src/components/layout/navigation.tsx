@@ -26,24 +26,6 @@ const Navigation = () => {
       access: ['guest', 'free', 'paid'] as const
     },
     { 
-      path: "/income", 
-      label: "Income", 
-      icon: DollarSign, 
-      access: ['free', 'paid'] as const
-    },
-    { 
-      path: "/visa", 
-      label: "Visa", 
-      icon: FileText, 
-      access: ['free', 'paid'] as const
-    },
-    { 
-      path: "/living", 
-      label: "Living", 
-      icon: Building, 
-      access: ['free', 'paid'] as const
-    },
-    { 
       path: "/progress", 
       label: "Progress", 
       icon: Target, 

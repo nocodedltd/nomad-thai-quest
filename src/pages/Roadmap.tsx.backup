@@ -1,0 +1,1041 @@
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { ProgressBar } from "@/components/ui/progress-bar";
+import { Input } from "@/components/ui/input";
+import { 
+  CheckCircle, 
+  Clock, 
+  Lock, 
+  ArrowRight, 
+  Target, 
+  DollarSign, 
+  FileText, 
+  Plane, 
+  Building, 
+  Users,
+  Star,
+  MapPin,
+  Calendar,
+  Award,
+  Package,
+  Bot,
+  GraduationCap,
+  Play,
+  TrendingUp,
+  Search,
+  Filter,
+  Download,
+  ExternalLink,
+  AlertCircle,
+  Crown,
+  Heart,
+  Coffee,
+  Car,
+  Music,
+  Camera,
+  Mountain,
+  Ship,
+  Phone,
+  Mail,
+  Globe
+} from "lucide-react";
+import { useUser } from "@/contexts/user-context";
+import { UserContent } from "@/components/shared/user-content";
+import { Paywall } from "@/components/shared/paywall";
+import { UpgradePrompt } from "@/components/shared/upgrade-prompt";
+
+const journeyPhases = [
+  {
+    id: 1,
+    title: "Preparation Phase",
+    subtitle: "Build Your Foundation",
+    description: "Get mentally and financially prepared for your Thailand journey",
+    icon: Target,
+    duration: "3-6 months",
+    difficulty: "Beginner" as const,
+    progress: 75,
+    lessons: 8,
+    completedLessons: 6,
+    neonColor: "blue",
+    gradientColor: "from-blue-500 to-blue-600",
+    features: ["Goal Setting", "Research & Planning", "Budget Planning", "Skill Assessment"],
+    nextSteps: ["Complete financial planning", "Research visa options"],
+    requiredLevel: null
+  },
+  {
+    id: 2,
+    title: "Income Setup", 
+    subtitle: "Secure Your Revenue",
+    description: "Establish reliable income streams before you move",
+    icon: DollarSign,
+    duration: "2-4 months",
+    difficulty: "Intermediate" as const,
+    progress: 60,
+    lessons: 12,
+    completedLessons: 7,
+    neonColor: "green",
+    gradientColor: "from-green-500 to-green-600",
+    features: ["Remote Work Setup", "Freelancing", "Online Business", "Passive Income"],
+    nextSteps: ["Launch first income stream", "Build client base"],
+    requiredLevel: null
+  },
+  {
+    id: 3,
+    title: "Legal & Visa",
+    subtitle: "Handle Documentation",
+    description: "Navigate Thailand's visa system and legal requirements",
+    icon: FileText,
+    duration: "1-2 months",
+    difficulty: "Intermediate" as const,
+    progress: 25,
+    lessons: 10,
+    completedLessons: 2,
+    neonColor: "purple",
+    gradientColor: "from-purple-500 to-purple-600",
+    features: ["Visa Applications", "Legal Setup", "Documentation", "Compliance"],
+    nextSteps: ["Choose visa type", "Gather documents"],
+    requiredLevel: "paid" as const
+  },
+  {
+    id: 4,
+    title: "Relocation",
+    subtitle: "Make the Move",
+    description: "Execute your move to Thailand with confidence",
+    icon: Plane,
+    duration: "1 month",
+    difficulty: "Advanced" as const,
+    progress: 0,
+    lessons: 15,
+    completedLessons: 0,
+    neonColor: "orange",
+    gradientColor: "from-orange-500 to-orange-600",
+    features: ["Travel Planning", "Initial Setup", "Accommodation", "First Steps"],
+    nextSteps: ["Book flights", "Arrange temporary accommodation"],
+    requiredLevel: "paid" as const
+  },
+  {
+    id: 5,
+    title: "Settlement",
+    subtitle: "Build Your Life",
+    description: "Establish your new life and integrate into Thai society",
+    icon: Building,
+    duration: "Ongoing",
+    difficulty: "Advanced" as const,
+    progress: 0,
+    lessons: 20,
+    completedLessons: 0,
+    neonColor: "pink",
+    gradientColor: "from-pink-500 to-pink-600",
+    features: ["Community Building", "Local Integration", "Lifestyle Setup", "Long-term Planning"],
+    nextSteps: ["Join expat communities", "Learn basic Thai"],
+    requiredLevel: "paid" as const
+  }
+];
+
+const timelineSteps = [
+  { phase: 1, title: "Research & Planning", weeks: "Week 1-4", status: "completed" },
+  { phase: 1, title: "Financial Preparation", weeks: "Week 5-8", status: "completed" },
+  { phase: 2, title: "Income Stream Setup", weeks: "Week 9-16", status: "in-progress" },
+  { phase: 2, title: "Client Acquisition", weeks: "Week 17-20", status: "pending" },
+  { phase: 3, title: "Visa Application", weeks: "Week 21-24", status: "locked" },
+  { phase: 4, title: "Travel Preparation", weeks: "Week 25-28", status: "locked" },
+  { phase: 5, title: "Arrival & Setup", weeks: "Month 7+", status: "locked" },
+];
+
+// Income data from Income.tsx
+const courses = [
+  {
+    id: "amazon-fba",
+    title: "Amazon FBA Mastery",
+    description: "Build a profitable Amazon business from Thailand with complete product research and scaling strategies.",
+    mentor: "Sarah Chen",
+    mentorBio: "7-figure Amazon seller living in Bangkok",
+    category: "E-commerce",
+    difficulty: "Beginner",
+    duration: "4 weeks",
+    lessons: 12,
+    completedLessons: 3,
+    xpReward: 450,
+    icon: Package,
+    gradient: "from-orange-500 to-red-500",
+    preview: ["Product Research Basics", "Supplier Introduction", "Amazon Account Setup"],
+    fullContent: [
+      "Advanced Product Research", "Supplier Negotiation", "Listing Optimization", 
+      "PPC Advertising", "Inventory Management", "Scaling Strategies",
+      "Legal Considerations", "Tax Planning", "Exit Strategies"
+    ],
+    estimatedIncome: "$2,000-10,000/month",
+    timeToProfit: "3-6 months",
+    access: "preview" as const
+  },
+  {
+    id: "ai-automation",
+    title: "AI Automation Business",
+    description: "Create profitable AI automation services for businesses while living anywhere in the world.",
+    mentor: "Marcus Rodriguez",
+    mentorBio: "AI consultant earning $15k/month remotely",
+    category: "Technology", 
+    difficulty: "Intermediate",
+    duration: "6 weeks",
+    lessons: 18,
+    completedLessons: 0,
+    xpReward: 650,
+    icon: Bot,
+    gradient: "from-purple-500 to-pink-500",
+    preview: ["AI Tools Overview", "Market Research", "Service Packaging"],
+    fullContent: [
+      "Advanced AI Implementation", "Client Acquisition", "Pricing Strategies",
+      "Service Delivery", "Team Building", "Scaling Operations",
+      "Tool Development", "Partnership Creation", "Advanced Analytics"
+    ],
+    estimatedIncome: "$5,000-20,000/month", 
+    timeToProfit: "2-4 months",
+    access: "locked" as const
+  },
+  {
+    id: "remote-consulting",
+    title: "Remote Consulting Empire",
+    description: "Leverage your expertise to build a high-value consulting business from Thailand.",
+    mentor: "David Kim", 
+    mentorBio: "Former McKinsey consultant, now independent",
+    category: "Consulting",
+    difficulty: "Advanced",
+    duration: "8 weeks", 
+    lessons: 24,
+    completedLessons: 0,
+    xpReward: 800,
+    icon: GraduationCap,
+    gradient: "from-blue-500 to-cyan-500",
+    preview: ["Expertise Assessment", "Market Positioning", "Service Development"],
+    fullContent: [
+      "Premium Pricing Models", "Corporate Sales", "Proposal Writing",
+      "Delivery Excellence", "Client Retention", "Referral Systems",
+      "Team Building", "Knowledge Products", "Exit Planning"
+    ],
+    estimatedIncome: "$10,000-50,000/month",
+    timeToProfit: "1-3 months", 
+    access: "locked" as const
+  }
+];
+
+const jobListings = [
+  {
+    id: 1,
+    title: "Senior React Developer",
+    company: "TechCorp Remote",
+    location: "Remote (Thailand-friendly)",
+    salary: "$80,000-120,000/year",
+    type: "full-time" as const,
+    posted: "2 days ago",
+    applications: 23,
+    tags: ["React", "TypeScript", "Remote", "Senior"]
+  },
+  {
+    id: 2,
+    title: "Digital Marketing Specialist", 
+    company: "Growth Agency",
+    location: "Remote Worldwide",
+    salary: "$50,000-70,000/year",
+    type: "full-time" as const,
+    posted: "1 week ago",
+    applications: 45,
+    tags: ["Marketing", "SEO", "PPC", "Analytics"]
+  },
+  {
+    id: 3,
+    title: "Content Writer - Tech",
+    company: "StartupBlog",
+    location: "Remote",
+    salary: "$30-50/hour",
+    type: "contract" as const,
+    posted: "3 days ago",
+    applications: 12,
+    tags: ["Writing", "Tech", "Content", "Freelance"]
+  }
+];
+
+const incomeStrategies = [
+  {
+    title: "Freelancing",
+    description: "Leverage your existing skills",
+    potential: "$2,000-8,000/month",
+    difficulty: "Easy",
+    timeToStart: "1-2 weeks",
+    icon: Users,
+    color: "from-green-500 to-green-600"
+  },
+  {
+    title: "Online Business",
+    description: "Build scalable income streams", 
+    potential: "$5,000-20,000/month",
+    difficulty: "Medium",
+    timeToStart: "1-3 months",
+    icon: TrendingUp,
+    color: "from-blue-500 to-blue-600"
+  },
+  {
+    title: "Remote Employment",
+    description: "Secure location-independent job",
+    potential: "$60,000-150,000/year", 
+    difficulty: "Medium",
+    timeToStart: "2-4 weeks",
+    icon: Building,
+    color: "from-purple-500 to-purple-600"
+  },
+  {
+    title: "Consulting",
+    description: "Monetize your expertise",
+    potential: "$10,000-50,000/month",
+    difficulty: "Hard", 
+    timeToStart: "1-2 months",
+    icon: Award,
+    color: "from-orange-500 to-orange-600"
+  }
+];
+
+// Visa data from Visa.tsx
+const visaTypes = [
+  {
+    id: "tourist",
+    title: "Tourist Visa (TR)",
+    subtitle: "60 days + 30 day extension",
+    description: "Perfect for testing the waters and short-term stays",
+    icon: Plane,
+    duration: "60+30 days",
+    cost: "$40-60",
+    difficulty: "Easy",
+    processing: "3-5 days",
+    renewable: "Yes (border runs)",
+    workAllowed: false,
+    gradient: "from-blue-500 to-blue-600",
+    requirements: [
+      "Valid passport (6+ months)",
+      "Return flight ticket",
+      "Bank statement ($3,000+)",
+      "Accommodation booking",
+      "Passport photos"
+    ],
+    access: "free" as const,
+    pros: ["Quick processing", "Low cost", "Easy requirements"],
+    cons: ["No work allowed", "Requires border runs", "Limited duration"]
+  },
+  {
+    id: "education",
+    title: "Education Visa (ED)",
+    subtitle: "1 year renewable",
+    description: "Learn Thai language or skills while living in Thailand",
+    icon: GraduationCap,
+    duration: "1 year",
+    cost: "$500-2,000/year",
+    difficulty: "Medium",
+    processing: "2-4 weeks",
+    renewable: "Yes (up to 3 years)",
+    workAllowed: false,
+    gradient: "from-purple-500 to-purple-600",
+    requirements: [
+      "Acceptance letter from school",
+      "Educational background documents",
+      "Bank statement ($5,000+)",
+      "Health certificate",
+      "Police clearance"
+    ],
+    access: "paid" as const,
+    pros: ["Long-term stay", "Legal residence", "Study opportunities"],
+    cons: ["Must attend classes", "No work allowed", "School dependency"]
+  },
+  {
+    id: "elite",
+    title: "Elite Visa", 
+    subtitle: "5-20 years",
+    description: "Premium visa program for affluent individuals",
+    icon: Crown,
+    duration: "5-20 years",
+    cost: "$15,000-60,000",
+    difficulty: "Easy",
+    processing: "30-60 days",
+    renewable: "No (but long-term)",
+    workAllowed: false,
+    gradient: "from-yellow-500 to-yellow-600",
+    requirements: [
+      "Payment of membership fee",
+      "Valid passport",
+      "Clean criminal record",
+      "Medical certificate",
+      "Financial documentation"
+    ],
+    access: "paid" as const,
+    pros: ["Very long-term", "VIP services", "Airport assistance"],
+    cons: ["Very expensive", "No work rights", "High financial barrier"]
+  },
+  {
+    id: "work",
+    title: "Work Visa (B)",
+    subtitle: "1 year renewable",
+    description: "For those employed by Thai companies or remote workers",
+    icon: Building,
+    duration: "1 year",
+    cost: "$200-500",
+    difficulty: "Hard",
+    processing: "4-8 weeks", 
+    renewable: "Yes",
+    workAllowed: true,
+    gradient: "from-green-500 to-green-600",
+    requirements: [
+      "Job offer from Thai company",
+      "Work permit application",
+      "University degree",
+      "Experience certificates",
+      "Health certificate",
+      "Police clearance"
+    ],
+    access: "paid" as const,
+    pros: ["Work legally", "Path to residency", "Stable status"],
+    cons: ["Complex process", "Employer dependency", "Strict requirements"]
+  },
+  {
+    id: "retirement",
+    title: "Retirement Visa",
+    subtitle: "1 year renewable",
+    description: "For those 50+ with sufficient funds",
+    icon: Heart,
+    duration: "1 year",
+    cost: "$200",
+    difficulty: "Medium",
+    processing: "2-4 weeks",
+    renewable: "Yes",
+    workAllowed: false,
+    gradient: "from-pink-500 to-pink-600",
+    requirements: [
+      "Age 50+ years",
+      "Bank balance ($25,000+)",
+      "Health insurance",
+      "Police clearance",
+      "Medical certificate"
+    ],
+    access: "paid" as const,
+    pros: ["Long-term stability", "Straightforward renewal", "Retirement focus"],
+    cons: ["Age requirement", "High financial requirement", "No work allowed"]
+  }
+];
+
+const documentTemplates = [
+  { name: "Visa Application Form", type: "PDF", access: "free" },
+  { name: "Bank Statement Template", type: "DOC", access: "paid" },
+  { name: "Employment Letter Template", type: "DOC", access: "paid" },
+  { name: "Accommodation Booking Guide", type: "PDF", access: "paid" },
+  { name: "Health Insurance Comparison", type: "XLS", access: "paid" },
+  { name: "Police Clearance Guide", type: "PDF", access: "paid" }
+];
+
+const visaTimeline = [
+  { step: "Research & Choose", weeks: "Week 1", status: "completed" },
+  { step: "Gather Documents", weeks: "Week 2-3", status: "in-progress" },
+  { step: "Submit Application", weeks: "Week 4", status: "pending" },
+  { step: "Processing Period", weeks: "Week 5-6", status: "pending" },
+  { step: "Collect Visa", weeks: "Week 7", status: "pending" },
+  { step: "Travel to Thailand", weeks: "Week 8", status: "pending" }
+];
+
+// Living data from Living.tsx
+const accommodationTypes = [
+  {
+    id: "hostels",
+    title: "Hostels & Backpacker",
+    description: "Budget-friendly social accommodation",
+    icon: Users,
+    priceRange: "$5-20/night",
+    color: "from-blue-500 to-blue-600"
+  },
+  {
+    id: "condos",
+    title: "Condos & Apartments", 
+    description: "Modern living with amenities",
+    icon: Building,
+    priceRange: "$300-1,500/month",
+    color: "from-green-500 to-green-600"
+  },
+  {
+    id: "coliving",
+    title: "Co-living Spaces",
+    description: "Digital nomad communities",
+    icon: Coffee,
+    priceRange: "$400-800/month", 
+    color: "from-purple-500 to-purple-600"
+  },
+  {
+    id: "villas",
+    title: "Houses & Villas",
+    description: "Private space and luxury",
+    icon: Star,
+    priceRange: "$800-5,000/month",
+    color: "from-orange-500 to-orange-600"
+  }
+];
+
+const accommodationListings = [
+  {
+    id: 1,
+    name: "Bangkok Nomad Hub",
+    type: "coliving",
+    location: "Sukhumvit, Bangkok",
+    price: "$650/month",
+    rating: 4.8,
+    reviews: 124,
+    amenities: ["WiFi", "Coworking", "Gym", "Pool", "Laundry"],
+    description: "Modern co-living space designed for digital nomads",
+    access: "free"
+  },
+  {
+    id: 2,
+    name: "Chiang Mai Mountain View",
+    type: "condos",
+    location: "Nimmanhaemin, Chiang Mai", 
+    price: "$450/month",
+    rating: 4.6,
+    reviews: 89,
+    amenities: ["WiFi", "Pool", "Security", "Parking"],
+    description: "Stylish condo with mountain views",
+    access: "free"
+  },
+  {
+    id: 3,
+    name: "Phuket Beach Villa",
+    type: "villas",
+    location: "Kata Beach, Phuket",
+    price: "$1,200/month",
+    rating: 4.9,
+    reviews: 67,
+    amenities: ["Beach Access", "Private Pool", "Kitchen", "Garden"],
+    description: "Luxury villa steps from the beach",
+    access: "paid"
+  },
+  {
+    id: 4,
+    name: "Koh Samui Retreat",
+    type: "villas", 
+    location: "Bophut, Koh Samui",
+    price: "$800/month",
+    rating: 4.7,
+    reviews: 43,
+    amenities: ["Ocean View", "Pool", "WiFi", "Motorbike"],
+    description: "Peaceful retreat with ocean views",
+    access: "paid"
+  }
+];
+
+const events = [
+  {
+    id: 1,
+    title: "Bangkok Digital Nomad Meetup",
+    date: "2024-02-15",
+    time: "19:00",
+    location: "Sukhumvit Soi 11",
+    type: "meetup" as const,
+    attendees: 45,
+    maxAttendees: 60,
+    price: "Free",
+    organizer: "Bangkok Nomad Community",
+    tags: ["Networking", "Coworking", "Social"],
+    access: "free"
+  },
+  {
+    id: 2,
+    title: "Chiang Mai Food Tour",
+    date: "2024-02-18",
+    time: "18:00",
+    location: "Old City, Chiang Mai",
+    type: "trip" as const,
+    attendees: 12,
+    maxAttendees: 15,
+    price: "$25",
+    organizer: "Food Lovers Thailand",
+    tags: ["Food", "Culture", "Walking"],
+    access: "free"
+  },
+  {
+    id: 3,
+    title: "Koh Phi Phi Island Hopping",
+    date: "2024-02-22",
+    time: "08:00",
+    location: "Phuket Marina",
+    type: "trip" as const,
+    attendees: 8,
+    maxAttendees: 12,
+    price: "$120",
+    organizer: "Island Adventures",
+    tags: ["Adventure", "Beach", "Snorkeling"],
+    access: "paid"
+  },
+  {
+    id: 4,
+    title: "Full Moon Party Koh Phangan",
+    date: "2024-02-25",
+    time: "20:00", 
+    location: "Haad Rin Beach",
+    type: "party" as const,
+    attendees: 200,
+    maxAttendees: 500,
+    price: "$15",
+    organizer: "Party Thailand",
+    tags: ["Party", "Beach", "Music"],
+    access: "paid"
+  }
+];
+
+const realEstateAgents = [
+  {
+    id: 1,
+    name: "Sarah Property Bangkok",
+    specialization: "Bangkok Condos",
+    rating: 4.9,
+    deals: 156,
+    languages: ["English", "Thai"],
+    contact: "+66 81 234 5678",
+    access: "paid"
+  },
+  {
+    id: 2,
+    name: "Chiang Mai Living Co",
+    specialization: "Northern Thailand",
+    rating: 4.7,
+    deals: 98,
+    languages: ["English", "Thai", "German"],
+    contact: "+66 53 123 456",
+    access: "paid"
+  }
+];
+
+export default function Roadmap() {
+  const navigate = useNavigate();
+  const { userType, userState } = useUser();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedPhase, setSelectedPhase] = useState(1);
+  const [selectedTab, setSelectedTab] = useState<'journey' | 'income' | 'visa' | 'living'>('journey');
+  
+  // Income tab states
+  const [incomeSubTab, setIncomeSubTab] = useState<'courses' | 'jobs' | 'strategies'>('courses');
+  const [searchTerm, setSearchTerm] = useState("");
+  
+  // Visa tab states
+  const [selectedVisa, setSelectedVisa] = useState("tourist");
+  
+  // Living tab states
+  const [livingSubTab, setLivingSubTab] = useState<'accommodation' | 'community'>('accommodation');
+  const [accommodationType, setAccommodationType] = useState("all");
+  const [livingSearchTerm, setLivingSearchTerm] = useState("");
+
+  // Handle URL tab parameter
+  useEffect(() => {
+    const tab = searchParams.get('tab');
+    if (tab && ['journey', 'income', 'visa', 'living'].includes(tab)) {
+      setSelectedTab(tab as any);
+    }
+  }, [searchParams]);
+
+  const handleTabChange = (tab: 'journey' | 'income' | 'visa' | 'living') => {
+    setSelectedTab(tab);
+    setSearchParams({ tab });
+  };
+  
+  const hasPhaseAccess = (phase: typeof journeyPhases[0]) => {
+    if (!phase.requiredLevel) return true;
+    if (phase.requiredLevel === 'paid') return userType === 'paid';
+    return userType !== 'guest';
+  };
+
+  const getPhaseStatus = (phaseId: number) => {
+    if (userState.progress?.completedPhases?.includes(phaseId)) return 'completed';
+    if (userState.progress?.currentPhase === phaseId) return 'current';
+    if (userState.access?.unlockedPhases?.includes(phaseId)) return 'available';
+    return 'locked';
+  };
+
+  // Helper functions for integrated content
+  const hasAccess = (accessLevel: string) => {
+    if (accessLevel === "free") return true;
+    return userType === "paid";
+  };
+
+  const getCourseAccess = (courseId: string) => {
+    if (userType === 'guest') return 'none';
+    if (userType === 'free') {
+      if (courseId === 'amazon-fba') return 'preview';
+      return 'none';
+    }
+    return 'full';
+  };
+
+  const filteredJobs = jobListings.filter(job => 
+    job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    job.company.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const selectedVisaData = visaTypes.find(v => v.id === selectedVisa);
+
+  const filteredAccommodation = accommodationListings.filter(place => {
+    const matchesSearch = place.name.toLowerCase().includes(livingSearchTerm.toLowerCase()) ||
+                         place.location.toLowerCase().includes(livingSearchTerm.toLowerCase());
+    const matchesType = accommodationType === "all" || place.type === accommodationType;
+    return matchesSearch && matchesType && hasAccess(place.access);
+  });
+
+  const filteredEvents = events.filter(event => hasAccess(event.access));
+
+  return (
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto p-6">
+        {/* Main Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold mb-4">🗺️ Your Thailand Journey</h1>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Complete roadmap to successfully relocating to Thailand as a digital nomad
+          </p>
+        </div>
+
+        {/* Tab Navigation */}
+        <div className="flex justify-center mb-8">
+          <div className="flex bg-muted rounded-lg p-1">
+            <Button
+              variant={selectedTab === 'journey' ? 'default' : 'ghost'}
+              onClick={() => handleTabChange('journey')}
+              className="flex items-center gap-2"
+            >
+              🎯 Journey Overview
+            </Button>
+            <Button
+              variant={selectedTab === 'income' ? 'default' : 'ghost'}
+              onClick={() => handleTabChange('income')}
+              className="flex items-center gap-2"
+            >
+              💰 Income Setup
+            </Button>
+            <Button
+              variant={selectedTab === 'visa' ? 'default' : 'ghost'}
+              onClick={() => handleTabChange('visa')}
+              className="flex items-center gap-2"
+            >
+              📋 Visa & Legal
+            </Button>
+            <Button
+              variant={selectedTab === 'living' ? 'default' : 'ghost'}
+              onClick={() => handleTabChange('living')}
+              className="flex items-center gap-2"
+            >
+              🏠 Living Setup
+            </Button>
+          </div>
+        </div>
+
+        {/* Tab Content */}
+        {selectedTab === 'journey' && (
+          <UserContent
+            guestContent={
+              <div>
+                <div className="text-center mb-12">
+                  <h2 className="text-3xl font-bold mb-4">Your Thailand Journey Roadmap</h2>
+                  <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                    A step-by-step guide to successfully relocating to Thailand as a digital nomad
+                  </p>
+                </div>
+
+            {/* Phase Overview for Guests */}
+            <div className="grid gap-6 mb-12">
+              {journeyPhases.slice(0, 2).map((phase) => {
+                const Icon = phase.icon;
+                return (
+                  <Card key={phase.id} className="p-6 border-2">
+                    <div className="flex items-start gap-4">
+                      <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${phase.gradientColor} flex items-center justify-center flex-shrink-0`}>
+                        <Icon className="w-6 h-6 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <h3 className="text-xl font-bold">{phase.title}</h3>
+                          <Badge variant="outline">{phase.duration}</Badge>
+                        </div>
+                        <p className="text-muted-foreground mb-4">{phase.description}</p>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                          {phase.features.map((feature) => (
+                            <div key={feature} className="flex items-center text-sm">
+                              <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
+                              {feature}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                );
+              })}
+              
+              {/* Locked phases preview */}
+              {journeyPhases.slice(2).map((phase) => {
+                const Icon = phase.icon;
+                return (
+                  <Card key={phase.id} className="p-6 border-2 border-dashed opacity-50">
+                    <div className="flex items-start gap-4">
+                      <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${phase.gradientColor} flex items-center justify-center flex-shrink-0`}>
+                        <Lock className="w-6 h-6 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <h3 className="text-xl font-bold">{phase.title}</h3>
+                          <Badge variant="outline">🔒 Premium</Badge>
+                        </div>
+                        <p className="text-muted-foreground">{phase.description}</p>
+                      </div>
+                    </div>
+                  </Card>
+                );
+              })}
+            </div>
+
+            <UpgradePrompt 
+              title="Unlock Your Complete Roadmap"
+              description="Get access to all 5 phases and start your Thailand journey today"
+              features={[
+                "Complete 5-phase roadmap",
+                "Detailed action plans",
+                "Progress tracking",
+                "Community support"
+              ]}
+            />
+          </div>
+        }
+        
+        freeContent={
+          <div className="container mx-auto p-6">
+            <div className="text-center mb-8">
+              <h1 className="text-4xl font-bold mb-4">Your Thailand Journey</h1>
+              <p className="text-xl text-muted-foreground">Track your progress through each phase</p>
+            </div>
+
+            {/* Progress Overview */}
+            <Card className="p-6 mb-8 bg-gradient-to-br from-primary/10 to-primary/5">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xl font-bold">Overall Progress</h3>
+                <Badge variant="secondary">Phase {userState.progress?.currentPhase || 1}</Badge>
+              </div>
+              <ProgressBar 
+                progress={40} // 2 out of 5 phases for free users
+                showPercentage={true}
+                size="lg"
+                className="mb-2"
+              />
+              <p className="text-sm text-muted-foreground">2 of 5 phases accessible with your current plan</p>
+            </Card>
+
+            {/* Available Phases */}
+            <div className="grid gap-6 mb-8">
+              {journeyPhases.slice(0, 2).map((phase) => {
+                const Icon = phase.icon;
+                const status = getPhaseStatus(phase.id);
+                
+                return (
+                  <Card key={phase.id} className={`p-6 border-2 cursor-pointer transition-all hover:shadow-lg ${
+                    selectedPhase === phase.id ? 'border-primary' : ''
+                  }`} onClick={() => setSelectedPhase(phase.id)}>
+                    <div className="flex items-start gap-4">
+                      <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${phase.gradientColor} flex items-center justify-center flex-shrink-0`}>
+                        <Icon className="w-6 h-6 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <h3 className="text-xl font-bold">{phase.title}</h3>
+                          <Badge variant="outline">{phase.duration}</Badge>
+                          {status === 'completed' && <CheckCircle className="w-5 h-5 text-green-500" />}
+                        </div>
+                        <p className="text-muted-foreground mb-4">{phase.description}</p>
+                        <ProgressBar 
+                          progress={phase.progress}
+                          showPercentage={true}
+                          size="sm"
+                          className="mb-4"
+                        />
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                          {phase.features.map((feature) => (
+                            <div key={feature} className="flex items-center text-sm">
+                              <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
+                              {feature}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                );
+              })}
+            </div>
+
+            {/* Locked Phases */}
+            <Paywall 
+              requiredLevel="paid"
+              title="Unlock Phases 3-5"
+              description="Complete your Thailand journey with advanced phases"
+              features={["Legal & visa guidance", "Relocation planning", "Settlement support"]}
+            >
+              <div className="grid gap-6">
+                {journeyPhases.slice(2).map((phase) => {
+                  const Icon = phase.icon;
+                  return (
+                    <Card key={phase.id} className="p-6 border-2">
+                      <div className="flex items-start gap-4">
+                        <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${phase.gradientColor} flex items-center justify-center flex-shrink-0`}>
+                          <Icon className="w-6 h-6 text-white" />
+                        </div>
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-2">
+                            <h3 className="text-xl font-bold">{phase.title}</h3>
+                            <Badge variant="outline">{phase.duration}</Badge>
+                          </div>
+                          <p className="text-muted-foreground mb-4">{phase.description}</p>
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                            {phase.features.map((feature) => (
+                              <div key={feature} className="flex items-center text-sm">
+                                <Star className="w-4 h-4 mr-2 text-yellow-500" />
+                                {feature}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </Card>
+                  );
+                })}
+              </div>
+            </Paywall>
+          </div>
+        }
+        
+        paidContent={
+          <div className="container mx-auto p-6">
+            <div className="text-center mb-8">
+              <h1 className="text-4xl font-bold mb-4">Your Complete Thailand Journey</h1>
+              <p className="text-xl text-muted-foreground">Master all 5 phases of relocation</p>
+            </div>
+
+            {/* Progress Overview */}
+            <Card className="p-6 mb-8 bg-gradient-to-br from-primary/10 to-primary/5">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xl font-bold">Overall Progress</h3>
+                <Badge variant="secondary">Phase {userState.progress?.currentPhase || 1} of 5</Badge>
+              </div>
+              <ProgressBar 
+                progress={((userState.progress?.currentPhase || 1) / 5) * 100}
+                showPercentage={true}
+                size="lg"
+                className="mb-4"
+              />
+              
+              {/* Timeline */}
+              <div className="grid grid-cols-1 md:grid-cols-7 gap-2 mt-6">
+                {timelineSteps.map((step, index) => (
+                  <div key={index} className="flex flex-col items-center text-center">
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold mb-2 ${
+                      step.status === 'completed' ? 'bg-green-500 text-white' :
+                      step.status === 'in-progress' ? 'bg-blue-500 text-white' :
+                      step.status === 'pending' ? 'bg-yellow-500 text-white' :
+                      'bg-gray-300 text-gray-600'
+                    }`}>
+                      {step.phase}
+                    </div>
+                    <div className="text-xs font-medium">{step.title}</div>
+                    <div className="text-xs text-muted-foreground">{step.weeks}</div>
+                  </div>
+                ))}
+              </div>
+            </Card>
+
+            {/* All Phases */}
+            <div className="grid gap-6 mb-8">
+              {journeyPhases.map((phase) => {
+                const Icon = phase.icon;
+                const status = getPhaseStatus(phase.id);
+                const isAccessible = hasPhaseAccess(phase);
+                
+                return (
+                  <Card key={phase.id} className={`p-6 border-2 cursor-pointer transition-all hover:shadow-lg ${
+                    selectedPhase === phase.id ? 'border-primary' : ''
+                  } ${!isAccessible ? 'opacity-50' : ''}`} 
+                  onClick={() => setSelectedPhase(phase.id)}>
+                    <div className="flex items-start gap-4">
+                      <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${phase.gradientColor} flex items-center justify-center flex-shrink-0`}>
+                        <Icon className="w-6 h-6 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <h3 className="text-xl font-bold">{phase.title}</h3>
+                          <Badge variant="outline">{phase.duration}</Badge>
+                          <Badge className={`${phase.difficulty === 'Beginner' ? 'bg-green-500' : 
+                            phase.difficulty === 'Intermediate' ? 'bg-yellow-500' : 'bg-red-500'}`}>
+                            {phase.difficulty}
+                          </Badge>
+                          {status === 'completed' && <CheckCircle className="w-5 h-5 text-green-500" />}
+                          {status === 'current' && <Clock className="w-5 h-5 text-blue-500" />}
+                        </div>
+                        <p className="text-muted-foreground mb-4">{phase.description}</p>
+                        <ProgressBar 
+                          progress={phase.progress}
+                          showPercentage={true}
+                          size="sm"
+                          className="mb-4"
+                        />
+                        
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="text-sm text-muted-foreground">
+                            {phase.completedLessons} of {phase.lessons} lessons completed
+                          </div>
+                          <Button 
+                            size="sm" 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (phase.id <= 2) {
+                                navigate('/income');
+                              } else if (phase.id === 3) {
+                                navigate('/visa');
+                              } else {
+                                navigate('/living');
+                              }
+                            }}
+                          >
+                            {phase.progress === 0 ? 'Start Phase' : 'Continue'}
+                            <ArrowRight className="w-4 h-4 ml-2" />
+                          </Button>
+                        </div>
+                        
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                          {phase.features.map((feature) => (
+                            <div key={feature} className="flex items-center text-sm">
+                              <Star className="w-4 h-4 mr-2 text-yellow-500" />
+                              {feature}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                );
+              })}
+            </div>
+
+            {/* Action Center */}
+            <Card className="p-6">
+              <h3 className="text-xl font-bold mb-4">Recommended Next Steps</h3>
+              <div className="grid md:grid-cols-2 gap-4">
+                {journeyPhases[selectedPhase - 1]?.nextSteps.map((step, index) => (
+                  <div key={index} className="flex items-center gap-3 p-3 border rounded-lg">
+                    <Target className="w-5 h-5 text-primary" />
+                    <span>{step}</span>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          </div>
+        }
+      />
+    </div>
+  );
+}

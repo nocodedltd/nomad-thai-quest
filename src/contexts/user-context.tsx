@@ -38,8 +38,21 @@ const mockProgress = {
 };
 
 export function UserProvider({ children }: { children: ReactNode }) {
-  const [userType, setUserType] = useState<UserType>('guest');
-  const isDevelopment = process.env.NODE_ENV === 'development';
+  // Initialize from localStorage or default to guest
+  const [userType, setUserType] = useState<UserType>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('nomad-thai-quest-user-type');
+      return (saved as UserType) || 'guest';
+    }
+    return 'guest';
+  });
+  // More robust development detection
+  const isDevelopment = process.env.NODE_ENV === 'development' || 
+                       process.env.NODE_ENV !== 'production' ||
+                       window.location.hostname === 'localhost' ||
+                       window.location.hostname === '127.0.0.1' ||
+                       window.location.hostname.includes('github.io') ||
+                       window.location.hostname.includes('vercel.app');
   
   const userState: UserState = {
     type: userType,
@@ -47,9 +60,17 @@ export function UserProvider({ children }: { children: ReactNode }) {
     access: getUserAccess(userType),
   };
 
+  // Enhanced setUserType with localStorage persistence
+  const handleSetUserType = (type: UserType) => {
+    setUserType(type);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('nomad-thai-quest-user-type', type);
+    }
+  };
+
   const value: UserContextType = {
     userType,
-    setUserType,
+    setUserType: handleSetUserType,
     userState,
     isGuest: userType === 'guest',
     isFree: userType === 'free',

@@ -38,6 +38,9 @@ import { useUser } from "@/contexts/user-context";
 import { UserContent } from "@/components/shared/user-content";
 import { Paywall } from "@/components/shared/paywall";
 import { UpgradePrompt } from "@/components/shared/upgrade-prompt";
+import IncomeTab from "@/components/roadmap/IncomeTab";
+import VisaTab from "@/components/roadmap/VisaTab";
+import LivingTab from "@/components/roadmap/LivingTab";
 
 // Journey phases data
 const journeyPhases = [
@@ -558,35 +561,14 @@ export default function Roadmap() {
           </div>
         )}
 
+        {/* Income Tab */}
+        {selectedTab === 'income' && <IncomeTab />}
+
         {/* Visa Tab */}
-        {selectedTab === 'visa' && (
-          <div className="text-center py-20">
-            <FileText className="w-16 h-16 mx-auto mb-4 text-blue-500" />
-            <h2 className="text-2xl font-bold mb-4">Visa & Legal Module</h2>
-            <p className="text-muted-foreground mb-8">
-              This section will contain all visa-related content from the Visa page:<br/>
-              • Visa type guides and comparisons<br/>
-              • Document templates and checklists<br/>
-              • Application timelines and processes
-            </p>
-            <Badge variant="outline">Coming in next integration step</Badge>
-          </div>
-        )}
+        {selectedTab === 'visa' && <VisaTab />}
 
         {/* Living Tab */}
-        {selectedTab === 'living' && (
-          <div className="text-center py-20">
-            <Building className="w-16 h-16 mx-auto mb-4 text-purple-500" />
-            <h2 className="text-2xl font-bold mb-4">Living Setup Module</h2>
-            <p className="text-muted-foreground mb-8">
-              This section will contain all living-related content from the Living page:<br/>
-              • Accommodation listings and search<br/>
-              • Community events and meetups<br/>
-              • Real estate agents and services
-            </p>
-            <Badge variant="outline">Coming in next integration step</Badge>
-          </div>
-        )}
+        {selectedTab === 'living' && <LivingTab />}
       </div>
     </div>
   );

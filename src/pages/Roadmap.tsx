@@ -42,34 +42,16 @@ import IncomeTab from "@/components/roadmap/IncomeTab";
 import VisaTab from "@/components/roadmap/VisaTab";
 import LivingTab from "@/components/roadmap/LivingTab";
 
-// Journey phases data
+// Journey phases data (removed preparation phase)
 const journeyPhases = [
   {
     id: 1,
-    title: "Preparation Phase",
-    subtitle: "Build Your Foundation",
-    description: "Get mentally and financially prepared for your Thailand journey",
-    icon: Target,
-    duration: "3-6 months",
-    difficulty: "Beginner" as const,
-    progress: 75,
-    lessons: 8,
-    completedLessons: 6,
-    neonColor: "blue",
-    gradientColor: "from-blue-500 to-blue-600",
-    features: ["Goal Setting", "Research & Planning", "Budget Planning", "Skill Assessment"],
-    nextSteps: ["Complete financial planning", "Research visa options"],
-    requiredLevel: null,
-    targetTab: 'journey'
-  },
-  {
-    id: 2,
     title: "Income Setup", 
     subtitle: "Secure Your Revenue",
     description: "Establish reliable income streams before you move",
     icon: DollarSign,
     duration: "2-4 months",
-    difficulty: "Intermediate" as const,
+    difficulty: "Beginner" as const,
     progress: 60,
     lessons: 12,
     completedLessons: 7,
@@ -81,7 +63,7 @@ const journeyPhases = [
     targetTab: 'income'
   },
   {
-    id: 3,
+    id: 2,
     title: "Legal & Visa",
     subtitle: "Handle Documentation",
     description: "Navigate Thailand's visa system and legal requirements",
@@ -99,7 +81,7 @@ const journeyPhases = [
     targetTab: 'visa'
   },
   {
-    id: 4,
+    id: 3,
     title: "Relocation",
     subtitle: "Make the Move",
     description: "Execute your move to Thailand with confidence",
@@ -117,7 +99,7 @@ const journeyPhases = [
     targetTab: 'living'
   },
   {
-    id: 5,
+    id: 4,
     title: "Settlement",
     subtitle: "Build Your Life",
     description: "Establish your new life and integrate into Thai society",
@@ -137,13 +119,12 @@ const journeyPhases = [
 ];
 
 const timelineSteps = [
-  { phase: 1, title: "Research & Planning", weeks: "Week 1-4", status: "completed" },
-  { phase: 1, title: "Financial Preparation", weeks: "Week 5-8", status: "completed" },
-  { phase: 2, title: "Income Stream Setup", weeks: "Week 9-16", status: "in-progress" },
-  { phase: 2, title: "Client Acquisition", weeks: "Week 17-20", status: "pending" },
-  { phase: 3, title: "Visa Application", weeks: "Week 21-24", status: "locked" },
-  { phase: 4, title: "Travel Preparation", weeks: "Week 25-28", status: "locked" },
-  { phase: 5, title: "Arrival & Setup", weeks: "Month 7+", status: "locked" },
+  { phase: 1, title: "Income Stream Setup", weeks: "Week 1-8", status: "in-progress" },
+  { phase: 1, title: "Client Acquisition", weeks: "Week 9-12", status: "pending" },
+  { phase: 2, title: "Visa Application", weeks: "Week 13-16", status: "locked" },
+  { phase: 2, title: "Document Preparation", weeks: "Week 17-18", status: "locked" },
+  { phase: 3, title: "Travel Preparation", weeks: "Week 19-22", status: "locked" },
+  { phase: 4, title: "Arrival & Setup", weeks: "Month 6+", status: "locked" },
 ];
 
 export default function Roadmap() {
@@ -244,7 +225,7 @@ export default function Roadmap() {
 
                 {/* Phase Overview for Guests */}
                 <div className="grid gap-6 mb-12">
-                  {journeyPhases.slice(0, 2).map((phase) => {
+                  {journeyPhases.slice(0, 1).map((phase) => {
                     const Icon = phase.icon;
                     return (
                       <Card key={phase.id} className="p-6 border-2">
@@ -273,7 +254,7 @@ export default function Roadmap() {
                   })}
                   
                   {/* Locked phases preview */}
-                  {journeyPhases.slice(2).map((phase) => {
+                  {journeyPhases.slice(1).map((phase) => {
                     const Icon = phase.icon;
                     return (
                       <Card key={phase.id} className="p-6 border-2 border-dashed opacity-50">
@@ -296,9 +277,9 @@ export default function Roadmap() {
 
                 <UpgradePrompt 
                   title="Unlock Your Complete Roadmap"
-                  description="Get access to all 5 phases and start your Thailand journey today"
+                  description="Get access to all 4 phases and start your Thailand journey today"
                   features={[
-                    "Complete 5-phase roadmap",
+                    "Complete 4-phase roadmap",
                     "Detailed action plans",
                     "Progress tracking",
                     "Community support"
@@ -321,17 +302,17 @@ export default function Roadmap() {
                     <Badge variant="secondary">Phase {userState.progress?.currentPhase || 1}</Badge>
                   </div>
                   <ProgressBar 
-                    progress={40} // 2 out of 5 phases for free users
+                    progress={25} // 1 out of 4 phases for free users
                     showPercentage={true}
                     size="lg"
                     className="mb-2"
                   />
-                  <p className="text-sm text-muted-foreground">2 of 5 phases accessible with your current plan</p>
+                  <p className="text-sm text-muted-foreground">1 of 4 phases accessible with your current plan</p>
                 </Card>
 
                 {/* Available Phases */}
                 <div className="grid gap-6 mb-8">
-                  {journeyPhases.slice(0, 2).map((phase) => {
+                  {journeyPhases.slice(0, 1).map((phase) => {
                     const Icon = phase.icon;
                     const status = getPhaseStatus(phase.id);
                     
@@ -381,12 +362,12 @@ export default function Roadmap() {
                 {/* Locked Phases */}
                 <Paywall 
                   requiredLevel="paid"
-                  title="Unlock Phases 3-5"
-                  description="Complete your Thailand journey with advanced phases"
+                  title="Unlock Phases 2-4"
+                  description="Complete your Thailand journey with all advanced phases"
                   features={["Legal & visa guidance", "Relocation planning", "Settlement support"]}
                 >
                   <div className="grid gap-6">
-                    {journeyPhases.slice(2).map((phase) => {
+                    {journeyPhases.slice(1).map((phase) => {
                       const Icon = phase.icon;
                       return (
                         <Card key={phase.id} className="p-6 border-2">
@@ -422,24 +403,24 @@ export default function Roadmap() {
               <div>
                 <div className="text-center mb-8">
                   <h2 className="text-3xl font-bold mb-4">Your Complete Thailand Journey</h2>
-                  <p className="text-xl text-muted-foreground">Master all 5 phases of relocation</p>
+                  <p className="text-xl text-muted-foreground">Master all 4 phases of relocation</p>
                 </div>
 
                 {/* Progress Overview */}
                 <Card className="p-6 mb-8 bg-gradient-to-br from-primary/10 to-primary/5">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-xl font-bold">Overall Progress</h3>
-                    <Badge variant="secondary">Phase {userState.progress?.currentPhase || 1} of 5</Badge>
+                    <Badge variant="secondary">Phase {userState.progress?.currentPhase || 1} of 4</Badge>
                   </div>
                   <ProgressBar 
-                    progress={((userState.progress?.currentPhase || 1) / 5) * 100}
+                    progress={((userState.progress?.currentPhase || 1) / 4) * 100}
                     showPercentage={true}
                     size="lg"
                     className="mb-4"
                   />
                   
                   {/* Timeline */}
-                  <div className="grid grid-cols-1 md:grid-cols-7 gap-2 mt-6">
+                  <div className="grid grid-cols-1 md:grid-cols-6 gap-2 mt-6">
                     {timelineSteps.map((step, index) => (
                       <div key={index} className="flex flex-col items-center text-center">
                         <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold mb-2 ${
@@ -544,21 +525,6 @@ export default function Roadmap() {
               </div>
             }
           />
-        )}
-
-        {/* Income Tab */}
-        {selectedTab === 'income' && (
-          <div className="text-center py-20">
-            <DollarSign className="w-16 h-16 mx-auto mb-4 text-green-500" />
-            <h2 className="text-2xl font-bold mb-4">Income Setup Module</h2>
-            <p className="text-muted-foreground mb-8">
-              This section will contain all income-related content from the Income page:<br/>
-              • Online courses and training<br/>
-              • Remote job listings<br/>
-              • Income strategies and guides
-            </p>
-            <Badge variant="outline">Coming in next integration step</Badge>
-          </div>
         )}
 
         {/* Income Tab */}

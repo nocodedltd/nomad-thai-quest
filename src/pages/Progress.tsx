@@ -160,23 +160,29 @@ export default function Progress() {
     <div className="min-h-screen bg-background">
       <div className="container mx-auto p-6">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-4">📊 Your Progress</h1>
+          <h1 className="text-4xl font-bold mb-4">📊 Progress Analytics</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Track your journey and celebrate your achievements
+            Deep dive into your learning journey with detailed analytics, achievements, and performance insights
           </p>
         </div>
 
         {/* Tabs */}
         <div className="flex justify-center mb-8">
           <div className="flex bg-muted rounded-lg p-1">
-            {['overview', 'courses', 'achievements', 'goals'].map((tab) => (
+            {[
+              { id: 'overview', label: 'Analytics Overview', desc: 'Performance stats' },
+              { id: 'courses', label: 'Course History', desc: 'Learning progress' },
+              { id: 'achievements', label: 'Achievement Gallery', desc: 'All unlocked rewards' },
+              { id: 'goals', label: 'Goal Tracking', desc: 'Custom objectives' }
+            ].map((tab) => (
               <Button
-                key={tab}
-                variant={selectedTab === tab ? 'default' : 'ghost'}
-                onClick={() => setSelectedTab(tab as any)}
-                className="capitalize"
+                key={tab.id}
+                variant={selectedTab === tab.id ? 'default' : 'ghost'}
+                onClick={() => setSelectedTab(tab.id as any)}
+                className="flex flex-col px-4 py-3 h-auto"
               >
-                {tab}
+                <span className="font-medium">{tab.label}</span>
+                <span className="text-xs text-muted-foreground">{tab.desc}</span>
               </Button>
             ))}
           </div>

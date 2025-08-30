@@ -26,6 +26,7 @@ import { Paywall } from "@/components/shared/paywall";
 import { UpgradePrompt } from "@/components/shared/upgrade-prompt";
 import CourseViewer from "@/components/lesson/course-viewer";
 import { amazonFBACourse, aiAutomationCourse, consultingCourse } from "@/data/courses/amazon-fba-course";
+import { CompactCourseCard } from "@/components/roadmap/CompactCourseCard";
 
 const courses = [
   {
@@ -218,6 +219,11 @@ export default function IncomeTab() {
     }
   };
 
+  const handleMentorContact = (mentorName: string) => {
+    console.log(`Contacting mentor: ${mentorName}`);
+    // Implement mentor contact functionality
+  };
+
   const handleBackToCourses = () => {
     setCurrentView('overview');
     setSelectedCourseId('');
@@ -278,46 +284,18 @@ export default function IncomeTab() {
           <div>
             {selectedTab === 'courses' && (
               <div>
-                <div className="grid gap-6 mb-8">
-                  {courses.map((course) => {
-                    const Icon = course.icon;
-                    return (
-                      <Card key={course.id} className="p-6 opacity-75">
-                        <div className="flex gap-6">
-                          <div className={`w-16 h-16 rounded-lg bg-gradient-to-r ${course.gradient} flex items-center justify-center flex-shrink-0`}>
-                            <Icon className="w-8 h-8 text-white" />
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-2">
-                              <h3 className="text-xl font-bold">{course.title}</h3>
-                              <Badge variant="outline">{course.category}</Badge>
-                              <Badge>{course.difficulty}</Badge>
-                              <Lock className="w-4 h-4 text-muted-foreground" />
-                            </div>
-                            <p className="text-muted-foreground mb-4">{course.description}</p>
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                              <div>
-                                <div className="font-medium">{course.lessons} Lessons</div>
-                                <div className="text-muted-foreground">{course.duration}</div>
-                              </div>
-                              <div>
-                                <div className="font-medium">{course.estimatedIncome}</div>
-                                <div className="text-muted-foreground">Potential Income</div>
-                              </div>
-                              <div>
-                                <div className="font-medium">{course.timeToProfit}</div>
-                                <div className="text-muted-foreground">Time to Profit</div>
-                              </div>
-                              <div>
-                                <div className="font-medium">{course.xpReward} XP</div>
-                                <div className="text-muted-foreground">Completion Reward</div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </Card>
-                    );
-                  })}
+                <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3">
+                  {courses.map((course) => (
+                    <CompactCourseCard
+                      key={course.id}
+                      course={course}
+                      userType={userType}
+                      onCourseSelect={handleCourseSelect}
+                      onMentorContact={handleMentorContact}
+
+
+                    />
+                  ))}
                 </div>
                 <UpgradePrompt 
                   title="Unlock Income Mastery Courses"
@@ -381,68 +359,18 @@ export default function IncomeTab() {
           <div>
             {selectedTab === 'courses' && (
               <div>
-                <div className="grid gap-6 mb-8">
-                  {courses.map((course) => {
-                    const Icon = course.icon;
-                    const access = getCourseAccess(course.id);
-                    
-                    return (
-                      <Card key={course.id} className="p-6">
-                        <div className="flex gap-6">
-                          <div className={`w-16 h-16 rounded-lg bg-gradient-to-r ${course.gradient} flex items-center justify-center flex-shrink-0`}>
-                            <Icon className="w-8 h-8 text-white" />
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-2">
-                              <h3 className="text-xl font-bold">{course.title}</h3>
-                              <Badge variant="outline">{course.category}</Badge>
-                              <Badge>{course.difficulty}</Badge>
-                              {access === 'preview' && <Badge variant="secondary">Preview Access</Badge>}
-                            </div>
-                            <p className="text-muted-foreground mb-4">{course.description}</p>
-                            
-                            {course.completedLessons > 0 && (
-                              <ProgressBar 
-                                progress={(course.completedLessons / course.lessons) * 100}
-                                showPercentage={true}
-                                size="sm"
-                                className="mb-4"
-                              />
-                            )}
-                            
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-4">
-                              <div>
-                                <div className="font-medium">{access === 'preview' ? '1' : course.lessons} Lessons</div>
-                                <div className="text-muted-foreground">{access === 'preview' ? 'Preview Access' : course.duration}</div>
-                              </div>
-                              <div>
-                                <div className="font-medium">{course.estimatedIncome}</div>
-                                <div className="text-muted-foreground">Potential Income</div>
-                              </div>
-                              <div>
-                                <div className="font-medium">{course.timeToProfit}</div>
-                                <div className="text-muted-foreground">Time to Profit</div>
-                              </div>
-                              <div>
-                                <div className="font-medium">{course.xpReward} XP</div>
-                                <div className="text-muted-foreground">Completion Reward</div>
-                              </div>
-                            </div>
-                            
-                            <div className="flex items-center justify-between">
-                              <div className="text-sm text-muted-foreground">
-                                By {course.mentor} • {course.mentorBio}
-                              </div>
-                              <Button onClick={() => handleCourseSelect(course.id)}>
-                                {course.completedLessons > 0 ? 'Continue' : 'Start Course'}
-                                <Play className="w-4 h-4 ml-2" />
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      </Card>
-                    );
-                  })}
+                <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3">
+                  {courses.map((course) => (
+                    <CompactCourseCard
+                      key={course.id}
+                      course={course}
+                      userType={userType}
+                      onCourseSelect={handleCourseSelect}
+                      onMentorContact={handleMentorContact}
+
+
+                    />
+                  ))}
                 </div>
                 
                 <UpgradePrompt 
@@ -560,72 +488,17 @@ export default function IncomeTab() {
         paidContent={
           <div>
             {selectedTab === 'courses' && (
-              <div className="grid gap-6 mb-8">
-                {courses.map((course) => {
-                  const Icon = course.icon;
-                  
-                  return (
-                    <Card key={course.id} className="p-6 hover:shadow-lg transition-shadow">
-                      <div className="flex gap-6">
-                        <div className={`w-16 h-16 rounded-lg bg-gradient-to-r ${course.gradient} flex items-center justify-center flex-shrink-0`}>
-                          <Icon className="w-8 h-8 text-white" />
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-2">
-                            <h3 className="text-xl font-bold">{course.title}</h3>
-                            <Badge variant="outline">{course.category}</Badge>
-                            <Badge>{course.difficulty}</Badge>
-                            <Badge variant="secondary">Full Access</Badge>
-                          </div>
-                          <p className="text-muted-foreground mb-4">{course.description}</p>
-                          
-                          {course.completedLessons > 0 && (
-                            <ProgressBar 
-                              progress={(course.completedLessons / course.lessons) * 100}
-                              showPercentage={true}
-                              size="sm"
-                              className="mb-4"
-                            />
-                          )}
-                          
-                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-4">
-                            <div>
-                              <div className="font-medium">{course.lessons} Lessons</div>
-                              <div className="text-muted-foreground">{course.duration}</div>
-                            </div>
-                            <div>
-                              <div className="font-medium">{course.estimatedIncome}</div>
-                              <div className="text-muted-foreground">Potential Income</div>
-                            </div>
-                            <div>
-                              <div className="font-medium">{course.timeToProfit}</div>
-                              <div className="text-muted-foreground">Time to Profit</div>
-                            </div>
-                            <div>
-                              <div className="font-medium">{course.xpReward} XP</div>
-                              <div className="text-muted-foreground">Completion Reward</div>
-                            </div>
-                          </div>
-                          
-                          <div className="flex items-center justify-between">
-                            <div className="text-sm text-muted-foreground">
-                              By {course.mentor} • {course.mentorBio}
-                            </div>
-                            <div className="flex gap-2">
-                              <Button variant="outline" size="sm">
-                                Contact Mentor
-                              </Button>
-                              <Button onClick={() => handleCourseSelect(course.id)}>
-                                {course.completedLessons > 0 ? 'Continue' : 'Start Course'}
-                                <Play className="w-4 h-4 ml-2" />
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </Card>
-                  );
-                })}
+              <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3">
+                {courses.map((course) => (
+                  <CompactCourseCard
+                    key={course.id}
+                    course={course}
+                    userType={userType}
+                    onCourseSelect={handleCourseSelect}
+                    onMentorContact={handleMentorContact}
+
+                  />
+                ))}
               </div>
             )}
             

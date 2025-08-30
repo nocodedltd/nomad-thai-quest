@@ -26,6 +26,7 @@ import {
   List
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { UserType } from "@/types/user";
 
 interface EnhancedCourseViewerProps {
   courseId: string;
@@ -35,7 +36,7 @@ interface EnhancedCourseViewerProps {
   mentorBio: string;
   lessons: any[];
   onBack: () => void;
-  userType: 'free' | 'paid';
+  userType: UserType;
   userProgress?: {
     completedLessons: string[];
     currentLesson?: string;

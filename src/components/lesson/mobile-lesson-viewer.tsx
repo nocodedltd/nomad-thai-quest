@@ -31,13 +31,14 @@ import {
   Zap
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { UserType } from "@/types/user";
 
 interface MobileLessonViewerProps {
   courseId: string;
   lessonId: string;
   lessons: any[];
   onBack: () => void;
-  userType?: 'free' | 'paid';
+  userType?: UserType;
 }
 
 

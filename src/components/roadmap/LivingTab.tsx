@@ -212,22 +212,39 @@ export default function LivingTab() {
             
             {selectedTab === 'community' && (
               <div>
-                <div className="text-center mb-8">
-                  <p className="text-muted-foreground">
-                    Join our community to access events, meetups, and connect with fellow nomads
-                  </p>
-                </div>
-                
-                <UpgradePrompt 
-                  title="Join the Community"
-                  description="Connect with thousands of expats and digital nomads across Thailand"
-                  features={[
-                    "Exclusive events & meetups",
-                    "Local networking groups", 
-                    "Activity partners",
-                    "Insider recommendations"
-                  ]}
-                />
+                {/* Discord Invite Section */}
+                <Card className="p-6 mb-8 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-950/20 dark:to-purple-950/20 border-indigo-200 dark:border-indigo-800">
+                  <div className="text-center">
+                    <div className="w-16 h-16 rounded-full bg-indigo-500 flex items-center justify-center mx-auto mb-4">
+                      <Users className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold mb-2">Join Our Official Discord Community</h3>
+                    <p className="text-muted-foreground mb-4 max-w-lg mx-auto">
+                      Connect with fellow digital nomads, get real-time advice, and join the conversation about living in Thailand
+                    </p>
+                    <Button 
+                      size="lg"
+                      onClick={() => window.open('https://discord.gg/C4gHpDDqet', '_blank')}
+                      className="bg-indigo-600 hover:bg-indigo-700"
+                    >
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      Join Discord Server
+                    </Button>
+                  </div>
+                </Card>
+
+                {/* Coming Soon Banner */}
+                <Card className="p-8 bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-950/20 dark:to-yellow-950/20 border-orange-200 dark:border-orange-800">
+                  <div className="text-center">
+                    <div className="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center mx-auto mb-4">
+                      <Calendar className="w-6 h-6 text-white" />
+                    </div>
+                    <h3 className="text-2xl font-bold mb-2">Meetups Coming Soon! 🎉</h3>
+                    <p className="text-muted-foreground max-w-md mx-auto">
+                      We're organizing amazing meetups and events across Thailand. Join our Discord to be the first to know when they're ready!
+                    </p>
+                  </div>
+                </Card>
               </div>
             )}
           </div>
@@ -255,58 +272,39 @@ export default function LivingTab() {
             
             {selectedTab === 'community' && (
               <div>
-                <div className="grid gap-6 mb-8">
-                  {events.filter(event => event.access === 'free').map((event) => (
-                    <Card key={event.id} className="p-6">
-                      <div className="flex justify-between items-start mb-4">
-                        <div>
-                          <h3 className="text-lg font-bold">{event.title}</h3>
-                          <p className="text-muted-foreground flex items-center gap-4">
-                            <span className="flex items-center gap-1">
-                              <Calendar className="w-4 h-4" />
-                              {event.date} at {event.time}
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <MapPin className="w-4 h-4" />
-                              {event.location}
-                            </span>
-                          </p>
-                        </div>
-                        <Badge variant="outline" className="capitalize">{event.type}</Badge>
-                      </div>
-                      
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {event.tags.map((tag) => (
-                          <Badge key={tag} variant="secondary" className="text-xs">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                      
-                      <div className="flex justify-between items-center">
-                        <div className="text-sm text-muted-foreground">
-                          {event.attendees}/{event.maxAttendees} attending • {event.price}
-                        </div>
-                        <Button size="sm">Join Event</Button>
-                      </div>
-                    </Card>
-                  ))}
-                </div>
-
-                <Paywall 
-                  requiredLevel="paid"
-                  title="Unlock Premium Events"
-                  description="Access exclusive trips, parties, and VIP experiences"
-                >
-                  <div className="grid gap-6">
-                    {events.filter(event => event.access === 'paid').map((event) => (
-                      <Card key={event.id} className="p-6">
-                        <h3 className="text-lg font-bold mb-2">{event.title}</h3>
-                        <p className="text-muted-foreground">{event.location}</p>
-                      </Card>
-                    ))}
+                {/* Discord Invite Section */}
+                <Card className="p-6 mb-8 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-950/20 dark:to-purple-950/20 border-indigo-200 dark:border-indigo-800">
+                  <div className="text-center">
+                    <div className="w-16 h-16 rounded-full bg-indigo-500 flex items-center justify-center mx-auto mb-4">
+                      <Users className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold mb-2">Join Our Official Discord Community</h3>
+                    <p className="text-muted-foreground mb-4 max-w-lg mx-auto">
+                      Connect with fellow digital nomads, get real-time advice, and join the conversation about living in Thailand
+                    </p>
+                    <Button 
+                      size="lg"
+                      onClick={() => window.open('https://discord.gg/C4gHpDDqet', '_blank')}
+                      className="bg-indigo-600 hover:bg-indigo-700"
+                    >
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      Join Discord Server
+                    </Button>
                   </div>
-                </Paywall>
+                </Card>
+
+                {/* Coming Soon Banner */}
+                <Card className="p-8 bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-950/20 dark:to-yellow-950/20 border-orange-200 dark:border-orange-800">
+                  <div className="text-center">
+                    <div className="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center mx-auto mb-4">
+                      <Calendar className="w-6 h-6 text-white" />
+                    </div>
+                    <h3 className="text-2xl font-bold mb-2">Meetups Coming Soon! 🎉</h3>
+                    <p className="text-muted-foreground max-w-md mx-auto">
+                      We're organizing amazing meetups and events across Thailand. Join our Discord to be the first to know when they're ready!
+                    </p>
+                  </div>
+                </Card>
               </div>
             )}
           </div>
@@ -334,71 +332,39 @@ export default function LivingTab() {
             
             {selectedTab === 'community' && (
               <div>
-                <div className="grid gap-6">
-                  {filteredEvents.map((event) => {
-                    const getEventIcon = (type: string) => {
-                      switch (type) {
-                        case 'party': return Music;
-                        case 'trip': return Mountain;
-                        case 'meetup': return Users;
-                        default: return Calendar;
-                      }
-                    };
-                    
-                    const EventIcon = getEventIcon(event.type);
-                    
-                    return (
-                      <Card key={event.id} className="p-6 hover:shadow-lg transition-shadow">
-                        <div className="flex gap-4">
-                          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center flex-shrink-0">
-                            <EventIcon className="w-6 h-6 text-white" />
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex justify-between items-start mb-2">
-                              <h3 className="text-lg font-bold">{event.title}</h3>
-                              <Badge variant="outline" className="capitalize">{event.type}</Badge>
-                            </div>
-                            
-                            <div className="grid md:grid-cols-3 gap-4 text-sm text-muted-foreground mb-4">
-                              <span className="flex items-center gap-1">
-                                <Calendar className="w-4 h-4" />
-                                {event.date} at {event.time}
-                              </span>
-                              <span className="flex items-center gap-1">
-                                <MapPin className="w-4 h-4" />
-                                {event.location}
-                              </span>
-                              <span className="flex items-center gap-1">
-                                <DollarSign className="w-4 h-4" />
-                                {event.price}
-                              </span>
-                            </div>
-                            
-                            <div className="flex flex-wrap gap-2 mb-4">
-                              {event.tags.map((tag) => (
-                                <Badge key={tag} variant="secondary" className="text-xs">
-                                  {tag}
-                                </Badge>
-                              ))}
-                            </div>
-                            
-                            <div className="flex justify-between items-center">
-                              <div className="text-sm text-muted-foreground">
-                                {event.attendees}/{event.maxAttendees} attending • By {event.organizer}
-                              </div>
-                              <div className="flex gap-2">
-                                <Button variant="outline" size="sm">Share</Button>
-                                <Button size="sm">
-                                  Join Event <ArrowRight className="w-4 h-4 ml-2" />
-                                </Button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </Card>
-                    );
-                  })}
-                </div>
+                {/* Discord Invite Section */}
+                <Card className="p-6 mb-8 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-950/20 dark:to-purple-950/20 border-indigo-200 dark:border-indigo-800">
+                  <div className="text-center">
+                    <div className="w-16 h-16 rounded-full bg-indigo-500 flex items-center justify-center mx-auto mb-4">
+                      <Users className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold mb-2">Join Our Official Discord Community</h3>
+                    <p className="text-muted-foreground mb-4 max-w-lg mx-auto">
+                      Connect with fellow digital nomads, get real-time advice, and join the conversation about living in Thailand
+                    </p>
+                    <Button 
+                      size="lg"
+                      onClick={() => window.open('https://discord.gg/C4gHpDDqet', '_blank')}
+                      className="bg-indigo-600 hover:bg-indigo-700"
+                    >
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      Join Discord Server
+                    </Button>
+                  </div>
+                </Card>
+
+                {/* Coming Soon Banner */}
+                <Card className="p-8 bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-950/20 dark:to-yellow-950/20 border-orange-200 dark:border-orange-800">
+                  <div className="text-center">
+                    <div className="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center mx-auto mb-4">
+                      <Calendar className="w-6 h-6 text-white" />
+                    </div>
+                    <h3 className="text-2xl font-bold mb-2">Meetups Coming Soon! 🎉</h3>
+                    <p className="text-muted-foreground max-w-md mx-auto">
+                      We're organizing amazing meetups and events across Thailand. Join our Discord to be the first to know when they're ready!
+                    </p>
+                  </div>
+                </Card>
               </div>
             )}
           </div>

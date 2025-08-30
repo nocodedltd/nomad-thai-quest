@@ -2,111 +2,29 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
 import { 
-  Building,
+  Calendar,
+  DollarSign,
+  ArrowRight,
+  Music,
+  Mountain,
   Users,
   MapPin,
   Star,
-  Calendar,
-  DollarSign,
-  Search,
-  Filter,
-  Coffee,
-  ArrowRight,
-  Music,
-  Mountain
+  Home,
+  BookOpen,
+  ExternalLink
 } from "lucide-react";
 import { useUser } from "@/contexts/user-context";
 import { UserContent } from "@/components/shared/user-content";
 import { Paywall } from "@/components/shared/paywall";
 import { UpgradePrompt } from "@/components/shared/upgrade-prompt";
+import ShortTermHostels from "@/components/accommodation/short-term-hostels";
+import LongTermGuide from "@/components/accommodation/long-term-guide";
+import AccommodationResources from "@/components/accommodation/accommodation-resources";
 
-const accommodationTypes = [
-  {
-    id: "hostels",
-    title: "Hostels & Backpacker",
-    description: "Budget-friendly social accommodation",
-    icon: Users,
-    priceRange: "$5-20/night",
-    color: "from-blue-500 to-blue-600"
-  },
-  {
-    id: "condos",
-    title: "Condos & Apartments", 
-    description: "Modern living with amenities",
-    icon: Building,
-    priceRange: "$300-1,500/month",
-    color: "from-green-500 to-green-600"
-  },
-  {
-    id: "coliving",
-    title: "Co-living Spaces",
-    description: "Digital nomad communities",
-    icon: Coffee,
-    priceRange: "$400-800/month", 
-    color: "from-purple-500 to-purple-600"
-  },
-  {
-    id: "villas",
-    title: "Houses & Villas",
-    description: "Private space and luxury",
-    icon: Star,
-    priceRange: "$800-5,000/month",
-    color: "from-orange-500 to-orange-600"
-  }
-];
-
-const accommodationListings = [
-  {
-    id: 1,
-    name: "Bangkok Nomad Hub",
-    type: "coliving",
-    location: "Sukhumvit, Bangkok",
-    price: "$650/month",
-    rating: 4.8,
-    reviews: 124,
-    amenities: ["WiFi", "Coworking", "Gym", "Pool", "Laundry"],
-    description: "Modern co-living space designed for digital nomads",
-    access: "free"
-  },
-  {
-    id: 2,
-    name: "Chiang Mai Mountain View",
-    type: "condos",
-    location: "Nimmanhaemin, Chiang Mai", 
-    price: "$450/month",
-    rating: 4.6,
-    reviews: 89,
-    amenities: ["WiFi", "Pool", "Security", "Parking"],
-    description: "Stylish condo with mountain views",
-    access: "free"
-  },
-  {
-    id: 3,
-    name: "Phuket Beach Villa",
-    type: "villas",
-    location: "Kata Beach, Phuket",
-    price: "$1,200/month",
-    rating: 4.9,
-    reviews: 67,
-    amenities: ["Beach Access", "Private Pool", "Kitchen", "Garden"],
-    description: "Luxury villa steps from the beach",
-    access: "paid"
-  },
-  {
-    id: 4,
-    name: "Koh Samui Retreat",
-    type: "villas", 
-    location: "Bophut, Koh Samui",
-    price: "$800/month",
-    rating: 4.7,
-    reviews: 43,
-    amenities: ["Ocean View", "Pool", "WiFi", "Motorbike"],
-    description: "Peaceful retreat with ocean views",
-    access: "paid"
-  }
-];
+// Archived accommodation listings data - replaced with new module system
+// Original data moved to archived-listings.tsx
 
 const events = [
   {
@@ -167,46 +85,16 @@ const events = [
   }
 ];
 
-const realEstateAgents = [
-  {
-    id: 1,
-    name: "Sarah Property Bangkok",
-    specialization: "Bangkok Condos",
-    rating: 4.9,
-    deals: 156,
-    languages: ["English", "Thai"],
-    contact: "+66 81 234 5678",
-    access: "paid"
-  },
-  {
-    id: 2,
-    name: "Chiang Mai Living Co",
-    specialization: "Northern Thailand",
-    rating: 4.7,
-    deals: 98,
-    languages: ["English", "Thai", "German"],
-    contact: "+66 53 123 456",
-    access: "paid"
-  }
-];
+// Archived real estate agents data - now included in accommodation-resources.tsx
 
 export default function LivingTab() {
   const { userType } = useUser();
-  const [selectedTab, setSelectedTab] = useState<'accommodation' | 'community'>('accommodation');
-  const [accommodationType, setAccommodationType] = useState("all");
-  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedTab, setSelectedTab] = useState<'short-term' | 'long-term' | 'resources' | 'community'>('short-term');
 
   const hasAccess = (accessLevel: string) => {
     if (accessLevel === "free") return true;
     return userType === "paid";
   };
-
-  const filteredAccommodation = accommodationListings.filter(place => {
-    const matchesSearch = place.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         place.location.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesType = accommodationType === "all" || place.type === accommodationType;
-    return matchesSearch && matchesType && hasAccess(place.access);
-  });
 
   const filteredEvents = events.filter(event => hasAccess(event.access));
 
@@ -215,22 +103,38 @@ export default function LivingTab() {
       <div className="text-center mb-8">
         <h2 className="text-4xl font-bold mb-4">🏠 Living in Thailand</h2>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Find your perfect home and connect with the expat community
+          Complete accommodation solutions from hostels to long-term rentals
         </p>
       </div>
 
       {/* Tabs */}
       <div className="flex justify-center mb-8">
-        <div className="flex bg-muted rounded-lg p-1">
+        <div className="flex bg-muted rounded-lg p-1 flex-wrap">
           <Button
-            variant={selectedTab === 'accommodation' ? 'default' : 'ghost'}
-            onClick={() => setSelectedTab('accommodation')}
+            variant={selectedTab === 'short-term' ? 'default' : 'ghost'}
+            onClick={() => setSelectedTab('short-term')}
+            className="flex items-center gap-2"
           >
-            🏠 Accommodation
+            🏨 Short-term
+          </Button>
+          <Button
+            variant={selectedTab === 'long-term' ? 'default' : 'ghost'}
+            onClick={() => setSelectedTab('long-term')}
+            className="flex items-center gap-2"
+          >
+            📚 Long-term Guide
+          </Button>
+          <Button
+            variant={selectedTab === 'resources' ? 'default' : 'ghost'}
+            onClick={() => setSelectedTab('resources')}
+            className="flex items-center gap-2"
+          >
+            🔧 Resources
           </Button>
           <Button
             variant={selectedTab === 'community' ? 'default' : 'ghost'}
             onClick={() => setSelectedTab('community')}
+            className="flex items-center gap-2"
           >
             👥 Community
           </Button>
@@ -240,32 +144,67 @@ export default function LivingTab() {
       <UserContent
         guestContent={
           <div>
-            {selectedTab === 'accommodation' && (
+            {selectedTab === 'short-term' && (
               <div>
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                  {accommodationTypes.map((type) => {
-                    const Icon = type.icon;
-                    return (
-                      <Card key={type.id} className="p-6 text-center opacity-75">
-                        <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${type.color} flex items-center justify-center mx-auto mb-4`}>
-                          <Icon className="w-6 h-6 text-white" />
-                        </div>
-                        <h3 className="font-bold mb-2">{type.title}</h3>
-                        <p className="text-sm text-muted-foreground mb-2">{type.description}</p>
-                        <Badge variant="outline">{type.priceRange}</Badge>
-                      </Card>
-                    );
-                  })}
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-bold mb-4">Featured Hostels Preview</h3>
+                  <p className="text-muted-foreground">
+                    Get a taste of our handpicked hostel recommendations across Thailand
+                  </p>
                 </div>
                 
                 <UpgradePrompt 
-                  title="Access Accommodation Platform"
-                  description="Browse verified listings, contact agents, and book your Thailand home"
+                  title="Access Complete Hostel Directory"
+                  description="Browse our full collection of verified backpacker hostels with direct booking links"
                   features={[
-                    "1000+ verified listings",
-                    "Direct agent contact",
-                    "Booking assistance",
-                    "Neighborhood guides"
+                    "50+ verified hostels across Thailand",
+                    "Direct Google Maps integration",
+                    "Hostelworld booking links",
+                    "Area-specific recommendations"
+                  ]}
+                />
+              </div>
+            )}
+
+            {selectedTab === 'long-term' && (
+              <div>
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-bold mb-4">Long-term Accommodation Guide</h3>
+                  <p className="text-muted-foreground">
+                    Learn the strategies used by successful expats to find great long-term housing
+                  </p>
+                </div>
+                
+                <UpgradePrompt 
+                  title="Access Complete Housing Guide"
+                  description="Master the art of finding long-term accommodation in Thailand"
+                  features={[
+                    "Step-by-step housing guide",
+                    "Facebook group strategies",
+                    "Negotiation techniques",
+                    "Scam avoidance tips"
+                  ]}
+                />
+              </div>
+            )}
+
+            {selectedTab === 'resources' && (
+              <div>
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-bold mb-4">Essential Resources & Tools</h3>
+                  <p className="text-muted-foreground">
+                    Access our curated collection of websites, agents, and tools
+                  </p>
+                </div>
+                
+                <UpgradePrompt 
+                  title="Access All Resources"
+                  description="Get our complete resource library for accommodation hunting"
+                  features={[
+                    "Verified real estate websites",
+                    "Trusted agent contacts",
+                    "Facebook group directory",
+                    "Essential tools & calculators"
                   ]}
                 />
               </div>
@@ -296,108 +235,21 @@ export default function LivingTab() {
         
         freeContent={
           <div>
-            {selectedTab === 'accommodation' && (
+            {selectedTab === 'short-term' && (
               <div>
-                {/* Accommodation Types */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                  {accommodationTypes.map((type) => {
-                    const Icon = type.icon;
-                    return (
-                      <Card 
-                        key={type.id} 
-                        className={`p-6 text-center cursor-pointer transition-all hover:shadow-lg ${
-                          accommodationType === type.id ? 'border-primary' : ''
-                        }`}
-                        onClick={() => setAccommodationType(type.id)}
-                      >
-                        <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${type.color} flex items-center justify-center mx-auto mb-4`}>
-                          <Icon className="w-6 h-6 text-white" />
-                        </div>
-                        <h3 className="font-bold mb-2">{type.title}</h3>
-                        <p className="text-sm text-muted-foreground mb-2">{type.description}</p>
-                        <Badge variant="outline">{type.priceRange}</Badge>
-                      </Card>
-                    );
-                  })}
-                </div>
+                <ShortTermHostels />
+              </div>
+            )}
 
-                {/* Search */}
-                <div className="mb-6">
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                    <Input
-                      placeholder="Search by location or name..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10"
-                    />
-                  </div>
-                </div>
+            {selectedTab === 'long-term' && (
+              <div>
+                <LongTermGuide />
+              </div>
+            )}
 
-                {/* Free Listings */}
-                <div className="grid gap-6 mb-8">
-                  {accommodationListings.filter(place => place.access === 'free').map((place) => (
-                    <Card key={place.id} className="p-6">
-                      <div className="flex justify-between items-start mb-4">
-                        <div>
-                          <h3 className="text-xl font-bold">{place.name}</h3>
-                          <p className="text-muted-foreground flex items-center gap-1">
-                            <MapPin className="w-4 h-4" />
-                            {place.location}
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <div className="text-xl font-bold text-green-600">{place.price}</div>
-                          <div className="flex items-center gap-1">
-                            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                            <span>{place.rating}</span>
-                            <span className="text-muted-foreground">({place.reviews})</span>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <p className="text-muted-foreground mb-4">{place.description}</p>
-                      
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {place.amenities.map((amenity) => (
-                          <Badge key={amenity} variant="secondary" className="text-xs">
-                            {amenity}
-                          </Badge>
-                        ))}
-                      </div>
-                      
-                      <Button className="w-full">View Details</Button>
-                    </Card>
-                  ))}
-                </div>
-
-                {/* Premium Listings */}
-                <Paywall 
-                  requiredLevel="paid"
-                  title="Unlock Premium Listings"
-                  description="Access luxury villas, exclusive properties, and direct agent contacts"
-                >
-                  <div className="grid gap-6">
-                    {accommodationListings.filter(place => place.access === 'paid').map((place) => (
-                      <Card key={place.id} className="p-6">
-                        <div className="flex justify-between items-start mb-4">
-                          <div>
-                            <h3 className="text-xl font-bold">{place.name}</h3>
-                            <p className="text-muted-foreground">{place.location}</p>
-                          </div>
-                          <div className="text-right">
-                            <div className="text-xl font-bold">{place.price}</div>
-                            <div className="flex items-center gap-1">
-                              <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                              <span>{place.rating}</span>
-                            </div>
-                          </div>
-                        </div>
-                        <p className="text-muted-foreground">{place.description}</p>
-                      </Card>
-                    ))}
-                  </div>
-                </Paywall>
+            {selectedTab === 'resources' && (
+              <div>
+                <AccommodationResources />
               </div>
             )}
             
@@ -462,117 +314,21 @@ export default function LivingTab() {
         
         paidContent={
           <div>
-            {selectedTab === 'accommodation' && (
+            {selectedTab === 'short-term' && (
               <div>
-                {/* Accommodation Types */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                  {accommodationTypes.map((type) => {
-                    const Icon = type.icon;
-                    return (
-                      <Card 
-                        key={type.id} 
-                        className={`p-6 text-center cursor-pointer transition-all hover:shadow-lg ${
-                          accommodationType === type.id ? 'border-primary' : ''
-                        }`}
-                        onClick={() => setAccommodationType(type.id)}
-                      >
-                        <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${type.color} flex items-center justify-center mx-auto mb-4`}>
-                          <Icon className="w-6 h-6 text-white" />
-                        </div>
-                        <h3 className="font-bold mb-2">{type.title}</h3>
-                        <p className="text-sm text-muted-foreground mb-2">{type.description}</p>
-                        <Badge variant="outline">{type.priceRange}</Badge>
-                      </Card>
-                    );
-                  })}
-                </div>
+                <ShortTermHostels />
+              </div>
+            )}
 
-                {/* Search and Filters */}
-                <div className="grid md:grid-cols-3 gap-4 mb-6">
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                    <Input
-                      placeholder="Search by location or name..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10"
-                    />
-                  </div>
-                  <Button variant="outline">
-                    <Filter className="w-4 h-4 mr-2" />
-                    Filters
-                  </Button>
-                  <Button variant="outline">
-                    <MapPin className="w-4 h-4 mr-2" />
-                    Map View
-                  </Button>
-                </div>
+            {selectedTab === 'long-term' && (
+              <div>
+                <LongTermGuide />
+              </div>
+            )}
 
-                {/* All Listings */}
-                <div className="grid gap-6 mb-8">
-                  {filteredAccommodation.map((place) => (
-                    <Card key={place.id} className="p-6 hover:shadow-lg transition-shadow">
-                      <div className="flex justify-between items-start mb-4">
-                        <div>
-                          <h3 className="text-xl font-bold">{place.name}</h3>
-                          <p className="text-muted-foreground flex items-center gap-1">
-                            <MapPin className="w-4 h-4" />
-                            {place.location}
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <div className="text-xl font-bold text-green-600">{place.price}</div>
-                          <div className="flex items-center gap-1">
-                            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                            <span>{place.rating}</span>
-                            <span className="text-muted-foreground">({place.reviews})</span>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <p className="text-muted-foreground mb-4">{place.description}</p>
-                      
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {place.amenities.map((amenity) => (
-                          <Badge key={amenity} variant="secondary" className="text-xs">
-                            {amenity}
-                          </Badge>
-                        ))}
-                      </div>
-                      
-                      <div className="flex gap-2">
-                        <Button variant="outline" className="flex-1">Contact Agent</Button>
-                        <Button className="flex-1">Book Now</Button>
-                      </div>
-                    </Card>
-                  ))}
-                </div>
-
-                {/* Real Estate Agents */}
-                <Card className="p-6">
-                  <h3 className="text-xl font-bold mb-4">Recommended Agents</h3>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {realEstateAgents.map((agent) => (
-                      <div key={agent.id} className="p-4 border rounded-lg">
-                        <div className="flex justify-between items-start mb-2">
-                          <h4 className="font-semibold">{agent.name}</h4>
-                          <div className="flex items-center gap-1">
-                            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                            <span className="text-sm">{agent.rating}</span>
-                          </div>
-                        </div>
-                        <p className="text-sm text-muted-foreground mb-2">{agent.specialization}</p>
-                        <p className="text-sm mb-2">{agent.deals} successful deals</p>
-                        <div className="flex justify-between items-center">
-                          <div className="text-sm">
-                            Languages: {agent.languages.join(", ")}
-                          </div>
-                          <Button size="sm" variant="outline">Contact</Button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </Card>
+            {selectedTab === 'resources' && (
+              <div>
+                <AccommodationResources />
               </div>
             )}
             

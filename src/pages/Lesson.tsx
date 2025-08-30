@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
+import MobileLessonViewer from "@/components/lesson/mobile-lesson-viewer";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { QuizComponent } from "@/components/lesson/quiz-component";
+import { BreadcrumbNavigation } from "@/components/layout/breadcrumb-navigation";
 import { 
   ArrowLeft, 
   Play, 
@@ -346,10 +349,19 @@ const getCourseQuiz = (courseId: string, lessonId: string) => {
 export default function Lesson() {
   const navigate = useNavigate();
   const { courseId, lessonId } = useParams();
+  const isMobile = useIsMobile();
   const [currentStep, setCurrentStep] = useState<'video' | 'quiz' | 'completion'>('video');
   const [quizScore, setQuizScore] = useState<number | null>(null);
   const [lessonData, setLessonData] = useState<any>(null);
   const [quizQuestions, setQuizQuestions] = useState<any[]>([]);
+
+  // Mock lessons data - replace with actual data from your context/store
+  const mockLessons = [
+    { id: '1', title: 'Amazon FBA Overview', description: 'Learn the fundamentals' },
+    { id: '2', title: 'Market Research', description: 'Find profitable products' },
+    { id: '3', title: 'Product Sourcing', description: 'Source quality products' },
+    { id: '4', title: 'Listing Optimization', description: 'Optimize your listings' }
+  ];
 
   useEffect(() => {
     if (courseId && lessonId) {
@@ -365,6 +377,19 @@ export default function Lesson() {
       }
     }
   }, [courseId, lessonId, navigate]);
+
+  // Use mobile-optimized viewer for mobile devices
+  if (isMobile && lessonData) {
+    return (
+      <MobileLessonViewer
+        courseId={courseId || ''}
+        lessonId={lessonId || ''}
+        lessons={mockLessons}
+        onBack={() => navigate('/roadmap')}
+        userType="paid"
+      />
+    );
+  }
 
   if (!lessonData) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
@@ -385,11 +410,32 @@ export default function Lesson() {
 
   const progress = currentStep === 'video' ? 33 : currentStep === 'quiz' ? 66 : 100;
 
+  // Generate breadcrumb items
+  const breadcrumbItems = [
+    {
+      label: 'Courses',
+      onClick: () => navigate('/roadmap')
+    },
+    {
+      label: courseId?.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase()) || 'Course',
+      onClick: handleBackToCourse
+    },
+    {
+      label: lessonData.title,
+      current: true
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="border-b bg-card">
         <div className="max-w-4xl mx-auto p-6">
+          {/* Breadcrumb Navigation */}
+          <div className="mb-4">
+            <BreadcrumbNavigation items={breadcrumbItems} />
+          </div>
+          
           <div className="flex items-center gap-4 mb-4">
             <Button variant="ghost" size="sm" onClick={handleBackToCourse}>
               <ArrowLeft className="w-4 h-4 mr-2" />

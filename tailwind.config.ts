@@ -207,7 +207,12 @@ export default {
 				heading: ["Rajdhani", "sans-serif"],
 				body: ["Exo 2", "sans-serif"],
 			},
+			scale: {
+				'98': '0.98',
+			},
 		},
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [
+		require("tailwindcss-animate"),
+	],
 } satisfies Config;

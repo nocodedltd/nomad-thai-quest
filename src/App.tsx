@@ -10,6 +10,8 @@ import { DevUserSwitcher } from "./components/layout/dev-user-switcher";
 import Home from "./pages/Home";
 import Roadmap from "./pages/Roadmap";
 import Progress from "./pages/Progress";
+import Lesson from "./pages/Lesson";
+import LessonDemo from "./pages/LessonDemo";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +30,8 @@ const App = () => (
               <Route path="/" element={<Home />} />
               <Route path="/roadmap" element={<Roadmap />} />
               <Route path="/progress" element={<Progress />} />
+              <Route path="/course/:courseId/lesson/:lessonId" element={<Lesson />} />
+              <Route path="/lesson-demo" element={<LessonDemo />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

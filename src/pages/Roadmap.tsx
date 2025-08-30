@@ -38,7 +38,7 @@ import { useUser } from "@/contexts/user-context";
 import { UserContent } from "@/components/shared/user-content";
 import { Paywall } from "@/components/shared/paywall";
 import { UpgradePrompt } from "@/components/shared/upgrade-prompt";
-import IncomeTab from "@/components/roadmap/IncomeTab";
+import IncomeJourney from "@/components/roadmap/IncomeJourney";
 import VisaTab from "@/components/roadmap/VisaTab";
 import LivingTab from "@/components/roadmap/LivingTab";
 
@@ -528,7 +528,7 @@ export default function Roadmap() {
         )}
 
         {/* Income Tab */}
-        {selectedTab === 'income' && <IncomeTab />}
+        {selectedTab === 'income' && <IncomeJourney />}
 
         {/* Visa Tab */}
         {selectedTab === 'visa' && <VisaTab />}

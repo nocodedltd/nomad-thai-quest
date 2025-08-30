@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Home, Map, DollarSign, FileText, Building, Target, Lock } from "lucide-react";
+import { Menu, X, Home, Map, DollarSign, FileText, Building, Target, Lock, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Badge } from "@/components/ui/badge";
@@ -30,6 +30,12 @@ const Navigation = () => {
       label: "Progress", 
       icon: Target, 
       access: ['free', 'paid'] as const
+    },
+    { 
+      path: "/lesson-demo", 
+      label: "Lesson Demo", 
+      icon: Play, 
+      access: ['guest', 'free', 'paid'] as const
     },
   ];
 

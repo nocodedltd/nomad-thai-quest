@@ -24,7 +24,7 @@ import { useUser } from "@/contexts/user-context";
 import { UserContent } from "@/components/shared/user-content";
 import { Paywall } from "@/components/shared/paywall";
 import { UpgradePrompt } from "@/components/shared/upgrade-prompt";
-import CourseViewer from "@/components/lesson/course-viewer";
+import { EnhancedCourseViewer } from "@/components/lesson/enhanced-course-viewer";
 import { amazonFBACourse, aiAutomationCourse, consultingCourse } from "@/data/courses/amazon-fba-course";
 import { CompactCourseCard } from "@/components/roadmap/CompactCourseCard";
 
@@ -236,7 +236,7 @@ export default function IncomeTab() {
     
     if (selectedCourse && courseData.length > 0) {
       return (
-        <CourseViewer
+        <EnhancedCourseViewer
           courseId={selectedCourse.id}
           courseTitle={selectedCourse.title}
           courseDescription={selectedCourse.description}

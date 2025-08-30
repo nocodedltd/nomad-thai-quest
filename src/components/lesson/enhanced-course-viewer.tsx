@@ -45,7 +45,7 @@ interface EnhancedCourseViewerProps {
 type ViewMode = 'grid' | 'list';
 type FilterType = 'all' | 'available' | 'in-progress' | 'completed' | 'locked';
 
-export default function EnhancedCourseViewer({
+export function EnhancedCourseViewer({
   courseId,
   courseTitle,
   courseDescription,

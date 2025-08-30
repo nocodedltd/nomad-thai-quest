@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -29,6 +29,7 @@ import { UserContent } from "@/components/shared/user-content";
 import { Paywall } from "@/components/shared/paywall";
 import { UpgradePrompt } from "@/components/shared/upgrade-prompt";
 import { CompactCourseCard } from "@/components/roadmap/CompactCourseCard";
+import { IncomePathSelector } from "@/components/income/IncomePathSelector";
 
 const courses = [
   {
@@ -185,6 +186,17 @@ export default function Income() {
   const { userType, userState } = useUser();
   const [selectedTab, setSelectedTab] = useState<'courses' | 'jobs' | 'strategies'>('courses');
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedPath, setSelectedPath] = useState<string | null>(null);
+  const [showPathSelector, setShowPathSelector] = useState(true);
+
+  // Check if user has already selected a path
+  useEffect(() => {
+    const savedPath = localStorage.getItem("selectedIncomePath");
+    if (savedPath) {
+      setSelectedPath(savedPath);
+      setShowPathSelector(false);
+    }
+  }, []);
 
   const getCourseAccess = (courseId: string) => {
     if (userType === 'guest') return 'none';
@@ -204,10 +216,59 @@ export default function Income() {
     // Implement mentor contact functionality
   };
 
+  const handlePathSelect = (pathId: string) => {
+    setSelectedPath(pathId);
+  };
+
+  const handlePathContinue = (pathId: string) => {
+    setShowPathSelector(false);
+    // Apply filtering based on selected path
+  };
+
   const filteredJobs = jobListings.filter(job => 
     job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     job.company.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // Filter courses based on selected income path
+  const getFilteredCourses = () => {
+    if (!selectedPath) return courses;
+    
+    switch (selectedPath) {
+      case 'quick-income':
+        // Freelancing & Remote Work - show Amazon FBA
+        return courses.filter(c => c.id === 'amazon-fba');
+      case 'scalable-business':
+        // Online Courses & Products - show Amazon FBA and AI Automation
+        return courses.filter(c => ['amazon-fba', 'ai-automation'].includes(c.id));
+      case 'stable-employment':
+        // Remote Corporate Jobs - show relevant courses (none in current set)
+        return [];
+      case 'expert-consulting':
+        // High-value Services - show Consulting course
+        return courses.filter(c => c.id === 'remote-consulting');
+      default:
+        return courses;
+    }
+  };
+
+  const filteredCourses = getFilteredCourses();
+
+  // Show path selector as the first step
+  if (showPathSelector) {
+    return (
+      <div className="min-h-screen bg-background">
+        <div className="container mx-auto p-6">
+          <div className="flex justify-center items-center min-h-[80vh]">
+            <IncomePathSelector 
+              onSelect={handlePathSelect}
+              onContinue={handlePathContinue}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -217,6 +278,19 @@ export default function Income() {
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Build sustainable income streams that support your Thailand lifestyle
           </p>
+          {selectedPath && (
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="mt-4"
+              onClick={() => {
+                setShowPathSelector(true);
+                localStorage.removeItem("selectedIncomePath");
+              }}
+            >
+              Change Income Path
+            </Button>
+          )}
         </div>
 
         {/* Tabs */}
@@ -240,19 +314,34 @@ export default function Income() {
             <div>
               {selectedTab === 'courses' && (
                 <div>
-                  <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3">
-                    {courses.map((course) => (
-                      <CompactCourseCard
-                        key={course.id}
-                        course={course}
-                        userType={userType}
-                        onCourseSelect={handleCourseSelect}
-                        onMentorContact={handleMentorContact}
-
-
-                      />
-                    ))}
-                  </div>
+                  {filteredCourses.length === 0 ? (
+                    <div className="text-center py-12">
+                      <p className="text-muted-foreground mb-4">
+                        No courses available for your selected income path.
+                      </p>
+                      <Button 
+                        variant="outline"
+                        onClick={() => {
+                          setShowPathSelector(true);
+                          localStorage.removeItem("selectedIncomePath");
+                        }}
+                      >
+                        Select Different Path
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3">
+                      {filteredCourses.map((course) => (
+                        <CompactCourseCard
+                          key={course.id}
+                          course={course}
+                          userType={userType}
+                          onCourseSelect={handleCourseSelect}
+                          onMentorContact={handleMentorContact}
+                        />
+                      ))}
+                    </div>
+                  )}
                   <UpgradePrompt 
                     title="Unlock Income Mastery Courses"
                     description="Get access to proven strategies that thousands have used to build location-independent income"
@@ -315,48 +404,63 @@ export default function Income() {
             <div>
               {selectedTab === 'courses' && (
                 <div>
-                  <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3">
-                    {courses.map((course, index) => {
-                      const access = getCourseAccess(course.id);
-                      
-                      if (access === 'none' && course.id !== 'amazon-fba') {
+                  {filteredCourses.length === 0 ? (
+                    <div className="text-center py-12">
+                      <p className="text-muted-foreground mb-4">
+                        No courses available for your selected income path.
+                      </p>
+                      <Button 
+                        variant="outline"
+                        onClick={() => {
+                          setShowPathSelector(true);
+                          localStorage.removeItem("selectedIncomePath");
+                        }}
+                      >
+                        Select Different Path
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3">
+                      {filteredCourses.map((course, index) => {
+                        const access = getCourseAccess(course.id);
+                        
+                        if (access === 'none' && course.id !== 'amazon-fba') {
+                          return (
+                            <Paywall 
+                              key={course.id}
+                              requiredLevel="paid"
+                              title={`Unlock ${course.title}`}
+                              description={`Get full access to this comprehensive course`}
+                            >
+                              <CompactCourseCard
+                                course={course}
+                                userType={userType}
+                                onCourseSelect={handleCourseSelect}
+                                onMentorContact={handleMentorContact}
+                              />
+                            </Paywall>
+                          );
+                        }
+                        
                         return (
-                          <Paywall 
+                          <CompactCourseCard
                             key={course.id}
-                            requiredLevel="paid"
-                            title={`Unlock ${course.title}`}
-                            description={`Get full access to this comprehensive course`}
-                          >
-                            <CompactCourseCard
-                              course={course}
-                              userType={userType}
-                              onCourseSelect={handleCourseSelect}
-                              onMentorContact={handleMentorContact}
-
-
-                            />
-                          </Paywall>
+                            course={course}
+                            userType={userType}
+                            onCourseSelect={handleCourseSelect}
+                            onMentorContact={handleMentorContact}
+                            className={`
+                              animate-in fade-in-0 slide-in-from-bottom-4 
+                              duration-700 ease-out
+                            `}
+                            style={{
+                              animationDelay: `${index * 150}ms`
+                            } as React.CSSProperties}
+                          />
                         );
-                      }
-                      
-                      return (
-                        <CompactCourseCard
-                          key={course.id}
-                          course={course}
-                          userType={userType}
-                          onCourseSelect={handleCourseSelect}
-                          onMentorContact={handleMentorContact}
-                          className={`
-                            animate-in fade-in-0 slide-in-from-bottom-4 
-                            duration-700 ease-out
-                          `}
-                          style={{
-                            animationDelay: `${index * 150}ms`
-                          } as React.CSSProperties}
-                        />
-                      );
-                    })}
-                  </div>
+                      })}
+                    </div>
+                  )}
                   
                   <UpgradePrompt 
                     compact
@@ -473,23 +577,42 @@ export default function Income() {
           paidContent={
             <div>
               {selectedTab === 'courses' && (
-                <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3">
-                  {courses.map((course) => (
-                    <CompactCourseCard
-                      key={course.id}
-                      course={course}
-                      userType={userType}
-                      onCourseSelect={handleCourseSelect}
-                      onMentorContact={handleMentorContact}
-                      className={`
-                        animate-in fade-in-0 slide-in-from-bottom-4 
-                        duration-700 ease-out
-                      `}
-                      style={{
-                        animationDelay: `${index * 150}ms`
-                      } as React.CSSProperties}
-                    />
-                  ))}
+                <div>
+                  {filteredCourses.length === 0 ? (
+                    <div className="text-center py-12">
+                      <p className="text-muted-foreground mb-4">
+                        No courses available for your selected income path.
+                      </p>
+                      <Button 
+                        variant="outline"
+                        onClick={() => {
+                          setShowPathSelector(true);
+                          localStorage.removeItem("selectedIncomePath");
+                        }}
+                      >
+                        Select Different Path
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3">
+                      {filteredCourses.map((course, index) => (
+                        <CompactCourseCard
+                          key={course.id}
+                          course={course}
+                          userType={userType}
+                          onCourseSelect={handleCourseSelect}
+                          onMentorContact={handleMentorContact}
+                          className={`
+                            animate-in fade-in-0 slide-in-from-bottom-4 
+                            duration-700 ease-out
+                          `}
+                          style={{
+                            animationDelay: `${index * 150}ms`
+                          } as React.CSSProperties}
+                        />
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
               

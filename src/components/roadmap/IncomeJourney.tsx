@@ -22,6 +22,7 @@ interface JourneyState {
 const STORAGE_KEY = 'income-journey-state';
 
 export default function IncomeJourney() {
+  console.log('🚀 IncomeJourney component is rendering!');
   const { userType } = useUser();
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentStep, setCurrentStep] = useState(0);

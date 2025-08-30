@@ -187,8 +187,7 @@ export default function IncomeTab() {
   const getCourseAccess = (courseId: string) => {
     if (userType === 'guest') return 'none';
     if (userType === 'free') {
-      if (courseId === 'amazon-fba') return 'preview';
-      return 'none';
+      return 'preview'; // All courses now have preview access for free users
     }
     return 'full';
   };
@@ -239,6 +238,7 @@ export default function IncomeTab() {
           mentorBio={selectedCourse.mentorBio}
           lessons={courseData}
           onBack={handleBackToCourses}
+          userType={userType}
           userProgress={{
             completedLessons: [], // This would come from user context in a real app
             currentLesson: courseData[0]?.id
@@ -386,29 +386,6 @@ export default function IncomeTab() {
                     const Icon = course.icon;
                     const access = getCourseAccess(course.id);
                     
-                    if (access === 'none' && course.id !== 'amazon-fba') {
-                      return (
-                        <Paywall 
-                          key={course.id}
-                          requiredLevel="paid"
-                          title={`Unlock ${course.title}`}
-                          description={`Get full access to this comprehensive course`}
-                        >
-                          <Card className="p-6">
-                            <div className="flex gap-6">
-                              <div className={`w-16 h-16 rounded-lg bg-gradient-to-r ${course.gradient} flex items-center justify-center flex-shrink-0`}>
-                                <Icon className="w-8 h-8 text-white" />
-                              </div>
-                              <div className="flex-1">
-                                <h3 className="text-xl font-bold mb-2">{course.title}</h3>
-                                <p className="text-muted-foreground">{course.description}</p>
-                              </div>
-                            </div>
-                          </Card>
-                        </Paywall>
-                      );
-                    }
-                    
                     return (
                       <Card key={course.id} className="p-6">
                         <div className="flex gap-6">
@@ -435,8 +412,8 @@ export default function IncomeTab() {
                             
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-4">
                               <div>
-                                <div className="font-medium">{access === 'preview' ? course.preview.length : course.lessons} Lessons</div>
-                                <div className="text-muted-foreground">{access === 'preview' ? 'Preview' : course.duration}</div>
+                                <div className="font-medium">{access === 'preview' ? '1' : course.lessons} Lessons</div>
+                                <div className="text-muted-foreground">{access === 'preview' ? 'Preview Access' : course.duration}</div>
                               </div>
                               <div>
                                 <div className="font-medium">{course.estimatedIncome}</div>
@@ -470,8 +447,8 @@ export default function IncomeTab() {
                 
                 <UpgradePrompt 
                   compact
-                  title="Unlock All Courses"
-                  description="Get full access to AI Automation and Consulting courses"
+                  title="Unlock Full Course Access"
+                  description="Get access to all lessons in every course - currently you can only access the first lesson of each course"
                 />
               </div>
             )}

@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ProgressBar } from "@/components/ui/progress-bar";
+import { UpgradePrompt } from "@/components/shared/upgrade-prompt";
+import { UserType } from "@/types/user";
 import { 
   Play, 
   CheckCircle, 
@@ -57,6 +59,8 @@ interface LessonViewerProps {
   onComplete: (lessonId: string) => void;
   onNavigate: (lessonId: string) => void;
   progress: number;
+  userType?: UserType;
+  isFirstLesson?: boolean;
 }
 
 export default function LessonViewer({ 
@@ -65,7 +69,9 @@ export default function LessonViewer({
   isLocked, 
   onComplete, 
   onNavigate,
-  progress 
+  progress,
+  userType = 'paid',
+  isFirstLesson = false
 }: LessonViewerProps) {
   const [currentSection, setCurrentSection] = useState<'video' | 'quiz' | 'homework'>('video');
   const [quizAnswers, setQuizAnswers] = useState<Record<string, number>>({});
@@ -393,6 +399,14 @@ export default function LessonViewer({
         </Card>
       )}
 
+      {/* Free User Upgrade Prompt */}
+      {userType === 'free' && isFirstLesson && canProceed && (
+        <UpgradePrompt 
+          title="🎉 Great job completing your first lesson!"
+          description="You've just completed the first lesson of this course! Upgrade now to unlock all remaining lessons and continue your learning journey."
+        />
+      )}
+
       {/* Navigation */}
       <Card className="p-6">
         <div className="flex items-center justify-between">
@@ -420,13 +434,21 @@ export default function LessonViewer({
           
           <div>
             {lesson.nextLesson && canProceed && (
-              <Button 
-                onClick={() => onNavigate(lesson.nextLesson!)}
-                className="flex items-center gap-2"
-              >
-                Next Lesson
-                <ArrowRight className="w-4 h-4" />
-              </Button>
+              userType === 'free' && isFirstLesson ? (
+                <UpgradePrompt 
+                  compact
+                  title="Unlock Next Lesson"
+                  description="Complete your upgrade to continue with the full course"
+                />
+              ) : (
+                <Button 
+                  onClick={() => onNavigate(lesson.nextLesson!)}
+                  className="flex items-center gap-2"
+                >
+                  Next Lesson
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              )
             )}
           </div>
         </div>

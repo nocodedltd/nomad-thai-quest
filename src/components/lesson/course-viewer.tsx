@@ -17,6 +17,7 @@ import {
   Star
 } from "lucide-react";
 import LessonViewer, { LessonContent } from "./lesson-viewer";
+import { UserType } from "@/types/user";
 
 interface CourseViewerProps {
   courseId: string;
@@ -26,6 +27,7 @@ interface CourseViewerProps {
   mentorBio: string;
   lessons: LessonContent[];
   onBack: () => void;
+  userType: UserType;
   userProgress?: {
     completedLessons: string[];
     currentLesson?: string;
@@ -40,6 +42,7 @@ export default function CourseViewer({
   mentorBio,
   lessons,
   onBack,
+  userType,
   userProgress = { completedLessons: [] }
 }: CourseViewerProps) {
   const [currentView, setCurrentView] = useState<'overview' | 'lesson'>('overview');
@@ -62,8 +65,17 @@ export default function CourseViewer({
 
   const isLessonLocked = (lesson: LessonContent, index: number) => {
     if (index === 0) return false; // First lesson is always unlocked
-    const previousLesson = lessons[index - 1];
-    return !completedLessons.includes(previousLesson.id);
+    
+    // For free users, only first lesson is accessible
+    if (userType === 'free' && index > 0) return true;
+    
+    // For paid users, check if previous lesson is completed
+    if (userType === 'paid') {
+      const previousLesson = lessons[index - 1];
+      return !completedLessons.includes(previousLesson.id);
+    }
+    
+    return false;
   };
 
   const handleLessonNavigation = (lessonId: string) => {
@@ -87,6 +99,8 @@ export default function CourseViewer({
         onComplete={handleLessonComplete}
         onNavigate={handleLessonNavigation}
         progress={progress}
+        userType={userType}
+        isFirstLesson={lessonIndex === 0}
       />
     );
   }

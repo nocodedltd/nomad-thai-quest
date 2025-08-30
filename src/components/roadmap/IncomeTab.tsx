@@ -1,9 +1,10 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import { 
   DollarSign, 
   Package,
@@ -178,12 +179,80 @@ const incomeStrategies = [
   }
 ];
 
+// Error Boundary Component
+class ErrorBoundary extends React.Component<
+  { children: React.ReactNode; fallback: React.ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: React.ReactNode; fallback: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('Course card error:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+// Course Card Error Fallback Component
+const CourseCardError = () => (
+  <Card className="h-[120px] p-4 flex items-center justify-center bg-muted/20 border-destructive/20">
+    <div className="text-center">
+      <p className="text-sm font-medium text-muted-foreground">Failed to load course</p>
+      <p className="text-xs text-muted-foreground mt-1">Please try refreshing the page</p>
+    </div>
+  </Card>
+);
+
+// Course Card Skeleton Component
+const CourseCardSkeleton = () => (
+  <Card className="h-[120px] p-4">
+    <div className="flex items-center gap-4">
+      <Skeleton className="w-12 h-12 rounded-lg flex-shrink-0" />
+      <div className="flex-1">
+        <div className="flex items-center gap-2 mb-2">
+          <Skeleton className="h-5 w-32" />
+          <Skeleton className="h-4 w-16" />
+        </div>
+        <Skeleton className="h-4 w-full mb-2" />
+        <div className="flex items-center justify-between">
+          <Skeleton className="h-4 w-24" />
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-6 w-16" />
+            <Skeleton className="h-8 w-8" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </Card>
+);
+
 export default function IncomeTab() {
   const { userType } = useUser();
   const [selectedTab, setSelectedTab] = useState<'courses' | 'jobs' | 'strategies'>('courses');
   const [searchTerm, setSearchTerm] = useState("");
   const [currentView, setCurrentView] = useState<'overview' | 'course'>('overview');
   const [selectedCourseId, setSelectedCourseId] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Simulate loading state
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
+    return () => clearTimeout(timer);
+  }, []);
 
   const getCourseAccess = (courseId: string) => {
     if (userType === 'guest') return 'none';
@@ -255,6 +324,81 @@ export default function IncomeTab() {
   }
 
   return (
+    <>
+      <style dangerouslySetInnerHTML={{ __html: `
+        .course-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: var(--grid-gap-mobile);
+          padding: 0 var(--grid-padding-mobile);
+          width: 100%;
+          margin-bottom: 2rem;
+        }
+
+        @media (min-width: 768px) {
+          .course-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--grid-gap-tablet);
+            padding: 0 var(--grid-padding-tablet);
+            max-width: 1024px;
+            margin-left: auto;
+            margin-right: auto;
+          }
+        }
+
+        @media (min-width: 1024px) {
+          .course-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--grid-gap-desktop);
+            padding: 0 var(--grid-padding-desktop);
+            max-width: 1280px;
+          }
+        }
+
+        .course-card-animation {
+          animation: fadeInUp 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+          animation-delay: var(--animation-delay, 0ms);
+          opacity: 0;
+          transform: translateY(20px);
+        }
+
+        @keyframes fadeInUp {
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        /* Touch interaction optimizations */
+        @media (hover: none) and (pointer: coarse) {
+          .course-grid {
+            /* Larger touch targets on mobile */
+            gap: calc(var(--grid-gap-mobile) * 1.2);
+          }
+        }
+
+        /* Focus styles for keyboard navigation */
+        .course-card-animation:focus-within {
+          outline: 2px solid hsl(var(--primary));
+          outline-offset: 2px;
+          border-radius: var(--radius);
+        }
+
+        /* Smooth transitions between tabs */
+        .tab-transition {
+          transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        .tab-enter {
+          opacity: 0;
+          transform: translateX(10px);
+        }
+
+        .tab-enter-active {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      `}} />
     <div>
       <div className="text-center mb-8">
         <h2 className="text-4xl font-bold mb-4">💰 Income Mastery</h2>
@@ -284,18 +428,40 @@ export default function IncomeTab() {
           <div>
             {selectedTab === 'courses' && (
               <div>
-                <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3">
-                  {courses.map((course) => (
-                    <CompactCourseCard
-                      key={course.id}
-                      course={course}
-                      userType={userType}
-                      onCourseSelect={handleCourseSelect}
-                      onMentorContact={handleMentorContact}
-
-
-                    />
-                  ))}
+                <div 
+                  className="course-grid"
+                  style={{
+                    '--grid-gap-mobile': '12px',
+                    '--grid-gap-tablet': '24px',
+                    '--grid-gap-desktop': '32px',
+                    '--grid-padding-mobile': '16px',
+                    '--grid-padding-tablet': '24px',
+                    '--grid-padding-desktop': '32px',
+                  } as React.CSSProperties}
+                >
+                  {isLoading ? (
+                    // Show skeleton loaders while loading
+                    Array.from({ length: 6 }).map((_, index) => (
+                      <CourseCardSkeleton key={`skeleton-${index}`} />
+                    ))
+                  ) : (
+                    // Show actual course cards when loaded
+                    courses.map((course, index) => (
+                      <ErrorBoundary key={course.id} fallback={<CourseCardError />}>
+                        <CompactCourseCard
+                          course={course}
+                          userType={userType}
+                          onCourseSelect={handleCourseSelect}
+                          onMentorContact={handleMentorContact}
+                          className="course-card-animation"
+                          style={{
+                            '--animation-delay': `${index * 100}ms`,
+                            animationDelay: `${index * 100}ms`
+                          } as React.CSSProperties}
+                        />
+                      </ErrorBoundary>
+                    ))
+                  )}
                 </div>
                 <UpgradePrompt 
                   title="Unlock Income Mastery Courses"
@@ -359,18 +525,40 @@ export default function IncomeTab() {
           <div>
             {selectedTab === 'courses' && (
               <div>
-                <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3">
-                  {courses.map((course) => (
-                    <CompactCourseCard
-                      key={course.id}
-                      course={course}
-                      userType={userType}
-                      onCourseSelect={handleCourseSelect}
-                      onMentorContact={handleMentorContact}
-
-
-                    />
-                  ))}
+                <div 
+                  className="course-grid"
+                  style={{
+                    '--grid-gap-mobile': '12px',
+                    '--grid-gap-tablet': '24px',
+                    '--grid-gap-desktop': '32px',
+                    '--grid-padding-mobile': '16px',
+                    '--grid-padding-tablet': '24px',
+                    '--grid-padding-desktop': '32px',
+                  } as React.CSSProperties}
+                >
+                  {isLoading ? (
+                    // Show skeleton loaders while loading
+                    Array.from({ length: 6 }).map((_, index) => (
+                      <CourseCardSkeleton key={`skeleton-${index}`} />
+                    ))
+                  ) : (
+                    // Show actual course cards when loaded
+                    courses.map((course, index) => (
+                      <ErrorBoundary key={course.id} fallback={<CourseCardError />}>
+                        <CompactCourseCard
+                          course={course}
+                          userType={userType}
+                          onCourseSelect={handleCourseSelect}
+                          onMentorContact={handleMentorContact}
+                          className="course-card-animation"
+                          style={{
+                            '--animation-delay': `${index * 100}ms`,
+                            animationDelay: `${index * 100}ms`
+                          } as React.CSSProperties}
+                        />
+                      </ErrorBoundary>
+                    ))
+                  )}
                 </div>
                 
                 <UpgradePrompt 
@@ -488,17 +676,40 @@ export default function IncomeTab() {
         paidContent={
           <div>
             {selectedTab === 'courses' && (
-              <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3">
-                {courses.map((course) => (
-                  <CompactCourseCard
-                    key={course.id}
-                    course={course}
-                    userType={userType}
-                    onCourseSelect={handleCourseSelect}
-                    onMentorContact={handleMentorContact}
-
-                  />
-                ))}
+              <div 
+                className="course-grid"
+                style={{
+                  '--grid-gap-mobile': '12px',
+                  '--grid-gap-tablet': '24px',
+                  '--grid-gap-desktop': '32px',
+                  '--grid-padding-mobile': '16px',
+                  '--grid-padding-tablet': '24px',
+                  '--grid-padding-desktop': '32px',
+                } as React.CSSProperties}
+              >
+                {isLoading ? (
+                  // Show skeleton loaders while loading
+                  Array.from({ length: 6 }).map((_, index) => (
+                    <CourseCardSkeleton key={`skeleton-${index}`} />
+                  ))
+                ) : (
+                  // Show actual course cards when loaded
+                  courses.map((course, index) => (
+                    <ErrorBoundary key={course.id} fallback={<CourseCardError />}>
+                      <CompactCourseCard
+                        course={course}
+                        userType={userType}
+                        onCourseSelect={handleCourseSelect}
+                        onMentorContact={handleMentorContact}
+                        className="course-card-animation"
+                        style={{
+                          '--animation-delay': `${index * 100}ms`,
+                          animationDelay: `${index * 100}ms`
+                        } as React.CSSProperties}
+                      />
+                    </ErrorBoundary>
+                  ))
+                )}
               </div>
             )}
             
@@ -604,5 +815,6 @@ export default function IncomeTab() {
         }
       />
     </div>
+    </>
   );
 }

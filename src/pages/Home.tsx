@@ -24,7 +24,7 @@ import {
   AlertTriangle,
   Timer,
   Banknote,
-  Home,
+  Home as HomeIcon,
   PiggyBank,
   Calendar
 } from "lucide-react";

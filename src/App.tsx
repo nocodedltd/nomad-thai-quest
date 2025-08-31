@@ -9,6 +9,10 @@ import Navigation from "./components/layout/navigation";
 import { DevUserSwitcher } from "./components/layout/dev-user-switcher";
 import { FloatingActionButton } from "./components/layout/floating-action-button";
 import Home from "./pages/Home";
+import Income from "./pages/Income";
+import Visa from "./pages/Visa";
+import Living from "./pages/Living";
+import Lesson from "./pages/Lesson";
 import Roadmap from "./pages/Roadmap";
 import Progress from "./pages/Progress";
 import NotFound from "./pages/NotFound";
@@ -30,6 +34,10 @@ const App = () => (
                 <Route path="/" element={<Home />} />
                 <Route path="/roadmap" element={<Roadmap />} />
                 <Route path="/progress" element={<Progress />} />
+                <Route path="/income" element={<Income />} />
+                <Route path="/visa" element={<Visa />} />
+                <Route path="/living" element={<Living />} />
+                <Route path="/lesson" element={<Lesson />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>

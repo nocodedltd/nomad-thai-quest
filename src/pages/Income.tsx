@@ -29,6 +29,7 @@ import { UserContent } from "@/components/shared/user-content";
 import { Paywall } from "@/components/shared/paywall";
 import { UpgradePrompt } from "@/components/shared/upgrade-prompt";
 import { CompactCourseCard } from "@/components/roadmap/CompactCourseCard";
+import AffiliateDashboard from "@/components/income/affiliate-dashboard";
 
 const courses = [
   {
@@ -183,7 +184,7 @@ const incomeStrategies = [
 export default function Income() {
   const navigate = useNavigate();
   const { userType, userState } = useUser();
-  const [selectedTab, setSelectedTab] = useState<'courses' | 'jobs' | 'strategies'>('courses');
+  const [selectedTab, setSelectedTab] = useState<'courses' | 'jobs' | 'strategies' | 'affiliate'>('courses');
   const [searchTerm, setSearchTerm] = useState("");
 
   const getCourseAccess = (courseId: string) => {
@@ -221,8 +222,8 @@ export default function Income() {
 
         {/* Tabs */}
         <div className="flex justify-center mb-6 sm:mb-8">
-          <div className="flex bg-muted rounded-lg p-1 w-full max-w-md">
-            {['courses', 'jobs', 'strategies'].map((tab) => (
+          <div className="flex bg-muted rounded-lg p-1 w-full max-w-lg">
+            {['courses', 'jobs', 'strategies', 'affiliate'].map((tab) => (
               <Button
                 key={tab}
                 variant={selectedTab === tab ? 'default' : 'ghost'}
@@ -304,6 +305,12 @@ export default function Income() {
                     title="Access Remote Job Board"
                     description="Find Thailand-friendly remote positions and freelance opportunities"
                   />
+                </div>
+              )}
+              
+              {selectedTab === 'affiliate' && (
+                <div>
+                  <AffiliateDashboard />
                 </div>
               )}
             </div>
@@ -463,6 +470,12 @@ export default function Income() {
                   </div>
                 </div>
               )}
+              
+              {selectedTab === 'affiliate' && (
+                <div>
+                  <AffiliateDashboard />
+                </div>
+              )}
             </div>
           }
           
@@ -585,6 +598,12 @@ export default function Income() {
                       );
                     })}
                   </div>
+                </div>
+              )}
+              
+              {selectedTab === 'affiliate' && (
+                <div>
+                  <AffiliateDashboard />
                 </div>
               )}
             </div>

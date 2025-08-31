@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Home, Map, DollarSign, FileText, Building, Target, Lock } from "lucide-react";
+import { Menu, X, Home, Map, DollarSign, FileText, Building, Target, Lock, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Badge } from "@/components/ui/badge";
@@ -9,8 +9,18 @@ import { useUser } from "@/contexts/user-context";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const { userType, userState } = useUser();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 30);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navItems = [
     { 
@@ -91,19 +101,45 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="nav-futuristic">
+    <nav className={cn(
+      "nav-futuristic fixed top-0 w-full z-50 backdrop-blur-md transition-all duration-300",
+      isScrolled 
+        ? "h-12 bg-futuristic-bg-primary/95 shadow-lg border-b border-futuristic-border-primary/20" 
+        : "h-16 bg-futuristic-bg-primary/80"
+    )}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+        <div className={cn(
+          "flex justify-between transition-all duration-300",
+          isScrolled ? "h-12" : "h-16"
+        )}>
           {/* Logo/Brand */}
           <div className="flex items-center">
             <Link 
               to="/" 
-              className="text-xl font-display font-bold neon-text animate-neon-pulse"
+              className={cn(
+                "font-display font-bold neon-text animate-neon-pulse transition-all duration-300",
+                isScrolled ? "text-lg" : "text-xl"
+              )}
             >
               <div className="flex items-center gap-2">
-                🇹🇭 <span>Nomad Thai Quest</span>
+                🇹🇭 
+                <span className={cn(
+                  "transition-all duration-300",
+                  isScrolled && "hidden sm:inline"
+                )}>
+                  Nomad Thai Quest
+                </span>
+                <span className={cn(
+                  "sm:hidden",
+                  !isScrolled && "hidden"
+                )}>
+                  NTQ
+                </span>
                 {userType !== 'guest' && (
-                  <Badge variant="outline" className="text-xs capitalize">
+                  <Badge variant="outline" className={cn(
+                    "capitalize transition-all duration-300",
+                    isScrolled ? "text-xs px-1 py-0" : "text-xs"
+                  )}>
                     {userType}
                   </Badge>
                 )}

@@ -256,15 +256,15 @@ export default function IncomeTab() {
 
   return (
     <div>
-      <div className="text-center mb-8">
-        <h2 className="text-4xl font-bold mb-4">💰 Income Mastery</h2>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+      <div className="text-center mb-6">
+        <h2 className="text-2xl font-bold mb-2">💰 Income Mastery</h2>
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
           Build sustainable income streams that support your Thailand lifestyle
         </p>
       </div>
 
-      {/* Tabs */}
-      <div className="flex justify-center mb-8">
+      {/* Compact Tabs */}
+      <div className="flex justify-center mb-6">
         <div className="flex bg-muted rounded-lg p-1">
           {['courses', 'jobs', 'strategies'].map((tab) => (
             <Button
@@ -453,12 +453,12 @@ export default function IncomeTab() {
                   {incomeStrategies.map((strategy) => {
                     const Icon = strategy.icon;
                     return (
-                      <Card key={strategy.title} className="p-6">
-                        <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${strategy.color} flex items-center justify-center mb-4`}>
-                          <Icon className="w-6 h-6 text-white" />
+                      <Card key={strategy.title} className="p-4">
+                        <div className={`w-10 h-10 rounded-full bg-gradient-to-r ${strategy.color} flex items-center justify-center mb-3`}>
+                          <Icon className="w-5 h-5 text-white" />
                         </div>
-                        <h3 className="text-xl font-bold mb-2">{strategy.title}</h3>
-                        <p className="text-muted-foreground mb-4">{strategy.description}</p>
+                        <h3 className="text-lg font-bold mb-2">{strategy.title}</h3>
+                        <p className="text-sm text-muted-foreground mb-3">{strategy.description}</p>
                         <div className="space-y-2 text-sm mb-4">
                           <div className="flex justify-between">
                             <span>Potential Income:</span>

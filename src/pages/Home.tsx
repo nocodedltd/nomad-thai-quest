@@ -150,108 +150,105 @@ export default function Home() {
         
         freeContent={
           // Free users see motivation + progress
-          <div className="container mx-auto p-6">
-            {/* Welcome Header with Motivation */}
-            <div className="mb-8">
-              <h1 className="text-4xl font-bold mb-2">You're Making It Happen! 🔥</h1>
-              <p className="text-xl text-muted-foreground mb-4">Your Thailand dream is getting closer every day</p>
-              
-              {/* Mini Cost Reminder */}
-              <div className="bg-gradient-to-r from-green-100 to-blue-100 dark:from-green-900 dark:to-blue-900 p-4 rounded-lg">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-sm text-muted-foreground">You're on track to save</div>
-                    <div className="text-2xl font-bold text-green-600">$4,680+ per year</div>
+          <div className="container mx-auto p-4">
+            {/* Compact Welcome Header */}
+            <div className="mb-6">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h1 className="text-3xl font-bold mb-1">You're Making It Happen! 🔥</h1>
+                  <p className="text-lg text-muted-foreground">Your Thailand dream is getting closer</p>
+                </div>
+                {/* Compact Cost Reminder */}
+                <div className="bg-gradient-to-r from-green-100 to-blue-100 dark:from-green-900 dark:to-blue-900 p-3 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <PiggyBank className="w-8 h-8 text-green-500" />
+                    <div>
+                      <div className="text-xs text-muted-foreground">Annual Savings</div>
+                      <div className="text-lg font-bold text-green-600">$4,680+</div>
+                    </div>
                   </div>
-                  <PiggyBank className="w-12 h-12 text-green-500" />
                 </div>
               </div>
             </div>
 
-            {/* Progress with Celebration */}
-            <Card className="p-6 mb-8 bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-950 dark:to-blue-950 border-green-200">
-              <div className="flex items-center justify-between mb-4">
+            {/* Compact Progress Card */}
+            <Card className="p-4 mb-6 bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-950 dark:to-blue-950 border-green-200">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-lg font-bold">🎯 Journey Progress</h3>
                 <div className="flex items-center gap-2">
-                  <h3 className="text-xl font-bold">🎯 Your Journey Progress</h3>
-                  <Badge className="bg-green-500 text-white">Active</Badge>
-                </div>
-                <Button variant="outline" size="sm" onClick={() => navigate('/progress')}>
-                  Full Analytics <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </div>
-              
-              <div className="grid grid-cols-3 gap-4 text-center mb-4">
-                <div>
-                  <div className="text-3xl font-bold text-blue-600">Phase {userState.progress?.currentPhase || 1}</div>
-                  <div className="text-sm text-muted-foreground">Current Phase</div>
-                  <div className="text-xs text-green-600 mt-1 font-semibold">✅ On track</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-green-600">{Math.round(progressPercentage)}%</div>
-                  <div className="text-sm text-muted-foreground">Overall Progress</div>
-                  <div className="text-xs text-blue-600 mt-1">2 of 5 phases unlocked</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-purple-600">6-8</div>
-                  <div className="text-sm text-muted-foreground">Months to Thailand</div>
-                  <div className="text-xs text-purple-600 mt-1">Estimated timeline</div>
+                  <Badge className="bg-green-500 text-white text-xs">Active</Badge>
+                  <Button variant="outline" size="sm" onClick={() => navigate('/progress')}>
+                    Analytics <ArrowRight className="w-3 h-3 ml-1" />
+                  </Button>
                 </div>
               </div>
               
-              {/* Motivation boost */}
-              <div className="bg-gradient-to-r from-yellow-100 to-orange-100 dark:from-yellow-900 dark:to-orange-900 p-3 rounded-lg text-center">
-                <div className="text-sm font-semibold text-orange-700 dark:text-orange-300">
-                  🔥 You're ahead of 73% of people who started this journey!
+              <div className="grid grid-cols-3 gap-3 text-center mb-3">
+                <div>
+                  <div className="text-2xl font-bold text-blue-600">Phase {userState.progress?.currentPhase || 1}</div>
+                  <div className="text-xs text-muted-foreground">Current</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-green-600">{Math.round(progressPercentage)}%</div>
+                  <div className="text-xs text-muted-foreground">Progress</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-purple-600">6-8m</div>
+                  <div className="text-xs text-muted-foreground">Timeline</div>
+                </div>
+              </div>
+              
+              {/* Compact Motivation */}
+              <div className="bg-gradient-to-r from-yellow-100 to-orange-100 dark:from-yellow-900 dark:to-orange-900 p-2 rounded text-center">
+                <div className="text-xs font-semibold text-orange-700 dark:text-orange-300">
+                  🔥 Ahead of 73% who started this journey!
                 </div>
               </div>
             </Card>
 
-            {/* Daily Motivation Facts */}
-            <div className="grid md:grid-cols-3 gap-6 mb-8">
-              <Card className="p-6 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950 dark:to-cyan-950 border-blue-200">
+            {/* Compact Stats */}
+            <div className="grid grid-cols-3 gap-3 mb-6">
+              <Card className="p-3 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950 dark:to-cyan-950 border-blue-200">
                 <div className="text-center">
-                  <Crown className="w-12 h-12 mx-auto text-blue-500 mb-3" />
-                  <div className="text-2xl font-bold text-blue-600">#1</div>
-                  <div className="text-sm font-semibold mb-1">Bangkok Ranked</div>
-                  <div className="text-xs text-muted-foreground">Top Digital Nomad City Worldwide</div>
+                  <Crown className="w-8 h-8 mx-auto text-blue-500 mb-2" />
+                  <div className="text-xl font-bold text-blue-600">#1</div>
+                  <div className="text-xs font-semibold">Bangkok Ranked</div>
                 </div>
               </Card>
               
-              <Card className="p-6 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950 border-green-200">
+              <Card className="p-3 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950 border-green-200">
                 <div className="text-center">
-                  <Banknote className="w-12 h-12 mx-auto text-green-500 mb-3" />
-                  <div className="text-2xl font-bold text-green-600">$390+</div>
-                  <div className="text-sm font-semibold mb-1">Monthly Savings</div>
-                  <div className="text-xs text-muted-foreground">Compared to Western living costs</div>
+                  <Banknote className="w-8 h-8 mx-auto text-green-500 mb-2" />
+                  <div className="text-xl font-bold text-green-600">$390+</div>
+                  <div className="text-xs font-semibold">Monthly Savings</div>
                 </div>
               </Card>
               
-              <Card className="p-6 bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-950 dark:to-red-950 border-orange-200">
+              <Card className="p-3 bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-950 dark:to-red-950 border-orange-200">
                 <div className="text-center">
-                  <Timer className="w-12 h-12 mx-auto text-orange-500 mb-3" />
-                  <div className="text-2xl font-bold text-orange-600">4 months</div>
-                  <div className="text-sm font-semibold mb-1">Until Visa Price Hike</div>
-                  <div className="text-xs text-muted-foreground">Save $400+ by acting now</div>
+                  <Timer className="w-8 h-8 mx-auto text-orange-500 mb-2" />
+                  <div className="text-xl font-bold text-orange-600">4mo</div>
+                  <div className="text-xs font-semibold">Price Hike</div>
                 </div>
               </Card>
             </div>
 
-            {/* Next Actions - Urgent */}
-            <div className="grid md:grid-cols-2 gap-6 mb-8">
+            {/* Compact Next Actions */}
+            <div className="grid md:grid-cols-2 gap-4 mb-6">
               {quickActions.slice(0, 2).map((action) => {
                 const Icon = action.icon;
                 return (
-                  <Card key={action.title} className="p-6 hover:shadow-lg transition-all cursor-pointer group border-l-4 border-green-500 bg-gradient-to-r from-green-50 to-transparent dark:from-green-950" 
+                  <Card key={action.title} className="p-4 hover:shadow-lg transition-all cursor-pointer group border-l-4 border-green-500 bg-gradient-to-r from-green-50 to-transparent dark:from-green-950" 
                         onClick={() => navigate(action.path)}>
-                    <div className="flex items-center gap-4">
-                      <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${action.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                        <Icon className="w-6 h-6 text-white" />
+                    <div className="flex items-center gap-3">
+                      <div className={`w-10 h-10 rounded-full bg-gradient-to-r ${action.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                        <Icon className="w-5 h-5 text-white" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-semibold mb-1">{action.title}</h3>
-                        <p className="text-sm text-muted-foreground mb-2">{action.description}</p>
-                        <Button size="sm" className="group-hover:scale-105 transition-transform">
-                          Continue <ArrowRight className="w-4 h-4 ml-2" />
+                        <h3 className="font-semibold mb-1 text-sm">{action.title}</h3>
+                        <p className="text-xs text-muted-foreground mb-2">{action.description}</p>
+                        <Button size="sm" className="group-hover:scale-105 transition-transform text-xs">
+                          Continue <ArrowRight className="w-3 h-3 ml-1" />
                         </Button>
                       </div>
                     </div>

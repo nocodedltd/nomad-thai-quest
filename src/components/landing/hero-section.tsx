@@ -9,7 +9,7 @@ export function HeroSection() {
   const { userType, setUserType, isDevelopment } = useUser();
   
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-futuristic-bg-primary">
+    <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-futuristic-bg-primary">
       {/* Animated Background */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-futuristic-hero opacity-20" />
@@ -34,9 +34,9 @@ export function HeroSection() {
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
         <div className="animate-slide-up">
-          {/* Main Heading */}
-          <div className="mb-8">
-            <h1 className="text-6xl md:text-8xl font-display font-bold mb-6 leading-tight">
+          {/* Compact Heading */}
+          <div className="mb-6">
+            <h1 className="text-4xl md:text-6xl font-display font-bold mb-4 leading-tight">
               <span className="text-futuristic-text-primary">MOVE TO THAILAND</span>
               <span className="block bg-gradient-futuristic-hero bg-clip-text text-transparent animate-neon-pulse">
                 IN 9 MONTHS
@@ -44,8 +44,8 @@ export function HeroSection() {
             </h1>
           </div>
           
-          {/* Subtitle */}
-          <p className="text-xl md:text-2xl mb-12 text-futuristic-text-secondary max-w-3xl mx-auto font-body leading-relaxed">
+          {/* Compact Subtitle */}
+          <p className="text-lg md:text-xl mb-8 text-futuristic-text-secondary max-w-3xl mx-auto font-body leading-relaxed">
             Master the <span className="text-futuristic-neon-blue font-semibold">4 pillars</span> of expat life: 
             <span className="text-futuristic-neon-green"> Income</span>, 
             <span className="text-futuristic-neon-purple"> Visa</span>, 
@@ -54,8 +54,8 @@ export function HeroSection() {
             Forge your path to Thailand success.
           </p>
           
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
+          {/* Compact CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
             <Button 
               className="btn-futuristic text-lg px-10 py-4 animate-pulse-glow group"
               onClick={() => {

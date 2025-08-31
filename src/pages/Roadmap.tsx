@@ -32,7 +32,9 @@ import {
   AlertCircle,
   Crown,
   Heart,
-  Coffee
+  Coffee,
+  ChevronDown,
+  ChevronRight
 } from "lucide-react";
 import { useUser } from "@/contexts/user-context";
 import { UserContent } from "@/components/shared/user-content";
@@ -133,6 +135,7 @@ export default function Roadmap() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedPhase, setSelectedPhase] = useState(1);
   const [selectedTab, setSelectedTab] = useState<'journey' | 'income' | 'visa' | 'living'>('journey');
+  const [expandedPhases, setExpandedPhases] = useState<Set<number>>(new Set([1])); // Start with first phase expanded
 
   // Handle URL tab parameter
   useEffect(() => {
@@ -152,6 +155,16 @@ export default function Roadmap() {
       handleTabChange(phase.targetTab);
     }
   };
+
+  const togglePhaseExpansion = (phaseId: number) => {
+    const newExpanded = new Set(expandedPhases);
+    if (newExpanded.has(phaseId)) {
+      newExpanded.delete(phaseId);
+    } else {
+      newExpanded.add(phaseId);
+    }
+    setExpandedPhases(newExpanded);
+  };
   
   const hasPhaseAccess = (phase: typeof journeyPhases[0]) => {
     if (!phase.requiredLevel) return true;
@@ -168,17 +181,17 @@ export default function Roadmap() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto p-6">
-        {/* Main Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-4">🗺️ Your Thailand Journey</h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Complete roadmap to successfully relocating to Thailand as a digital nomad
+      <div className="container mx-auto p-4">
+        {/* Compact Header */}
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-bold mb-2">🗺️ Your Thailand Journey</h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Complete roadmap to successfully relocating to Thailand
           </p>
         </div>
 
-        {/* Tab Navigation */}
-        <div className="flex justify-center mb-8">
+        {/* Compact Tab Navigation */}
+        <div className="flex justify-center mb-6">
           <div className="flex bg-muted rounded-lg p-1">
             <Button
               variant={selectedTab === 'journey' ? 'default' : 'ghost'}
@@ -438,73 +451,90 @@ export default function Roadmap() {
                   </div>
                 </Card>
 
-                {/* All Phases */}
-                <div className="grid gap-6 mb-8">
+                {/* Collapsible Phases */}
+                <div className="space-y-4 mb-6">
                   {journeyPhases.map((phase) => {
                     const Icon = phase.icon;
                     const status = getPhaseStatus(phase.id);
                     const isAccessible = hasPhaseAccess(phase);
+                    const isExpanded = expandedPhases.has(phase.id);
+                    const isCurrent = status === 'current' || phase.id === 1; // Always expand current phase
                     
                     return (
                       <Card 
                         key={phase.id} 
-                        className={`p-6 border-2 cursor-pointer transition-all hover:shadow-lg ${
+                        className={`border-2 transition-all hover:shadow-lg ${
                           selectedPhase === phase.id ? 'border-primary' : ''
                         } ${!isAccessible ? 'opacity-50' : ''}`} 
-                        onClick={() => {
-                          setSelectedPhase(phase.id);
-                          handlePhaseClick(phase);
-                        }}
                       >
-                        <div className="flex items-start gap-4">
-                          <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${phase.gradientColor} flex items-center justify-center flex-shrink-0`}>
-                            <Icon className="w-6 h-6 text-white" />
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-2">
-                              <h3 className="text-xl font-bold">{phase.title}</h3>
-                              <Badge variant="outline">{phase.duration}</Badge>
-                              <Badge className={`${phase.difficulty === 'Beginner' ? 'bg-green-500' : 
-                                phase.difficulty === 'Intermediate' ? 'bg-yellow-500' : 'bg-red-500'}`}>
-                                {phase.difficulty}
-                              </Badge>
-                              {status === 'completed' && <CheckCircle className="w-5 h-5 text-green-500" />}
-                              {status === 'current' && <Clock className="w-5 h-5 text-blue-500" />}
+                        {/* Phase Header - Always Visible */}
+                        <div 
+                          className="p-4 cursor-pointer"
+                          onClick={() => togglePhaseExpansion(phase.id)}
+                        >
+                          <div className="flex items-center gap-4">
+                            <div className={`w-10 h-10 rounded-full bg-gradient-to-r ${phase.gradientColor} flex items-center justify-center flex-shrink-0`}>
+                              <Icon className="w-5 h-5 text-white" />
                             </div>
-                            <p className="text-muted-foreground mb-4">{phase.description}</p>
-                            <ProgressBar 
-                              progress={phase.progress}
-                              showPercentage={true}
-                              size="sm"
-                              className="mb-4"
-                            />
-                            
-                            <div className="flex items-center justify-between mb-4">
-                              <div className="text-sm text-muted-foreground">
-                                {phase.completedLessons} of {phase.lessons} lessons completed
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-1">
+                                <h3 className="text-lg font-bold">{phase.title}</h3>
+                                <Badge variant="outline" className="text-xs">{phase.duration}</Badge>
+                                {status === 'completed' && <CheckCircle className="w-4 h-4 text-green-500" />}
+                                {status === 'current' && <Clock className="w-4 h-4 text-blue-500" />}
                               </div>
+                              <p className="text-sm text-muted-foreground">{phase.description}</p>
+                              <ProgressBar 
+                                progress={phase.progress}
+                                showPercentage={false}
+                                size="sm"
+                                className="mt-2"
+                              />
+                            </div>
+                            <div className="flex items-center gap-2">
                               <Button 
                                 size="sm" 
+                                variant="outline"
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   handlePhaseClick(phase);
                                 }}
                               >
-                                {phase.progress === 0 ? 'Start Phase' : 'Continue'}
-                                <ArrowRight className="w-4 h-4 ml-2" />
+                                {phase.progress === 0 ? 'Start' : 'Continue'}
                               </Button>
-                            </div>
-                            
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                              {phase.features.map((feature) => (
-                                <div key={feature} className="flex items-center text-sm">
-                                  <Star className="w-4 h-4 mr-2 text-yellow-500" />
-                                  {feature}
-                                </div>
-                              ))}
+                              {isExpanded ? 
+                                <ChevronDown className="w-5 h-5 text-muted-foreground" /> : 
+                                <ChevronRight className="w-5 h-5 text-muted-foreground" />
+                              }
                             </div>
                           </div>
                         </div>
+
+                        {/* Phase Details - Collapsible */}
+                        {(isExpanded || isCurrent) && (
+                          <div className="px-4 pb-4 border-t">
+                            <div className="pt-4">
+                              <div className="flex items-center justify-between mb-3">
+                                <div className="text-sm text-muted-foreground">
+                                  {phase.completedLessons} of {phase.lessons} lessons completed
+                                </div>
+                                <Badge className={`${phase.difficulty === 'Beginner' ? 'bg-green-500' : 
+                                  phase.difficulty === 'Intermediate' ? 'bg-yellow-500' : 'bg-red-500'} text-xs`}>
+                                  {phase.difficulty}
+                                </Badge>
+                              </div>
+                              
+                              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                                {phase.features.map((feature) => (
+                                  <div key={feature} className="flex items-center text-xs">
+                                    <Star className="w-3 h-3 mr-2 text-yellow-500" />
+                                    {feature}
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
                       </Card>
                     );
                   })}

@@ -211,23 +211,23 @@ export default function Income() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto p-6">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-4">💰 Income Mastery</h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+      <div className="container mx-auto p-4 sm:p-6">
+        <div className="text-center mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">💰 Income Mastery</h1>
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
             Build sustainable income streams that support your Thailand lifestyle
           </p>
         </div>
 
         {/* Tabs */}
-        <div className="flex justify-center mb-8">
-          <div className="flex bg-muted rounded-lg p-1">
+        <div className="flex justify-center mb-6 sm:mb-8">
+          <div className="flex bg-muted rounded-lg p-1 w-full max-w-md">
             {['courses', 'jobs', 'strategies'].map((tab) => (
               <Button
                 key={tab}
                 variant={selectedTab === tab ? 'default' : 'ghost'}
                 onClick={() => setSelectedTab(tab as any)}
-                className="capitalize"
+                className="capitalize flex-1 text-xs sm:text-sm"
               >
                 {tab}
               </Button>
@@ -240,7 +240,7 @@ export default function Income() {
             <div>
               {selectedTab === 'courses' && (
                 <div>
-                  <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3">
+                  <div className="grid gap-4 mb-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                     {courses.map((course) => (
                       <CompactCourseCard
                         key={course.id}
@@ -248,8 +248,6 @@ export default function Income() {
                         userType={userType}
                         onCourseSelect={handleCourseSelect}
                         onMentorContact={handleMentorContact}
-
-
                       />
                     ))}
                   </div>
@@ -315,7 +313,7 @@ export default function Income() {
             <div>
               {selectedTab === 'courses' && (
                 <div>
-                  <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3">
+                  <div className="grid gap-4 mb-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                     {courses.map((course, index) => {
                       const access = getCourseAccess(course.id);
                       
@@ -332,8 +330,6 @@ export default function Income() {
                               userType={userType}
                               onCourseSelect={handleCourseSelect}
                               onMentorContact={handleMentorContact}
-
-
                             />
                           </Paywall>
                         );
@@ -473,8 +469,8 @@ export default function Income() {
           paidContent={
             <div>
               {selectedTab === 'courses' && (
-                <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3">
-                  {courses.map((course) => (
+                <div className="grid gap-4 mb-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                  {courses.map((course, index) => (
                     <CompactCourseCard
                       key={course.id}
                       course={course}

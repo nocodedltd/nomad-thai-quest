@@ -134,7 +134,7 @@ export default function Roadmap() {
   const { userType, userState } = useUser();
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedPhase, setSelectedPhase] = useState(1);
-  const [selectedTab, setSelectedTab] = useState<'journey' | 'income' | 'visa' | 'living'>('journey');
+  const [selectedTab, setSelectedTab] = useState<'journey' | 'income' | 'visa' | 'living'>('income');
   const [expandedPhases, setExpandedPhases] = useState<Set<number>>(new Set([1])); // Start with first phase expanded
 
   // Handle URL tab parameter
@@ -192,15 +192,11 @@ export default function Roadmap() {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto p-4">
-        {/* Minimal Persistent Roadmap Header */}
+        {/* Minimal Persistent Roadmap Header (progress only) */}
         <div className="mb-4">
-          <div className="flex items-center justify-between gap-4 mb-2">
-            <h1 className="text-xl font-semibold">Your Thailand Journey</h1>
-            <div className="text-sm text-muted-foreground">
-              Phase {userState.progress?.currentPhase || 1} of 4
-            </div>
+          <div className="max-w-3xl mx-auto">
+            <ProgressBar progress={overallProgress} size="sm" />
           </div>
-          <ProgressBar progress={overallProgress} size="sm" />
         </div>
 
         {/* Compact Section Tabs */}

@@ -550,52 +550,212 @@ export default function AffiliateDashboard() {
           }
           
           paidContent={
-            <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-4 sm:space-y-6">
-              <TabsList className="grid w-full grid-cols-4 h-auto p-1">
-                <TabsTrigger value="overview" className="text-xs sm:text-sm py-2">Overview</TabsTrigger>
-                <TabsTrigger value="links" className="text-xs sm:text-sm py-2">Links</TabsTrigger>
-                <TabsTrigger value="materials" className="text-xs sm:text-sm py-2">Materials</TabsTrigger>
-                <TabsTrigger value="payments" className="text-xs sm:text-sm py-2">Payments</TabsTrigger>
-              </TabsList>
+            <div className="space-y-4 sm:space-y-6">
+              {/* Premium Welcome Banner */}
+              <Card className="bg-gradient-to-r from-yellow-50 to-yellow-100 dark:from-yellow-950 dark:to-yellow-900 border-yellow-200 dark:border-yellow-800">
+                <CardContent className="p-4 sm:p-6">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                    <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Star className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-lg sm:text-xl font-bold mb-1 text-yellow-900 dark:text-yellow-100">Premium Affiliate Access</h3>
+                      <p className="text-sm sm:text-base text-yellow-800 dark:text-yellow-200">
+                        You have full access to all affiliate features with enhanced analytics and no restrictions!
+                      </p>
+                    </div>
+                    <Badge className="bg-yellow-500 text-white flex-shrink-0">Premium</Badge>
+                  </div>
+                </CardContent>
+              </Card>
 
-              <TabsContent value="overview" className="space-y-4 sm:space-y-6">
-                {/* Full paid user content with all features */}
-                {/* This would include all the detailed analytics, advanced tracking, etc. */}
-                <div className="text-center py-8">
-                  <h3 className="text-xl font-bold mb-4">Premium Affiliate Features</h3>
-                  <p className="text-muted-foreground">
-                    Advanced analytics, custom link creation, detailed reports, and more coming soon!
-                  </p>
-                </div>
-              </TabsContent>
+              {/* Enhanced Stats for Premium Users */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+                <StatCard
+                  title="Total Earnings"
+                  value={`$${affiliateStats.totalEarnings.toFixed(0)}`}
+                  icon={DollarSign}
+                  trend="up"
+                  trendValue="+8.2%"
+                  color="text-green-600"
+                />
+                <StatCard
+                  title="This Month"
+                  value={`$${affiliateStats.thisMonthEarnings.toFixed(0)}`}
+                  icon={TrendingUp}
+                  trend="up"
+                  trendValue="+12%"
+                  color="text-blue-600"
+                />
+                <StatCard
+                  title="Referrals"
+                  value={affiliateStats.totalReferrals}
+                  icon={Users}
+                  trend="up"
+                  trendValue="+3"
+                  color="text-purple-600"
+                />
+                <StatCard
+                  title="Conversion"
+                  value={`${affiliateStats.conversionRate}%`}
+                  icon={Target}
+                  trend="up"
+                  trendValue="+0.5%"
+                  color="text-orange-600"
+                />
+              </div>
 
-              <TabsContent value="links" className="space-y-4 sm:space-y-6">
-                <div className="text-center py-8">
-                  <h3 className="text-xl font-bold mb-4">Advanced Link Management</h3>
-                  <p className="text-muted-foreground">
-                    Create custom links, track individual performance, and manage campaigns.
-                  </p>
-                </div>
-              </TabsContent>
+              {/* Enhanced Affiliate Links */}
+              <Card>
+                <CardHeader className="pb-3 sm:pb-4">
+                  <CardTitle className="text-lg sm:text-xl flex items-center gap-2">
+                    <Link2 className="w-5 h-5" />
+                    Your Affiliate Links
+                    <Badge variant="secondary" className="text-xs">Premium</Badge>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                    <Input 
+                      value={affiliateLink} 
+                      readOnly 
+                      className="flex-1 text-xs sm:text-sm"
+                    />
+                    <Button 
+                      onClick={handleCopyLink}
+                      className="w-full sm:w-auto flex-shrink-0"
+                      size="sm"
+                    >
+                      {copiedLink ? <CheckCircle className="w-4 h-4 mr-2" /> : <Copy className="w-4 h-4 mr-2" />}
+                      {copiedLink ? "Copied!" : "Copy"}
+                    </Button>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
+                    <div className="p-2 sm:p-3 bg-muted rounded-lg">
+                      <div className="flex items-center justify-center mb-1">
+                        <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
+                      </div>
+                      <p className="text-xs sm:text-sm font-medium">{affiliateStats.clicksThisMonth}</p>
+                      <p className="text-xs text-muted-foreground">Clicks</p>
+                    </div>
+                    <div className="p-2 sm:p-3 bg-muted rounded-lg">
+                      <div className="flex items-center justify-center mb-1">
+                        <MousePointer className="w-3 h-3 sm:w-4 sm:h-4" />
+                      </div>
+                      <p className="text-xs sm:text-sm font-medium">{affiliateStats.conversionRate}%</p>
+                      <p className="text-xs text-muted-foreground">CVR</p>
+                    </div>
+                    <div className="p-2 sm:p-3 bg-muted rounded-lg">
+                      <div className="flex items-center justify-center mb-1">
+                        <Users className="w-3 h-3 sm:w-4 sm:h-4" />
+                      </div>
+                      <p className="text-xs sm:text-sm font-medium">{affiliateStats.totalReferrals}</p>
+                      <p className="text-xs text-muted-foreground">Referrals</p>
+                    </div>
+                    <div className="p-2 sm:p-3 bg-muted rounded-lg">
+                      <div className="flex items-center justify-center mb-1">
+                        <Award className="w-3 h-3 sm:w-4 sm:h-4" />
+                      </div>
+                      <p className="text-xs sm:text-sm font-medium">{affiliateStats.commissionsEarned}</p>
+                      <p className="text-xs text-muted-foreground">Sales</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
 
-              <TabsContent value="materials" className="space-y-4 sm:space-y-6">
-                <div className="text-center py-8">
-                  <h3 className="text-xl font-bold mb-4">Full Materials Library</h3>
-                  <p className="text-muted-foreground">
-                    Access to complete collection of banners, videos, templates, and assets.
-                  </p>
-                </div>
-              </TabsContent>
+              {/* Rest of the content same as free users but without upgrade prompts */}
+              {/* Commission Structure */}
+              <Card>
+                <CardHeader className="pb-3 sm:pb-4">
+                  <CardTitle className="text-lg sm:text-xl flex items-center gap-2">
+                    <Percent className="w-5 h-5" />
+                    Commission Structure
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3 sm:space-y-4">
+                    {commissionStructure.map((item, index) => (
+                      <div key={index} className="flex items-center justify-between p-3 sm:p-4 bg-muted rounded-lg">
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-medium text-sm sm:text-base">{item.product}</h4>
+                          <p className="text-xs sm:text-sm text-muted-foreground">{item.description}</p>
+                        </div>
+                        <div className="text-right flex-shrink-0 ml-4">
+                          <p className="font-bold text-sm sm:text-base text-green-600">{item.commission}</p>
+                          <p className="text-xs sm:text-sm text-muted-foreground">{item.amount}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
 
-              <TabsContent value="payments" className="space-y-4 sm:space-y-6">
-                <div className="text-center py-8">
-                  <h3 className="text-xl font-bold mb-4">Payment Management</h3>
-                  <p className="text-muted-foreground">
-                    Detailed payment history, tax documents, and payout preferences.
-                  </p>
-                </div>
-              </TabsContent>
-            </Tabs>
+              {/* Recent Earnings */}
+              <Card>
+                <CardHeader className="pb-3 sm:pb-4">
+                  <CardTitle className="text-lg sm:text-xl flex items-center gap-2">
+                    <BarChart3 className="w-5 h-5" />
+                    Recent Earnings
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3 sm:space-y-4">
+                    {recentEarnings.map((earning) => (
+                      <div key={earning.id} className="flex items-center justify-between p-3 sm:p-4 bg-muted rounded-lg">
+                        <div className="flex items-center gap-3 flex-1 min-w-0">
+                          <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                            <DollarSign className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <p className="font-medium text-sm sm:text-base truncate">{earning.product}</p>
+                            <p className="text-xs sm:text-sm text-muted-foreground">{earning.date}</p>
+                          </div>
+                        </div>
+                        <div className="text-right flex-shrink-0 ml-4">
+                          <p className="font-bold text-sm sm:text-base text-green-600">${earning.commission.toFixed(2)}</p>
+                          <Badge variant={earning.status === "paid" ? "default" : "secondary"} className="text-xs">
+                            {earning.status}
+                          </Badge>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Marketing Materials - Full Access */}
+              <Card>
+                <CardHeader className="pb-3 sm:pb-4">
+                  <CardTitle className="text-lg sm:text-xl flex items-center gap-2">
+                    <Gift className="w-5 h-5" />
+                    Marketing Materials
+                    <Badge variant="secondary" className="text-xs">Full Access</Badge>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                    {marketingMaterials.map((material) => (
+                      <div key={material.id} className="p-3 sm:p-4 bg-muted rounded-lg">
+                        <div className="flex items-start justify-between mb-2">
+                          <h4 className="font-medium text-sm sm:text-base flex-1 min-w-0 pr-2">{material.title}</h4>
+                          <Badge variant="outline" className="text-xs flex-shrink-0">{material.format}</Badge>
+                        </div>
+                        <p className="text-xs sm:text-sm text-muted-foreground mb-3">{material.description}</p>
+                        <div className="flex items-center justify-between text-xs sm:text-sm text-muted-foreground mb-3">
+                          <span>{material.clicks} clicks</span>
+                          <span>{material.conversions} conversions</span>
+                        </div>
+                        <Button size="sm" className="w-full">
+                          <Download className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
+                          Download
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           }
         />
       </div>

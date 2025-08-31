@@ -179,7 +179,11 @@ const incomeStrategies = [
   }
 ];
 
-export default function IncomeTab() {
+type IncomeTabProps = {
+  compact?: boolean;
+};
+
+export default function IncomeTab({ compact = false }: IncomeTabProps) {
   const { userType } = useUser();
   const [selectedTab, setSelectedTab] = useState<'courses' | 'jobs' | 'strategies' | 'affiliate'>('courses');
   const [searchTerm, setSearchTerm] = useState("");
@@ -257,22 +261,24 @@ export default function IncomeTab() {
 
   return (
     <div>
-      <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold mb-2">💰 Income Mastery</h2>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Build sustainable income streams that support your Thailand lifestyle
-        </p>
-      </div>
+      {!compact && (
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-bold mb-2">💰 Income Mastery</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Build sustainable income streams that support your Thailand lifestyle
+          </p>
+        </div>
+      )}
 
       {/* Compact Tabs */}
-      <div className="flex justify-center mb-6">
+      <div className={`flex justify-center ${compact ? 'mb-4' : 'mb-6'}`}>
         <div className="flex bg-muted rounded-lg p-1">
           {['courses', 'jobs', 'strategies', 'affiliate'].map((tab) => (
             <Button
               key={tab}
               variant={selectedTab === tab ? 'default' : 'ghost'}
               onClick={() => setSelectedTab(tab as any)}
-              className="capitalize"
+              className={`capitalize ${compact ? 'px-3 py-1 text-sm' : ''}`}
             >
               {tab}
             </Button>

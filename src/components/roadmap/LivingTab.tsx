@@ -87,7 +87,11 @@ const events = [
 
 // Archived real estate agents data - now included in accommodation-resources.tsx
 
-export default function LivingTab() {
+type LivingTabProps = {
+  compact?: boolean;
+};
+
+export default function LivingTab({ compact = false }: LivingTabProps) {
   const { userType } = useUser();
   const [selectedTab, setSelectedTab] = useState<'short-term' | 'long-term' | 'resources' | 'community'>('short-term');
 
@@ -100,41 +104,43 @@ export default function LivingTab() {
 
   return (
     <div>
-      <div className="text-center mb-8">
-        <h2 className="text-4xl font-bold mb-4">🏠 Living in Thailand</h2>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Complete accommodation solutions from hostels to long-term rentals
-        </p>
-      </div>
+      {!compact && (
+        <div className="text-center mb-8">
+          <h2 className="text-4xl font-bold mb-4">🏠 Living in Thailand</h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Complete accommodation solutions from hostels to long-term rentals
+          </p>
+        </div>
+      )}
 
       {/* Tabs */}
-      <div className="flex justify-center mb-8">
+      <div className={`flex justify-center ${compact ? 'mb-4' : 'mb-8'}`}>
         <div className="flex bg-muted rounded-lg p-1 flex-wrap">
           <Button
             variant={selectedTab === 'short-term' ? 'default' : 'ghost'}
             onClick={() => setSelectedTab('short-term')}
-            className="flex items-center gap-2"
+            className={`flex items-center gap-2 ${compact ? 'px-3 py-1 text-sm' : ''}`}
           >
             🏨 Short-term
           </Button>
           <Button
             variant={selectedTab === 'long-term' ? 'default' : 'ghost'}
             onClick={() => setSelectedTab('long-term')}
-            className="flex items-center gap-2"
+            className={`flex items-center gap-2 ${compact ? 'px-3 py-1 text-sm' : ''}`}
           >
             📚 Long-term Guide
           </Button>
           <Button
             variant={selectedTab === 'resources' ? 'default' : 'ghost'}
             onClick={() => setSelectedTab('resources')}
-            className="flex items-center gap-2"
+            className={`flex items-center gap-2 ${compact ? 'px-3 py-1 text-sm' : ''}`}
           >
             🔧 Resources
           </Button>
           <Button
             variant={selectedTab === 'community' ? 'default' : 'ghost'}
             onClick={() => setSelectedTab('community')}
-            className="flex items-center gap-2"
+            className={`flex items-center gap-2 ${compact ? 'px-3 py-1 text-sm' : ''}`}
           >
             👥 Community
           </Button>

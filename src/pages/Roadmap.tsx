@@ -179,45 +179,58 @@ export default function Roadmap() {
     return 'locked';
   };
 
+  // Minimal overall progress value used in compact header
+  const overallProgress = (() => {
+    if (userType === 'paid') {
+      const phase = userState.progress?.currentPhase || 1;
+      return Math.min(100, (phase / 4) * 100);
+    }
+    // Show one of four phases accessible for guests/free
+    return 25;
+  })();
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto p-4">
-        {/* Compact Header */}
-        <div className="text-center mb-6">
-          <h1 className="text-3xl font-bold mb-2">🗺️ Your Thailand Journey</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Complete roadmap to successfully relocating to Thailand
-          </p>
+        {/* Minimal Persistent Roadmap Header */}
+        <div className="mb-4">
+          <div className="flex items-center justify-between gap-4 mb-2">
+            <h1 className="text-xl font-semibold">Your Thailand Journey</h1>
+            <div className="text-sm text-muted-foreground">
+              Phase {userState.progress?.currentPhase || 1} of 4
+            </div>
+          </div>
+          <ProgressBar progress={overallProgress} size="sm" />
         </div>
 
-        {/* Compact Tab Navigation */}
-        <div className="flex justify-center mb-6">
+        {/* Compact Section Tabs */}
+        <div className="flex justify-center mb-4">
           <div className="flex bg-muted rounded-lg p-1">
             <Button
               variant={selectedTab === 'journey' ? 'default' : 'ghost'}
               onClick={() => handleTabChange('journey')}
-              className="flex items-center gap-2"
+              className="px-3 py-1 text-sm"
             >
               🎯 Journey Overview
             </Button>
             <Button
               variant={selectedTab === 'income' ? 'default' : 'ghost'}
               onClick={() => handleTabChange('income')}
-              className="flex items-center gap-2"
+              className="px-3 py-1 text-sm"
             >
               💰 Income Setup
             </Button>
             <Button
               variant={selectedTab === 'visa' ? 'default' : 'ghost'}
               onClick={() => handleTabChange('visa')}
-              className="flex items-center gap-2"
+              className="px-3 py-1 text-sm"
             >
               📋 Visa & Legal
             </Button>
             <Button
               variant={selectedTab === 'living' ? 'default' : 'ghost'}
               onClick={() => handleTabChange('living')}
-              className="flex items-center gap-2"
+              className="px-3 py-1 text-sm"
             >
               🏠 Living Setup
             </Button>
@@ -558,13 +571,13 @@ export default function Roadmap() {
         )}
 
         {/* Income Tab */}
-        {selectedTab === 'income' && <IncomeTab />}
+        {selectedTab === 'income' && <IncomeTab compact />}
 
         {/* Visa Tab */}
-        {selectedTab === 'visa' && <VisaTab />}
+        {selectedTab === 'visa' && <VisaTab compact />}
 
         {/* Living Tab */}
-        {selectedTab === 'living' && <LivingTab />}
+        {selectedTab === 'living' && <LivingTab compact />}
       </div>
     </div>
   );

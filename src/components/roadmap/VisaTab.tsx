@@ -164,7 +164,11 @@ const visaTimeline = [
   { step: "Travel to Thailand", weeks: "Week 8", status: "pending" }
 ];
 
-export default function VisaTab() {
+type VisaTabProps = {
+  compact?: boolean;
+};
+
+export default function VisaTab({ compact = false }: VisaTabProps) {
   const { userType } = useUser();
   const [selectedVisa, setSelectedVisa] = useState("tourist");
 
@@ -177,12 +181,14 @@ export default function VisaTab() {
 
   return (
     <div>
-      <div className="text-center mb-8">
-        <h2 className="text-4xl font-bold mb-4">📋 Visa & Legal Guide</h2>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Navigate Thailand's visa system with confidence and stay legally compliant
-        </p>
-      </div>
+      {!compact && (
+        <div className="text-center mb-8">
+          <h2 className="text-4xl font-bold mb-4">📋 Visa & Legal Guide</h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Navigate Thailand's visa system with confidence and stay legally compliant
+          </p>
+        </div>
+      )}
 
       <UserContent
         guestContent={

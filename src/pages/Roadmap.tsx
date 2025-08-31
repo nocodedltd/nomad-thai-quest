@@ -190,10 +190,37 @@ export default function Roadmap() {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto p-4">
-        {/* Minimal Persistent Roadmap Header (progress only) */}
-        <div className="mb-4">
+        {/* Hero Header Section */}
+        <div className="text-center mb-8">
+          {/* User Level */}
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <Star className="w-5 h-5 text-primary" />
+            <span className="text-lg font-medium">Nomad Level 1</span>
+          </div>
+          
+          {/* Main Headline */}
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+            Your Journey to Thailand
+          </h1>
+          
+          {/* Subheading */}
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
+            From home to Thailand in three simple steps, with support along every step of the journey
+          </p>
+          
+          {/* Enhanced Progress Bar Section */}
           <div className="max-w-3xl mx-auto">
-            <ProgressBar progress={overallProgress} size="sm" />
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-medium">Overall Progress</span>
+              <span className="text-sm font-medium">{Math.round(overallProgress)}%</span>
+            </div>
+            <ProgressBar progress={overallProgress} size="sm" className="mb-2" />
+            <p className="text-sm text-muted-foreground">
+              {userType === 'paid' ? 
+                `${userState.progress?.currentPhase || 1}/4 stages completed` : 
+                `${Math.min(1, Math.round(overallProgress / 25))}/4 stages completed`
+              }
+            </p>
           </div>
         </div>
 

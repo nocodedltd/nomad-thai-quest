@@ -134,26 +134,24 @@ export default function Roadmap() {
   const { userType, userState } = useUser();
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedPhase, setSelectedPhase] = useState(1);
-  const [selectedTab, setSelectedTab] = useState<'journey' | 'income' | 'visa' | 'living'>('income');
+  const [selectedTab, setSelectedTab] = useState<'income' | 'visa' | 'living'>('income');
   const [expandedPhases, setExpandedPhases] = useState<Set<number>>(new Set([1])); // Start with first phase expanded
 
   // Handle URL tab parameter
   useEffect(() => {
     const tab = searchParams.get('tab');
-    if (tab && ['journey', 'income', 'visa', 'living'].includes(tab)) {
+    if (tab && ['income', 'visa', 'living'].includes(tab)) {
       setSelectedTab(tab as any);
     }
   }, [searchParams]);
 
-  const handleTabChange = (tab: 'journey' | 'income' | 'visa' | 'living') => {
+  const handleTabChange = (tab: 'income' | 'visa' | 'living') => {
     setSelectedTab(tab);
     setSearchParams({ tab });
   };
 
   const handlePhaseClick = (phase: typeof journeyPhases[0]) => {
-    if (phase.targetTab !== 'journey') {
-      handleTabChange(phase.targetTab);
-    }
+    handleTabChange(phase.targetTab);
   };
 
   const togglePhaseExpansion = (phaseId: number) => {
@@ -199,372 +197,32 @@ export default function Roadmap() {
           </div>
         </div>
 
-        {/* Compact Section Tabs */}
+        {/* Main Section Tabs */}
         <div className="flex justify-center mb-4">
           <div className="flex bg-muted rounded-lg p-1">
             <Button
-              variant={selectedTab === 'journey' ? 'default' : 'ghost'}
-              onClick={() => handleTabChange('journey')}
-              className="px-3 py-1 text-sm"
-            >
-              🎯 Journey Overview
-            </Button>
-            <Button
               variant={selectedTab === 'income' ? 'default' : 'ghost'}
               onClick={() => handleTabChange('income')}
-              className="px-3 py-1 text-sm"
+              className="px-4 py-2 text-sm"
             >
               💰 Income Setup
             </Button>
             <Button
               variant={selectedTab === 'visa' ? 'default' : 'ghost'}
               onClick={() => handleTabChange('visa')}
-              className="px-3 py-1 text-sm"
+              className="px-4 py-2 text-sm"
             >
               📋 Visa & Legal
             </Button>
             <Button
               variant={selectedTab === 'living' ? 'default' : 'ghost'}
               onClick={() => handleTabChange('living')}
-              className="px-3 py-1 text-sm"
+              className="px-4 py-2 text-sm"
             >
               🏠 Living Setup
             </Button>
           </div>
         </div>
-
-        {/* Tab Content */}
-        {selectedTab === 'journey' && (
-          <UserContent
-            guestContent={
-              <div>
-                <div className="text-center mb-12">
-                  <h2 className="text-3xl font-bold mb-4">Your Thailand Journey Roadmap</h2>
-                  <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                    A step-by-step guide to successfully relocating to Thailand as a digital nomad
-                  </p>
-                </div>
-
-                {/* Phase Overview for Guests */}
-                <div className="grid gap-6 mb-12">
-                  {journeyPhases.slice(0, 1).map((phase) => {
-                    const Icon = phase.icon;
-                    return (
-                      <Card key={phase.id} className="p-6 border-2">
-                        <div className="flex items-start gap-4">
-                          <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${phase.gradientColor} flex items-center justify-center flex-shrink-0`}>
-                            <Icon className="w-6 h-6 text-white" />
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-2">
-                              <h3 className="text-xl font-bold">{phase.title}</h3>
-                              <Badge variant="outline">{phase.duration}</Badge>
-                            </div>
-                            <p className="text-muted-foreground mb-4">{phase.description}</p>
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                              {phase.features.map((feature) => (
-                                <div key={feature} className="flex items-center text-sm">
-                                  <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
-                                  {feature}
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      </Card>
-                    );
-                  })}
-                  
-                  {/* Locked phases preview */}
-                  {journeyPhases.slice(1).map((phase) => {
-                    const Icon = phase.icon;
-                    return (
-                      <Card key={phase.id} className="p-6 border-2 border-dashed opacity-50">
-                        <div className="flex items-start gap-4">
-                          <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${phase.gradientColor} flex items-center justify-center flex-shrink-0`}>
-                            <Lock className="w-6 h-6 text-white" />
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-2">
-                              <h3 className="text-xl font-bold">{phase.title}</h3>
-                              <Badge variant="outline">🔒 Premium</Badge>
-                            </div>
-                            <p className="text-muted-foreground">{phase.description}</p>
-                          </div>
-                        </div>
-                      </Card>
-                    );
-                  })}
-                </div>
-
-                <UpgradePrompt 
-                  title="Unlock Your Complete Roadmap"
-                  description="Get access to all 4 phases and start your Thailand journey today"
-                  features={[
-                    "Complete 4-phase roadmap",
-                    "Detailed action plans",
-                    "Progress tracking",
-                    "Community support"
-                  ]}
-                />
-              </div>
-            }
-            
-            freeContent={
-              <div>
-                <div className="text-center mb-8">
-                  <h2 className="text-3xl font-bold mb-4">Your Thailand Journey</h2>
-                  <p className="text-xl text-muted-foreground">Track your progress through each phase</p>
-                </div>
-
-                {/* Progress Overview */}
-                <Card className="p-6 mb-8 bg-gradient-to-br from-primary/10 to-primary/5">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-xl font-bold">Overall Progress</h3>
-                    <Badge variant="secondary">Phase {userState.progress?.currentPhase || 1}</Badge>
-                  </div>
-                  <ProgressBar 
-                    progress={25} // 1 out of 4 phases for free users
-                    showPercentage={true}
-                    size="lg"
-                    className="mb-2"
-                  />
-                  <p className="text-sm text-muted-foreground">1 of 4 phases accessible with your current plan</p>
-                </Card>
-
-                {/* Available Phases */}
-                <div className="grid gap-6 mb-8">
-                  {journeyPhases.slice(0, 1).map((phase) => {
-                    const Icon = phase.icon;
-                    const status = getPhaseStatus(phase.id);
-                    
-                    return (
-                      <Card 
-                        key={phase.id} 
-                        className={`p-6 border-2 cursor-pointer transition-all hover:shadow-lg ${
-                          selectedPhase === phase.id ? 'border-primary' : ''
-                        }`} 
-                        onClick={() => {
-                          setSelectedPhase(phase.id);
-                          handlePhaseClick(phase);
-                        }}
-                      >
-                        <div className="flex items-start gap-4">
-                          <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${phase.gradientColor} flex items-center justify-center flex-shrink-0`}>
-                            <Icon className="w-6 h-6 text-white" />
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-2">
-                              <h3 className="text-xl font-bold">{phase.title}</h3>
-                              <Badge variant="outline">{phase.duration}</Badge>
-                              {status === 'completed' && <CheckCircle className="w-5 h-5 text-green-500" />}
-                            </div>
-                            <p className="text-muted-foreground mb-4">{phase.description}</p>
-                            <ProgressBar 
-                              progress={phase.progress}
-                              showPercentage={true}
-                              size="sm"
-                              className="mb-4"
-                            />
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                              {phase.features.map((feature) => (
-                                <div key={feature} className="flex items-center text-sm">
-                                  <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
-                                  {feature}
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      </Card>
-                    );
-                  })}
-                </div>
-
-                {/* Locked Phases */}
-                <Paywall 
-                  requiredLevel="paid"
-                  title="Unlock Phases 2-4"
-                  description="Complete your Thailand journey with all advanced phases"
-                  features={["Legal & visa guidance", "Relocation planning", "Settlement support"]}
-                >
-                  <div className="grid gap-6">
-                    {journeyPhases.slice(1).map((phase) => {
-                      const Icon = phase.icon;
-                      return (
-                        <Card key={phase.id} className="p-6 border-2">
-                          <div className="flex items-start gap-4">
-                            <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${phase.gradientColor} flex items-center justify-center flex-shrink-0`}>
-                              <Icon className="w-6 h-6 text-white" />
-                            </div>
-                            <div className="flex-1">
-                              <div className="flex items-center gap-2 mb-2">
-                                <h3 className="text-xl font-bold">{phase.title}</h3>
-                                <Badge variant="outline">{phase.duration}</Badge>
-                              </div>
-                              <p className="text-muted-foreground mb-4">{phase.description}</p>
-                              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                                {phase.features.map((feature) => (
-                                  <div key={feature} className="flex items-center text-sm">
-                                    <Star className="w-4 h-4 mr-2 text-yellow-500" />
-                                    {feature}
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-                        </Card>
-                      );
-                    })}
-                  </div>
-                </Paywall>
-              </div>
-            }
-            
-            paidContent={
-              <div>
-                <div className="text-center mb-8">
-                  <h2 className="text-3xl font-bold mb-4">Your Complete Thailand Journey</h2>
-                  <p className="text-xl text-muted-foreground">Master all 4 phases of relocation</p>
-                </div>
-
-                {/* Progress Overview */}
-                <Card className="p-6 mb-8 bg-gradient-to-br from-primary/10 to-primary/5">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-xl font-bold">Overall Progress</h3>
-                    <Badge variant="secondary">Phase {userState.progress?.currentPhase || 1} of 4</Badge>
-                  </div>
-                  <ProgressBar 
-                    progress={((userState.progress?.currentPhase || 1) / 4) * 100}
-                    showPercentage={true}
-                    size="lg"
-                    className="mb-4"
-                  />
-                  
-                  {/* Timeline */}
-                  <div className="grid grid-cols-1 md:grid-cols-6 gap-2 mt-6">
-                    {timelineSteps.map((step, index) => (
-                      <div key={index} className="flex flex-col items-center text-center">
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold mb-2 ${
-                          step.status === 'completed' ? 'bg-green-500 text-white' :
-                          step.status === 'in-progress' ? 'bg-blue-500 text-white' :
-                          step.status === 'pending' ? 'bg-yellow-500 text-white' :
-                          'bg-gray-300 text-gray-600'
-                        }`}>
-                          {step.phase}
-                        </div>
-                        <div className="text-xs font-medium">{step.title}</div>
-                        <div className="text-xs text-muted-foreground">{step.weeks}</div>
-                      </div>
-                    ))}
-                  </div>
-                </Card>
-
-                {/* Collapsible Phases */}
-                <div className="space-y-4 mb-6">
-                  {journeyPhases.map((phase) => {
-                    const Icon = phase.icon;
-                    const status = getPhaseStatus(phase.id);
-                    const isAccessible = hasPhaseAccess(phase);
-                    const isExpanded = expandedPhases.has(phase.id);
-                    const isCurrent = status === 'current' || phase.id === 1; // Always expand current phase
-                    
-                    return (
-                      <Card 
-                        key={phase.id} 
-                        className={`border-2 transition-all hover:shadow-lg ${
-                          selectedPhase === phase.id ? 'border-primary' : ''
-                        } ${!isAccessible ? 'opacity-50' : ''}`} 
-                      >
-                        {/* Phase Header - Always Visible */}
-                        <div 
-                          className="p-4 cursor-pointer"
-                          onClick={() => togglePhaseExpansion(phase.id)}
-                        >
-                          <div className="flex items-center gap-4">
-                            <div className={`w-10 h-10 rounded-full bg-gradient-to-r ${phase.gradientColor} flex items-center justify-center flex-shrink-0`}>
-                              <Icon className="w-5 h-5 text-white" />
-                            </div>
-                            <div className="flex-1">
-                              <div className="flex items-center gap-2 mb-1">
-                                <h3 className="text-lg font-bold">{phase.title}</h3>
-                                <Badge variant="outline" className="text-xs">{phase.duration}</Badge>
-                                {status === 'completed' && <CheckCircle className="w-4 h-4 text-green-500" />}
-                                {status === 'current' && <Clock className="w-4 h-4 text-blue-500" />}
-                              </div>
-                              <p className="text-sm text-muted-foreground">{phase.description}</p>
-                              <ProgressBar 
-                                progress={phase.progress}
-                                showPercentage={false}
-                                size="sm"
-                                className="mt-2"
-                              />
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <Button 
-                                size="sm" 
-                                variant="outline"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handlePhaseClick(phase);
-                                }}
-                              >
-                                {phase.progress === 0 ? 'Start' : 'Continue'}
-                              </Button>
-                              {isExpanded ? 
-                                <ChevronDown className="w-5 h-5 text-muted-foreground" /> : 
-                                <ChevronRight className="w-5 h-5 text-muted-foreground" />
-                              }
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Phase Details - Collapsible */}
-                        {(isExpanded || isCurrent) && (
-                          <div className="px-4 pb-4 border-t">
-                            <div className="pt-4">
-                              <div className="flex items-center justify-between mb-3">
-                                <div className="text-sm text-muted-foreground">
-                                  {phase.completedLessons} of {phase.lessons} lessons completed
-                                </div>
-                                <Badge className={`${phase.difficulty === 'Beginner' ? 'bg-green-500' : 
-                                  phase.difficulty === 'Intermediate' ? 'bg-yellow-500' : 'bg-red-500'} text-xs`}>
-                                  {phase.difficulty}
-                                </Badge>
-                              </div>
-                              
-                              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                                {phase.features.map((feature) => (
-                                  <div key={feature} className="flex items-center text-xs">
-                                    <Star className="w-3 h-3 mr-2 text-yellow-500" />
-                                    {feature}
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                      </Card>
-                    );
-                  })}
-                </div>
-
-                {/* Action Center */}
-                <Card className="p-6">
-                  <h3 className="text-xl font-bold mb-4">Recommended Next Steps</h3>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {journeyPhases[selectedPhase - 1]?.nextSteps.map((step, index) => (
-                      <div key={index} className="flex items-center gap-3 p-3 border rounded-lg">
-                        <Target className="w-5 h-5 text-primary" />
-                        <span>{step}</span>
-                      </div>
-                    ))}
-                  </div>
-                </Card>
-              </div>
-            }
-          />
-        )}
 
         {/* Income Tab */}
         {selectedTab === 'income' && <IncomeTab compact />}

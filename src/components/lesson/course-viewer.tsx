@@ -106,96 +106,99 @@ export default function CourseViewer({
   }
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto p-3 sm:p-6">
       {/* Header */}
-      <div className="mb-6">
+      <div className="mb-4 sm:mb-6">
         <Button 
           variant="outline" 
           onClick={onBack}
-          className="mb-4 flex items-center gap-2"
+          className="mb-3 sm:mb-4 flex items-center gap-2 h-9 sm:h-10"
+          size="sm"
         >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Courses
+          <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4" />
+          <span className="hidden sm:inline">Back to Courses</span>
+          <span className="sm:hidden">Back</span>
         </Button>
         
-        <Card className="p-6">
-          <div className="flex items-start justify-between mb-6">
-            <div className="flex-1">
-              <h1 className="text-3xl font-bold mb-2">{courseTitle}</h1>
-              <p className="text-muted-foreground text-lg mb-4">{courseDescription}</p>
+        <Card className="p-3 sm:p-6">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 sm:mb-6">
+            <div className="flex-1 mb-4 sm:mb-0">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2">{courseTitle}</h1>
+              <p className="text-muted-foreground text-sm sm:text-base md:text-lg mb-3 sm:mb-4 overflow-hidden">{courseDescription}</p>
               
-              <div className="flex items-center gap-6 mb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 mb-3 sm:mb-4">
                 <div className="flex items-center gap-2">
-                  <Users className="w-5 h-5 text-blue-500" />
-                  <div>
-                    <div className="font-medium">{mentor}</div>
-                    <div className="text-sm text-muted-foreground">{mentorBio}</div>
+                  <Users className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500 flex-shrink-0" />
+                  <div className="min-w-0">
+                    <div className="font-medium text-sm sm:text-base truncate">{mentor}</div>
+                    <div className="text-xs sm:text-sm text-muted-foreground truncate">{mentorBio}</div>
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-4">
-                  <Badge variant="secondary" className="flex items-center gap-1">
-                    <BookOpen className="w-4 h-4" />
-                    {lessons.length} Lessons
+                <div className="flex items-center gap-2 sm:gap-4">
+                  <Badge variant="secondary" className="flex items-center gap-1 text-xs">
+                    <BookOpen className="w-3 h-3 sm:w-4 sm:h-4" />
+                    <span className="hidden sm:inline">{lessons.length} Lessons</span>
+                    <span className="sm:hidden">{lessons.length}</span>
                   </Badge>
-                  <Badge variant="secondary" className="flex items-center gap-1">
-                    <Clock className="w-4 h-4" />
-                    {lessons.reduce((total, lesson) => {
+                  <Badge variant="secondary" className="flex items-center gap-1 text-xs">
+                    <Clock className="w-3 h-3 sm:w-4 sm:h-4" />
+                    <span>{lessons.reduce((total, lesson) => {
                       const minutes = parseInt(lesson.duration.split(' ')[0]);
                       return total + minutes;
-                    }, 0)} min total
+                    }, 0)} min</span>
                   </Badge>
                 </div>
               </div>
             </div>
             
-            <div className="text-right">
-              <div className="text-sm text-muted-foreground mb-2">Course Progress</div>
-              <div className="flex items-center gap-3">
+            <div className="text-center sm:text-right">
+              <div className="text-xs sm:text-sm text-muted-foreground mb-2">Progress</div>
+              <div className="flex items-center justify-center sm:justify-end gap-2 sm:gap-3">
                 <ProgressBar 
                   progress={completionPercentage} 
                   showPercentage 
                   size="sm" 
-                  className="w-32" 
+                  className="w-24 sm:w-32" 
                 />
-                <Badge className={completionPercentage === 100 ? 'bg-green-500' : ''}>
+                <Badge className={`text-xs ${completionPercentage === 100 ? 'bg-green-500' : ''}`}>
                   {completedLessons.length}/{lessons.length}
                 </Badge>
               </div>
             </div>
           </div>
 
-          {/* Course Stats */}
-          <div className="grid grid-cols-4 gap-4 text-center">
-            <div className="p-3 bg-blue-50 rounded-lg">
-              <Trophy className="w-6 h-6 mx-auto mb-2 text-blue-500" />
-              <div className="font-bold text-blue-700">{completedLessons.length}</div>
-              <div className="text-xs text-blue-600">Completed</div>
+          {/* Course Stats - Simplified for mobile */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 text-center">
+            <div className="p-2 sm:p-3 bg-blue-50 rounded-lg">
+              <Trophy className="w-4 h-4 sm:w-6 sm:h-6 mx-auto mb-1 sm:mb-2 text-blue-500" />
+              <div className="font-bold text-sm sm:text-base text-blue-700">{completedLessons.length}</div>
+              <div className="text-xs text-blue-600">Done</div>
             </div>
-            <div className="p-3 bg-green-50 rounded-lg">
-              <Target className="w-6 h-6 mx-auto mb-2 text-green-500" />
-              <div className="font-bold text-green-700">{Math.round(completionPercentage)}%</div>
+            <div className="p-2 sm:p-3 bg-green-50 rounded-lg">
+              <Target className="w-4 h-4 sm:w-6 sm:h-6 mx-auto mb-1 sm:mb-2 text-green-500" />
+              <div className="font-bold text-sm sm:text-base text-green-700">{Math.round(completionPercentage)}%</div>
               <div className="text-xs text-green-600">Progress</div>
             </div>
-            <div className="p-3 bg-purple-50 rounded-lg">
-              <Award className="w-6 h-6 mx-auto mb-2 text-purple-500" />
-              <div className="font-bold text-purple-700">{lessons.reduce((total, lesson) => total + lesson.quiz.length, 0)}</div>
-              <div className="text-xs text-purple-600">Total Quizzes</div>
+            <div className="p-2 sm:p-3 bg-purple-50 rounded-lg sm:block">
+              <Award className="w-4 h-4 sm:w-6 sm:h-6 mx-auto mb-1 sm:mb-2 text-purple-500" />
+              <div className="font-bold text-sm sm:text-base text-purple-700">{lessons.reduce((total, lesson) => total + lesson.quiz.length, 0)}</div>
+              <div className="text-xs text-purple-600">Quizzes</div>
             </div>
-            <div className="p-3 bg-orange-50 rounded-lg">
-              <Star className="w-6 h-6 mx-auto mb-2 text-orange-500" />
-              <div className="font-bold text-orange-700">{completionPercentage === 100 ? 'Complete!' : 'In Progress'}</div>
+            <div className="p-2 sm:p-3 bg-orange-50 rounded-lg">
+              <Star className="w-4 h-4 sm:w-6 sm:h-6 mx-auto mb-1 sm:mb-2 text-orange-500" />
+              <div className="font-bold text-xs sm:text-base text-orange-700">{completionPercentage === 100 ? 'Complete' : 'Active'}</div>
               <div className="text-xs text-orange-600">Status</div>
             </div>
           </div>
         </Card>
       </div>
 
-      {/* Lesson List */}
-      <Card className="p-6">
-        <h2 className="text-2xl font-bold mb-6">Course Curriculum</h2>
+      {/* Lesson List - Mobile Optimized */}
+      <Card className="p-3 sm:p-6">
+        <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-4 sm:mb-6">Course Curriculum</h2>
         
-        <div className="space-y-4">
+        <div className="space-y-2 sm:space-y-4">
           {lessons.map((lesson, index) => {
             const isCompleted = completedLessons.includes(lesson.id);
             const isLocked = isLessonLocked(lesson, index);
@@ -204,67 +207,89 @@ export default function CourseViewer({
             return (
               <Card 
                 key={lesson.id}
-                className={`p-4 transition-all cursor-pointer hover:shadow-md ${
+                className={`p-3 sm:p-4 transition-all cursor-pointer hover:shadow-md ${
                   isLocked ? 'opacity-50 cursor-not-allowed' : ''
                 } ${
                   isCurrent ? 'border-primary border-2' : ''
                 }`}
                 onClick={() => !isLocked && handleLessonSelect(lesson.id)}
               >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                      isCompleted ? 'bg-green-500 text-white' :
-                      isLocked ? 'bg-gray-300 text-gray-600' :
-                      'bg-blue-500 text-white'
-                    }`}>
-                      {isCompleted ? (
-                        <CheckCircle className="w-5 h-5" />
-                      ) : isLocked ? (
-                        <Lock className="w-5 h-5" />
-                      ) : (
-                        <Play className="w-5 h-5" />
-                      )}
-                    </div>
-                    
-                    <div className="flex-1">
-                      <h3 className="font-bold text-lg">{lesson.title}</h3>
-                      <p className="text-muted-foreground">{lesson.description}</p>
-                      <div className="flex items-center gap-4 mt-2">
-                        <Badge variant="outline" className="text-xs">
-                          {lesson.duration}
-                        </Badge>
-                        <Badge variant="outline" className="text-xs">
-                          {lesson.quiz.length} questions
-                        </Badge>
-                        {isCurrent && (
-                          <Badge className="text-xs bg-blue-500">
-                            Continue Here
+                <div className="flex items-center gap-3 sm:gap-4">
+                  {/* Visual Status Indicator */}
+                  <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
+                    isCompleted ? 'bg-green-500 text-white' :
+                    isLocked ? 'bg-gray-300 text-gray-600' :
+                    isCurrent ? 'bg-primary text-primary-foreground' :
+                    'bg-blue-500 text-white'
+                  }`}>
+                    {isCompleted ? (
+                      <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" />
+                    ) : isLocked ? (
+                      <Lock className="w-4 h-4 sm:w-5 sm:h-5" />
+                    ) : (
+                      <Play className="w-4 h-4 sm:w-5 sm:h-5" />
+                    )}
+                  </div>
+                  
+                  {/* Lesson Content */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-bold text-sm sm:text-base md:text-lg truncate">{lesson.title}</h3>
+                        <p className="text-muted-foreground text-xs sm:text-sm overflow-hidden mt-1">{lesson.description}</p>
+                        
+                        {/* Mobile-optimized badges */}
+                        <div className="flex items-center gap-2 mt-2">
+                          <Badge variant="outline" className="text-xs flex items-center gap-1">
+                            <Clock className="w-3 h-3" />
+                            {lesson.duration}
                           </Badge>
+                          <Badge variant="outline" className="text-xs flex items-center gap-1 hidden sm:flex">
+                            <BookOpen className="w-3 h-3" />
+                            {lesson.quiz.length} questions
+                          </Badge>
+                          {isCurrent && (
+                            <Badge className="text-xs bg-primary">
+                              Continue Here
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+                      
+                      {/* Action Button */}
+                      <div className="flex flex-col items-end gap-2 flex-shrink-0">
+                        {isCompleted && (
+                          <Badge className="bg-green-500 text-xs hidden sm:flex">
+                            <Trophy className="w-3 h-3 mr-1" />
+                            Complete
+                          </Badge>
+                        )}
+                        
+                        {!isLocked && (
+                          <Button
+                            size="sm"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleLessonSelect(lesson.id);
+                            }}
+                            className="h-8 px-3 text-xs sm:text-sm"
+                          >
+                            {isCompleted ? (
+                              <span className="flex items-center gap-1">
+                                <Trophy className="w-3 h-3 sm:hidden" />
+                                <span className="hidden sm:inline">Review</span>
+                                <span className="sm:hidden">Done</span>
+                              </span>
+                            ) : (
+                              <span className="flex items-center gap-1">
+                                <Play className="w-3 h-3" />
+                                <span className="hidden sm:inline">Start</span>
+                              </span>
+                            )}
+                          </Button>
                         )}
                       </div>
                     </div>
-                  </div>
-                  
-                  <div className="flex items-center gap-3">
-                    {isCompleted && (
-                      <Badge className="bg-green-500">
-                        <Trophy className="w-3 h-3 mr-1" />
-                        Complete
-                      </Badge>
-                    )}
-                    
-                    {!isLocked && (
-                      <Button
-                        size="sm"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleLessonSelect(lesson.id);
-                        }}
-                      >
-                        {isCompleted ? 'Review' : 'Start'}
-                      </Button>
-                    )}
                   </div>
                 </div>
               </Card>
@@ -272,20 +297,20 @@ export default function CourseViewer({
           })}
         </div>
 
-        {/* Course Completion Message */}
+        {/* Course Completion Message - Mobile Optimized */}
         {completionPercentage === 100 && (
-          <Card className="p-6 mt-6 bg-gradient-to-r from-green-50 to-blue-50 border-green-200">
+          <Card className="p-4 sm:p-6 mt-4 sm:mt-6 bg-gradient-to-r from-green-50 to-blue-50 border-green-200">
             <div className="text-center">
-              <Trophy className="w-16 h-16 mx-auto mb-4 text-yellow-500" />
-              <h3 className="text-2xl font-bold text-green-700 mb-2">Congratulations!</h3>
-              <p className="text-green-600 mb-4">
+              <Trophy className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 text-yellow-500" />
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-green-700 mb-2">Congratulations!</h3>
+              <p className="text-sm sm:text-base text-green-600 mb-4">
                 You've completed the {courseTitle} course. You're now ready to apply your knowledge!
               </p>
-              <div className="flex justify-center gap-4">
-                <Button className="bg-green-500 hover:bg-green-600">
+              <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+                <Button className="bg-green-500 hover:bg-green-600 text-sm">
                   Download Certificate
                 </Button>
-                <Button variant="outline">
+                <Button variant="outline" className="text-sm">
                   Share Achievement
                 </Button>
               </div>

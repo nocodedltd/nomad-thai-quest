@@ -387,40 +387,41 @@ export default function Lesson() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
+      {/* Header - Mobile Optimized */}
       <div className="border-b bg-card">
-        <div className="max-w-4xl mx-auto p-6">
-          <div className="flex items-center gap-4 mb-4">
-            <Button variant="ghost" size="sm" onClick={handleBackToCourse}>
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Course
+        <div className="max-w-4xl mx-auto p-3 sm:p-6">
+          <div className="flex items-center gap-2 sm:gap-4 mb-3 sm:mb-4">
+            <Button variant="ghost" size="sm" onClick={handleBackToCourse} className="h-8 sm:h-9">
+              <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">Back to Course</span>
+              <span className="sm:hidden">Back</span>
             </Button>
-            <div className="text-sm text-muted-foreground">
+            <div className="text-xs sm:text-sm text-muted-foreground truncate">
               {courseId?.charAt(0).toUpperCase() + courseId?.slice(1).replace('-', ' ')} • Lesson {lessonId}
             </div>
           </div>
           
-          <h1 className="text-2xl font-bold mb-2">{lessonData.title}</h1>
-          <p className="text-muted-foreground mb-4">{lessonData.description}</p>
+          <h1 className="text-lg sm:text-xl md:text-2xl font-bold mb-2">{lessonData.title}</h1>
+          <p className="text-muted-foreground text-sm sm:text-base mb-3 sm:mb-4 overflow-hidden">{lessonData.description}</p>
           
-          <div className="flex items-center gap-6 text-sm text-muted-foreground mb-4">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
             <span className="flex items-center gap-1">
-              <Clock className="w-4 h-4" />
+              <Clock className="w-3 h-3 sm:w-4 sm:h-4" />
               {lessonData.duration} min
             </span>
             <span className="flex items-center gap-1">
-              <Award className="w-4 h-4" />
+              <Award className="w-3 h-3 sm:w-4 sm:h-4" />
               {lessonData.xpReward} XP
             </span>
             <span className="capitalize">{lessonData.difficulty}</span>
           </div>
           
-          <ProgressBar progress={progress} showPercentage={true} size="md" />
+          <ProgressBar progress={progress} showPercentage={true} size="sm" className="sm:size-md" />
         </div>
       </div>
 
       {/* Content */}
-      <div className="max-w-4xl mx-auto p-6">
+      <div className="max-w-4xl mx-auto p-3 sm:p-6">
         {currentStep === 'video' && (
           <div className="space-y-6">
             {/* Video Section */}

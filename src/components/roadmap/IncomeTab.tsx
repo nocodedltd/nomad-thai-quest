@@ -10,14 +10,9 @@ import {
   Bot,
   GraduationCap,
   Play,
-  TrendingUp,
-  Users,
-  Award,
-  Building,
   Search,
   MapPin,
   Clock,
-  ArrowRight,
   Lock
 } from "lucide-react";
 import { useUser } from "@/contexts/user-context";
@@ -140,44 +135,7 @@ const jobListings = [
   }
 ];
 
-const incomeStrategies = [
-  {
-    title: "Freelancing",
-    description: "Leverage your existing skills",
-    potential: "$2,000-8,000/month",
-    difficulty: "Easy",
-    timeToStart: "1-2 weeks",
-    icon: Users,
-    color: "from-green-500 to-green-600"
-  },
-  {
-    title: "Online Business",
-    description: "Build scalable income streams", 
-    potential: "$5,000-20,000/month",
-    difficulty: "Medium",
-    timeToStart: "1-3 months",
-    icon: TrendingUp,
-    color: "from-blue-500 to-blue-600"
-  },
-  {
-    title: "Remote Employment",
-    description: "Secure location-independent job",
-    potential: "$60,000-150,000/year", 
-    difficulty: "Medium",
-    timeToStart: "2-4 weeks",
-    icon: Building,
-    color: "from-purple-500 to-purple-600"
-  },
-  {
-    title: "Consulting",
-    description: "Monetize your expertise",
-    potential: "$10,000-50,000/month",
-    difficulty: "Hard", 
-    timeToStart: "1-2 months",
-    icon: Award,
-    color: "from-orange-500 to-orange-600"
-  }
-];
+
 
 type IncomeTabProps = {
   compact?: boolean;
@@ -185,7 +143,7 @@ type IncomeTabProps = {
 
 export default function IncomeTab({ compact = false }: IncomeTabProps) {
   const { userType } = useUser();
-  const [selectedTab, setSelectedTab] = useState<'courses' | 'jobs' | 'strategies' | 'affiliate'>('courses');
+  const [selectedTab, setSelectedTab] = useState<'courses' | 'jobs' | 'affiliate'>('courses');
   const [searchTerm, setSearchTerm] = useState("");
   const [currentView, setCurrentView] = useState<'overview' | 'course'>('overview');
   const [selectedCourseId, setSelectedCourseId] = useState<string>('');
@@ -279,7 +237,7 @@ export default function IncomeTab({ compact = false }: IncomeTabProps) {
       {/* Compact Tabs */}
       <div className={`flex justify-center ${compact ? 'mb-4' : 'mb-6'}`}>
         <div className="flex bg-muted rounded-lg p-1">
-          {['courses', 'jobs', 'strategies', 'affiliate'].map((tab) => (
+          {['courses', 'jobs', 'affiliate'].map((tab) => (
             <Button
               key={tab}
               variant={selectedTab === tab ? 'default' : 'ghost'}
@@ -317,42 +275,7 @@ export default function IncomeTab({ compact = false }: IncomeTabProps) {
               </div>
             )}
             
-            {selectedTab === 'strategies' && (
-              <div>
-                <div className="grid md:grid-cols-2 gap-6 mb-8">
-                  {incomeStrategies.map((strategy) => {
-                    const Icon = strategy.icon;
-                    return (
-                      <Card key={strategy.title} className="p-6 opacity-75">
-                        <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${strategy.color} flex items-center justify-center mb-4`}>
-                          <Icon className="w-6 h-6 text-white" />
-                        </div>
-                        <h3 className="text-xl font-bold mb-2">{strategy.title}</h3>
-                        <p className="text-muted-foreground mb-4">{strategy.description}</p>
-                        <div className="space-y-2 text-sm">
-                          <div className="flex justify-between">
-                            <span>Potential Income:</span>
-                            <span className="font-medium">{strategy.potential}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span>Difficulty:</span>
-                            <Badge variant="outline">{strategy.difficulty}</Badge>
-                          </div>
-                          <div className="flex justify-between">
-                            <span>Time to Start:</span>
-                            <span className="font-medium">{strategy.timeToStart}</span>
-                          </div>
-                        </div>
-                      </Card>
-                    );
-                  })}
-                </div>
-                <UpgradePrompt 
-                  title="Access Detailed Strategy Guides"
-                  description="Get step-by-step implementation guides for each income strategy"
-                />
-              </div>
-            )}
+
             
             {selectedTab === 'jobs' && (
               <div>
@@ -466,41 +389,7 @@ export default function IncomeTab({ compact = false }: IncomeTabProps) {
               </div>
             )}
             
-            {selectedTab === 'strategies' && (
-              <div>
-                <div className="grid md:grid-cols-2 gap-6">
-                  {incomeStrategies.map((strategy) => {
-                    const Icon = strategy.icon;
-                    return (
-                      <Card key={strategy.title} className="p-4">
-                        <div className={`w-10 h-10 rounded-full bg-gradient-to-r ${strategy.color} flex items-center justify-center mb-3`}>
-                          <Icon className="w-5 h-5 text-white" />
-                        </div>
-                        <h3 className="text-lg font-bold mb-2">{strategy.title}</h3>
-                        <p className="text-sm text-muted-foreground mb-3">{strategy.description}</p>
-                        <div className="space-y-2 text-sm mb-4">
-                          <div className="flex justify-between">
-                            <span>Potential Income:</span>
-                            <span className="font-medium">{strategy.potential}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span>Difficulty:</span>
-                            <Badge variant="outline">{strategy.difficulty}</Badge>
-                          </div>
-                          <div className="flex justify-between">
-                            <span>Time to Start:</span>
-                            <span className="font-medium">{strategy.timeToStart}</span>
-                          </div>
-                        </div>
-                        <Button variant="outline" className="w-full">
-                          Learn More <ArrowRight className="w-4 h-4 ml-2" />
-                        </Button>
-                      </Card>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
+
             
             {selectedTab === 'affiliate' && (
               <div>
@@ -590,41 +479,7 @@ export default function IncomeTab({ compact = false }: IncomeTabProps) {
               </div>
             )}
             
-            {selectedTab === 'strategies' && (
-              <div>
-                <div className="grid md:grid-cols-2 gap-6">
-                  {incomeStrategies.map((strategy) => {
-                    const Icon = strategy.icon;
-                    return (
-                      <Card key={strategy.title} className="p-6 hover:shadow-lg transition-shadow">
-                        <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${strategy.color} flex items-center justify-center mb-4`}>
-                          <Icon className="w-6 h-6 text-white" />
-                        </div>
-                        <h3 className="text-xl font-bold mb-2">{strategy.title}</h3>
-                        <p className="text-muted-foreground mb-4">{strategy.description}</p>
-                        <div className="space-y-2 text-sm mb-4">
-                          <div className="flex justify-between">
-                            <span>Potential Income:</span>
-                            <span className="font-medium">{strategy.potential}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span>Difficulty:</span>
-                            <Badge variant="outline">{strategy.difficulty}</Badge>
-                          </div>
-                          <div className="flex justify-between">
-                            <span>Time to Start:</span>
-                            <span className="font-medium">{strategy.timeToStart}</span>
-                          </div>
-                        </div>
-                        <Button className="w-full">
-                          View Implementation Guide <ArrowRight className="w-4 h-4 ml-2" />
-                        </Button>
-                      </Card>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
+
             
             {selectedTab === 'affiliate' && (
               <div>

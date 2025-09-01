@@ -525,6 +525,7 @@ function CompactVisaCard({ visa, userType, onVisaSelect }: {
 export default function VisaTab({ compact = false }: { compact?: boolean }) {
   const { userType } = useUser();
   const [selectedVisa, setSelectedVisa] = useState("tourist");
+  const [selectedDurationTab, setSelectedDurationTab] = useState<'0-1' | '1-3' | '3+'>('0-1');
 
   const hasAccess = (accessLevel: string) => {
     if (accessLevel === "free") return true;
@@ -535,6 +536,42 @@ export default function VisaTab({ compact = false }: { compact?: boolean }) {
 
   const handleVisaSelect = (visaId: string) => {
     setSelectedVisa(visaId);
+  };
+
+  // Categorize visas by duration
+  const visaCategories = {
+    '0-1': visaTypes.filter(visa => {
+      const duration = visa.duration.toLowerCase();
+      return duration.includes('days') || duration.includes('month') || 
+             (duration.includes('1 year') && !duration.includes('renewable'));
+    }),
+    '1-3': visaTypes.filter(visa => {
+      const duration = visa.duration.toLowerCase();
+      return duration.includes('1 year renewable') || duration.includes('2') || duration.includes('3');
+    }),
+    '3+': visaTypes.filter(visa => {
+      const duration = visa.duration.toLowerCase();
+      return duration.includes('4') || duration.includes('5') || duration.includes('10') || 
+             duration.includes('20') || duration.includes('long-term');
+    })
+  };
+
+  const getDurationLabel = (tab: string) => {
+    switch (tab) {
+      case '0-1': return '0-1 Years';
+      case '1-3': return '1-3 Years';
+      case '3+': return '3+ Years';
+      default: return tab;
+    }
+  };
+
+  const getDurationDescription = (tab: string) => {
+    switch (tab) {
+      case '0-1': return 'Short-term stays and entry-level visas';
+      case '1-3': return 'Medium-term visas for education and business';
+      case '3+': return 'Long-term and premium visa options';
+      default: return '';
+    }
   };
 
   return (
@@ -554,12 +591,35 @@ export default function VisaTab({ compact = false }: { compact?: boolean }) {
         </div>
       )}
 
+      {/* Duration-based Sub Navigation */}
+      <div className="flex justify-center mb-6">
+        <div className="flex bg-muted rounded-lg p-1">
+          {(['0-1', '1-3', '3+'] as const).map((tab) => (
+            <Button
+              key={tab}
+              variant={selectedDurationTab === tab ? 'default' : 'ghost'}
+              onClick={() => setSelectedDurationTab(tab)}
+              className="capitalize px-4 py-2 text-sm"
+            >
+              {getDurationLabel(tab)}
+            </Button>
+          ))}
+        </div>
+      </div>
+
+      {/* Duration Description */}
+      <div className="text-center mb-6">
+        <p className="text-sm text-muted-foreground">
+          {getDurationDescription(selectedDurationTab)}
+        </p>
+      </div>
+
       <UserContent
         guestContent={
           <div>
-            {/* Compact Visa Cards */}
+            {/* Compact Visa Cards for Selected Duration */}
             <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3">
-              {visaTypes.map((visa) => (
+              {visaCategories[selectedDurationTab].map((visa) => (
                 <CompactVisaCard
                   key={visa.id}
                   visa={visa}
@@ -573,7 +633,7 @@ export default function VisaTab({ compact = false }: { compact?: boolean }) {
               title="Unlock Complete Visa Guide"
               description="Get detailed guides for all visa types, document templates, and step-by-step processes"
               features={[
-                "All 5 visa type guides",
+                "All 9 visa type guides",
                 "Document templates & checklists", 
                 "Application timelines",
                 "Legal consultation access"
@@ -584,9 +644,9 @@ export default function VisaTab({ compact = false }: { compact?: boolean }) {
         
         freeContent={
           <div>
-            {/* Compact Visa Cards */}
+            {/* Compact Visa Cards for Selected Duration */}
             <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3">
-              {visaTypes.map((visa) => (
+              {visaCategories[selectedDurationTab].map((visa) => (
                 <CompactVisaCard
                   key={visa.id}
                   visa={visa}
@@ -606,9 +666,9 @@ export default function VisaTab({ compact = false }: { compact?: boolean }) {
         
         paidContent={
           <div>
-            {/* Compact Visa Cards */}
+            {/* Compact Visa Cards for Selected Duration */}
             <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3">
-              {visaTypes.map((visa) => (
+              {visaCategories[selectedDurationTab].map((visa) => (
                 <CompactVisaCard
                   key={visa.id}
                   visa={visa}

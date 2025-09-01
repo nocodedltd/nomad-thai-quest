@@ -40,7 +40,7 @@ import { HeroSection } from "@/components/landing/hero-section";
 import { FeaturesSection } from "@/components/landing/features-section";
 import { CTASection } from "@/components/landing/cta-section";
 import { MotivationSection } from "@/components/home/MotivationSection";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // Thailand motivation facts and statistics
 const thailandFacts = {
@@ -191,6 +191,15 @@ const quickActions = [
 function MotivationalCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  // Auto-advance timer
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % motivationalSlides.length);
+    }, 10000); // 10 seconds
+
+    return () => clearInterval(timer);
+  }, []);
+
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % motivationalSlides.length);
   };
@@ -203,7 +212,7 @@ function MotivationalCarousel() {
   const Icon = currentSlideData.icon;
 
   return (
-    <Card className={`p-4 bg-gradient-to-br ${currentSlideData.color}`}>
+    <Card className={`p-4 bg-gradient-to-br ${currentSlideData.color} overflow-hidden`}>
       <div className="text-center mb-3">
         <div className="flex items-center justify-center gap-2 mb-2">
           <Icon className="w-5 h-5 text-yellow-500" />
@@ -212,7 +221,9 @@ function MotivationalCarousel() {
         <p className="text-sm text-muted-foreground mb-3">{currentSlideData.subtitle}</p>
       </div>
       
-      {currentSlideData.content}
+      <div className="transition-all duration-500 ease-in-out transform">
+        {currentSlideData.content}
+      </div>
       
       <div className="mt-3 text-center">
         <div className="bg-green-500 text-white p-2 rounded text-sm font-bold">
@@ -222,7 +233,7 @@ function MotivationalCarousel() {
 
       {/* Navigation dots and arrows */}
       <div className="flex items-center justify-between mt-3">
-        <Button variant="ghost" size="sm" onClick={prevSlide} className="p-1">
+        <Button variant="ghost" size="sm" onClick={prevSlide} className="p-1 hover:bg-white/20 transition-colors">
           <ChevronLeft className="w-4 h-4" />
         </Button>
         
@@ -231,17 +242,41 @@ function MotivationalCarousel() {
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
-              className={`w-2 h-2 rounded-full transition-colors ${
-                index === currentSlide ? 'bg-green-500' : 'bg-gray-300 dark:bg-gray-600'
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                index === currentSlide 
+                  ? 'bg-green-500 scale-125' 
+                  : 'bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500'
               }`}
             />
           ))}
         </div>
         
-        <Button variant="ghost" size="sm" onClick={nextSlide} className="p-1">
+        <Button variant="ghost" size="sm" onClick={nextSlide} className="p-1 hover:bg-white/20 transition-colors">
           <ChevronRight className="w-4 h-4" />
         </Button>
       </div>
+
+      {/* Progress bar for auto-advance */}
+      <div className="mt-3">
+        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1 overflow-hidden">
+          <div 
+            className="bg-green-500 h-1 rounded-full"
+            style={{ 
+              width: '0%',
+              animation: 'progressBar 10s linear infinite'
+            }}
+          />
+        </div>
+      </div>
+      
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @keyframes progressBar {
+            0% { width: 0%; }
+            100% { width: 100%; }
+          }
+        `
+      }} />
     </Card>
   );
 }

@@ -102,8 +102,7 @@ const motivationalSlides = [
       </div>
     ),
     footer: "🎯 Save $390+ per month = $4,680+ per year!",
-    icon: Coins,
-    color: "from-green-50 to-blue-50 dark:from-green-950 dark:to-blue-950"
+    icon: Coins
   },
   {
     id: 2,
@@ -124,8 +123,7 @@ const motivationalSlides = [
       </div>
     ),
     footer: "💡 Millionaires are choosing Thailand",
-    icon: TrendingUp,
-    color: "from-purple-50 to-pink-50 dark:from-purple-950 dark:to-pink-950"
+    icon: TrendingUp
   },
   {
     id: 3,
@@ -152,8 +150,7 @@ const motivationalSlides = [
       </div>
     ),
     footer: "🌟 Join thousands already living the dream",
-    icon: Trophy,
-    color: "from-yellow-50 to-orange-50 dark:from-yellow-950 dark:to-orange-950"
+    icon: Trophy
   }
 ];
 
@@ -212,7 +209,7 @@ function MotivationalCarousel() {
   const Icon = currentSlideData.icon;
 
   return (
-    <Card className={`p-4 bg-gradient-to-br ${currentSlideData.color} overflow-hidden`}>
+    <Card className="p-4 bg-transparent border border-gray-200 dark:border-gray-700 overflow-hidden">
       <div className="text-center mb-3">
         <div className="flex items-center justify-center gap-2 mb-2">
           <Icon className="w-5 h-5 text-yellow-500" />

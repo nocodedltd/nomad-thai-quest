@@ -89,12 +89,12 @@ const motivationalSlides = [
     subtitle: "$2,000/month in Thailand = More than $3,500/month in the West",
     content: (
       <div className="grid grid-cols-2 gap-3">
-        <div className="text-center p-2 bg-red-100 dark:bg-red-900 rounded">
+        <div className="text-center p-2 bg-transparent border border-red-200 dark:border-red-800 rounded">
           <div className="text-xs text-muted-foreground">Western Life</div>
           <div className="text-lg font-bold text-red-600">${thailandFacts.costComparison.western.total}</div>
           <div className="text-xs">Monthly expenses</div>
         </div>
-        <div className="text-center p-2 bg-green-100 dark:bg-green-900 rounded">
+        <div className="text-center p-2 bg-transparent border border-green-200 dark:border-green-800 rounded">
           <div className="text-xs text-muted-foreground">Thailand Life</div>
           <div className="text-lg font-bold text-green-600">${thailandFacts.costComparison.thailand.total}</div>
           <div className="text-xs">Monthly expenses</div>
@@ -110,12 +110,12 @@ const motivationalSlides = [
     subtitle: "Smart money is moving to Thailand",
     content: (
       <div className="grid grid-cols-2 gap-3">
-        <div className="text-center p-2 bg-red-100 dark:bg-red-900 rounded">
+        <div className="text-center p-2 bg-transparent border border-red-200 dark:border-red-800 rounded">
           <TrendingDown className="w-6 h-6 mx-auto text-red-500 mb-1" />
           <div className="text-lg font-bold text-red-600">-8,500</div>
           <div className="text-xs">UK millionaires left</div>
         </div>
-        <div className="text-center p-2 bg-green-100 dark:bg-green-900 rounded">
+        <div className="text-center p-2 bg-transparent border border-green-200 dark:border-green-800 rounded">
           <TrendingUpIcon className="w-6 h-6 mx-auto text-green-500 mb-1" />
           <div className="text-lg font-bold text-green-600">+3,000</div>
           <div className="text-xs">Thailand millionaires</div>
@@ -131,19 +131,19 @@ const motivationalSlides = [
     subtitle: "Join the digital nomad revolution",
     content: (
       <div className="grid grid-cols-2 gap-2">
-        <div className="text-center p-2 bg-yellow-100 dark:bg-yellow-900 rounded">
+        <div className="text-center p-2 bg-transparent border border-yellow-200 dark:border-yellow-800 rounded">
           <div className="text-lg font-bold text-yellow-600">#1</div>
           <div className="text-xs">Bangkok Ranked</div>
         </div>
-        <div className="text-center p-2 bg-blue-100 dark:bg-blue-900 rounded">
+        <div className="text-center p-2 bg-transparent border border-blue-200 dark:border-blue-800 rounded">
           <div className="text-lg font-bold text-blue-600">47K+</div>
           <div className="text-xs">Digital Nomads</div>
         </div>
-        <div className="text-center p-2 bg-green-100 dark:bg-green-900 rounded">
+        <div className="text-center p-2 bg-transparent border border-green-200 dark:border-green-800 rounded">
           <div className="text-lg font-bold text-green-600">+65%</div>
           <div className="text-xs">Income Boost</div>
         </div>
-        <div className="text-center p-2 bg-purple-100 dark:bg-purple-900 rounded">
+        <div className="text-center p-2 bg-transparent border border-purple-200 dark:border-purple-800 rounded">
           <div className="text-lg font-bold text-purple-600">94%</div>
           <div className="text-xs">Visa Success</div>
         </div>
@@ -313,7 +313,7 @@ export default function Home() {
             {/* Two-column layout for progress and motivation */}
             <div className="grid md:grid-cols-2 gap-4">
               {/* Compact Progress Overview */}
-              <Card className="p-4 bg-gradient-to-br from-blue-50 to-green-50 dark:from-blue-950 dark:to-green-950">
+              <Card className="p-4 bg-transparent border border-gray-200 dark:border-gray-700">
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div>
                     <div className="text-xl font-bold text-blue-600">Phase {userState.progress?.currentPhase || 1}</div>
@@ -331,7 +331,7 @@ export default function Home() {
               </Card>
 
               {/* Discord Community */}
-              <Card className="p-4 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950 dark:to-blue-950">
+              <Card className="p-4 bg-transparent border border-gray-200 dark:border-gray-700">
                 <div className="flex items-center gap-3">
                   <MessageCircle className="w-8 h-8 text-indigo-500" />
                   <div className="flex-1">
@@ -355,11 +355,11 @@ export default function Home() {
               <MotivationalCarousel />
 
               {/* Combined Actions & Priorities */}
-              <Card className="p-4">
+              <Card className="p-4 bg-transparent border border-gray-200 dark:border-gray-700">
                 <h3 className="font-bold mb-3">Today's Priorities & Actions</h3>
                 <div className="space-y-3">
                   {/* Priority Items */}
-                  <div className="flex items-center gap-2 p-2 bg-green-50 dark:bg-green-950 rounded">
+                  <div className="flex items-center gap-2 p-2 bg-transparent border border-green-200 dark:border-green-800 rounded">
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                     <div className="flex-1">
                       <p className="text-sm font-medium">Continue AI Course</p>
@@ -369,7 +369,7 @@ export default function Home() {
                       Continue
                     </Button>
                   </div>
-                  <div className="flex items-center gap-2 p-2 bg-blue-50 dark:bg-blue-950 rounded">
+                  <div className="flex items-center gap-2 p-2 bg-transparent border border-blue-200 dark:border-blue-800 rounded">
                     <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                     <div className="flex-1">
                       <p className="text-sm font-medium">Submit Visa</p>
@@ -385,7 +385,7 @@ export default function Home() {
                     {quickActions.map((action) => {
                       const Icon = action.icon;
                       return (
-                        <Card key={action.title} className="p-2 hover:shadow-lg transition-all cursor-pointer" 
+                        <Card key={action.title} className="p-2 hover:shadow-lg transition-all cursor-pointer bg-transparent border border-gray-200 dark:border-gray-700" 
                               onClick={() => navigate(action.path)}>
                           <div className="flex items-center gap-2">
                             <div className={`w-6 h-6 rounded-full bg-gradient-to-r ${action.color} flex items-center justify-center`}>
@@ -404,7 +404,7 @@ export default function Home() {
             </div>
 
             {/* Upgrade Prompt - Full Width */}
-            <Card className="p-4 bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-950 dark:to-orange-950">
+            <Card className="p-4 bg-transparent border border-yellow-200 dark:border-yellow-800">
               <div className="text-center">
                 <h3 className="font-bold mb-2">🚀 Unlock Premium</h3>
                 <p className="text-sm text-muted-foreground mb-3">Advanced strategies & support</p>
@@ -432,7 +432,7 @@ export default function Home() {
             {/* Two-column layout for progress and motivation */}
             <div className="grid md:grid-cols-2 gap-4">
               {/* Compact Progress Overview */}
-              <Card className="p-4 bg-gradient-to-br from-blue-50 to-green-50 dark:from-blue-950 dark:to-green-950">
+              <Card className="p-4 bg-transparent border border-gray-200 dark:border-gray-700">
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="font-bold">Current Status</h3>
                   <Button variant="outline" size="sm" onClick={() => navigate('/progress')}>
@@ -456,7 +456,7 @@ export default function Home() {
               </Card>
 
               {/* Discord Community */}
-              <Card className="p-4 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950 dark:to-blue-950">
+              <Card className="p-4 bg-transparent border border-gray-200 dark:border-gray-700">
                 <div className="flex items-center gap-3">
                   <MessageCircle className="w-8 h-8 text-indigo-500" />
                   <div className="flex-1">
@@ -480,11 +480,11 @@ export default function Home() {
               <MotivationalCarousel />
 
               {/* Combined Actions & Priorities */}
-              <Card className="p-4">
+              <Card className="p-4 bg-transparent border border-gray-200 dark:border-gray-700">
                 <h3 className="font-bold mb-3">Today's Priorities & Actions</h3>
                 <div className="space-y-3">
                   {/* Priority Items */}
-                  <div className="flex items-center gap-2 p-2 bg-green-50 dark:bg-green-950 rounded">
+                  <div className="flex items-center gap-2 p-2 bg-transparent border border-green-200 dark:border-green-800 rounded">
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                     <div className="flex-1">
                       <p className="text-sm font-medium">Continue AI Course</p>
@@ -494,7 +494,7 @@ export default function Home() {
                       Continue
                     </Button>
                   </div>
-                  <div className="flex items-center gap-2 p-2 bg-blue-50 dark:bg-blue-950 rounded">
+                  <div className="flex items-center gap-2 p-2 bg-transparent border border-blue-200 dark:border-blue-800 rounded">
                     <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                     <div className="flex-1">
                       <p className="text-sm font-medium">Submit Visa</p>
@@ -510,7 +510,7 @@ export default function Home() {
                     {quickActions.map((action) => {
                       const Icon = action.icon;
                       return (
-                        <Card key={action.title} className="p-2 hover:shadow-lg transition-all cursor-pointer" 
+                        <Card key={action.title} className="p-2 hover:shadow-lg transition-all cursor-pointer bg-transparent border border-gray-200 dark:border-gray-700" 
                               onClick={() => navigate(action.path)}>
                           <div className="flex items-center gap-2">
                             <div className={`w-6 h-6 rounded-full bg-gradient-to-r ${action.color} flex items-center justify-center`}>

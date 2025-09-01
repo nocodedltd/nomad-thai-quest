@@ -338,7 +338,11 @@ export default function Home() {
                     <h3 className="font-bold">Join Our Discord</h3>
                     <p className="text-xs text-muted-foreground">2,000+ Thailand nomads</p>
                   </div>
-                  <Button size="sm" className="bg-indigo-500 hover:bg-indigo-600">
+                  <Button 
+                    size="sm" 
+                    className="bg-indigo-500 hover:bg-indigo-600"
+                    onClick={() => window.open('https://discord.com/invite/C4gHpDDqet', '_blank')}
+                  >
                     Join
                   </Button>
                 </div>
@@ -459,7 +463,11 @@ export default function Home() {
                     <h3 className="font-bold">Join Our Discord</h3>
                     <p className="text-xs text-muted-foreground">2,000+ Thailand nomads</p>
                   </div>
-                  <Button size="sm" className="bg-indigo-500 hover:bg-indigo-600">
+                  <Button 
+                    size="sm" 
+                    className="bg-indigo-500 hover:bg-indigo-600"
+                    onClick={() => window.open('https://discord.com/invite/C4gHpDDqet', '_blank')}
+                  >
                     Join
                   </Button>
                 </div>

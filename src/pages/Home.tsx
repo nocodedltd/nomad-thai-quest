@@ -334,7 +334,7 @@ export default function Home() {
               </Card>
 
               {/* Discord Community */}
-              <Card className="p-4 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950 dark:to-purple-950">
+              <Card className="p-4 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950 dark:to-blue-950">
                 <div className="flex items-center gap-3">
                   <MessageCircle className="w-8 h-8 text-indigo-500" />
                   <div className="flex-1">
@@ -348,44 +348,71 @@ export default function Home() {
               </Card>
             </div>
 
-            {/* Motivational Carousel */}
-            <MotivationalCarousel />
-
-            {/* Two-column layout for actions and upgrade */}
+            {/* Two-column layout: Motivational Carousel + Combined Actions & Priorities */}
             <div className="grid md:grid-cols-2 gap-4">
-              {/* Quick Actions */}
-              <div className="grid grid-cols-2 gap-3">
-                {quickActions.slice(0, 2).map((action) => {
-                  const Icon = action.icon;
-                  return (
-                    <Card key={action.title} className="p-3 hover:shadow-lg transition-all cursor-pointer" 
-                          onClick={() => navigate(action.path)}>
-                      <div className="flex items-center gap-2">
-                        <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${action.color} flex items-center justify-center`}>
-                          <Icon className="w-4 h-4 text-white" />
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="font-semibold text-sm">{action.title}</h3>
-                          <p className="text-xs text-muted-foreground">{action.description}</p>
-                        </div>
-                      </div>
-                    </Card>
-                  );
-                })}
-              </div>
+              {/* Motivational Carousel - Half Width */}
+              <MotivationalCarousel />
 
-              {/* Upgrade Prompt */}
-              <Card className="p-4 bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-950 dark:to-orange-950">
-                <div className="text-center">
-                  <h3 className="font-bold mb-2">🚀 Unlock Premium</h3>
-                  <p className="text-sm text-muted-foreground mb-3">Advanced strategies & support</p>
-                  <Button size="sm" className="bg-gradient-to-r from-yellow-500 to-orange-500">
-                    <Crown className="w-4 h-4 mr-1" />
-                    Upgrade
-                  </Button>
+              {/* Combined Actions & Priorities */}
+              <Card className="p-4">
+                <h3 className="font-bold mb-3">Today's Priorities & Actions</h3>
+                <div className="space-y-3">
+                  {/* Priority Items */}
+                  <div className="flex items-center gap-2 p-2 bg-green-50 dark:bg-green-950 rounded">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium">Continue AI Course</p>
+                      <p className="text-xs text-muted-foreground">Lesson 6: Client Acquisition</p>
+                    </div>
+                    <Button size="sm" className="bg-green-500 hover:bg-green-600">
+                      Continue
+                    </Button>
+                  </div>
+                  <div className="flex items-center gap-2 p-2 bg-blue-50 dark:bg-blue-950 rounded">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium">Submit Visa</p>
+                      <p className="text-xs text-muted-foreground">Deadline: 5 days</p>
+                    </div>
+                    <Button size="sm" variant="outline">
+                      Submit
+                    </Button>
+                  </div>
+                  
+                  {/* Quick Action Buttons */}
+                  <div className="grid grid-cols-2 gap-2 mt-4">
+                    {quickActions.map((action) => {
+                      const Icon = action.icon;
+                      return (
+                        <Card key={action.title} className="p-2 hover:shadow-lg transition-all cursor-pointer" 
+                              onClick={() => navigate(action.path)}>
+                          <div className="flex items-center gap-2">
+                            <div className={`w-6 h-6 rounded-full bg-gradient-to-r ${action.color} flex items-center justify-center`}>
+                              <Icon className="w-3 h-3 text-white" />
+                            </div>
+                            <div className="flex-1">
+                              <h3 className="font-semibold text-xs">{action.title}</h3>
+                            </div>
+                          </div>
+                        </Card>
+                      );
+                    })}
+                  </div>
                 </div>
               </Card>
             </div>
+
+            {/* Upgrade Prompt - Full Width */}
+            <Card className="p-4 bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-950 dark:to-orange-950">
+              <div className="text-center">
+                <h3 className="font-bold mb-2">🚀 Unlock Premium</h3>
+                <p className="text-sm text-muted-foreground mb-3">Advanced strategies & support</p>
+                <Button size="sm" className="bg-gradient-to-r from-yellow-500 to-orange-500">
+                  <Crown className="w-4 h-4 mr-1" />
+                  Upgrade
+                </Button>
+              </div>
+            </Card>
           </div>
         }
         
@@ -428,7 +455,7 @@ export default function Home() {
               </Card>
 
               {/* Discord Community */}
-              <Card className="p-4 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950 dark:to-purple-950">
+              <Card className="p-4 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950 dark:to-blue-950">
                 <div className="flex items-center gap-3">
                   <MessageCircle className="w-8 h-8 text-indigo-500" />
                   <div className="flex-1">
@@ -442,36 +469,16 @@ export default function Home() {
               </Card>
             </div>
 
-            {/* Motivational Carousel */}
-            <MotivationalCarousel />
-
-            {/* Two-column layout for actions and priorities */}
+            {/* Two-column layout: Motivational Carousel + Combined Actions & Priorities */}
             <div className="grid md:grid-cols-2 gap-4">
-              {/* Quick Actions - All Unlocked */}
-              <div className="grid grid-cols-2 gap-3">
-                {quickActions.map((action) => {
-                  const Icon = action.icon;
-                  return (
-                    <Card key={action.title} className="p-3 hover:shadow-lg transition-all cursor-pointer" 
-                          onClick={() => navigate(action.path)}>
-                      <div className="flex items-center gap-2">
-                        <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${action.color} flex items-center justify-center`}>
-                          <Icon className="w-4 h-4 text-white" />
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="font-semibold text-sm">{action.title}</h3>
-                          <p className="text-xs text-muted-foreground">{action.description}</p>
-                        </div>
-                      </div>
-                    </Card>
-                  );
-                })}
-              </div>
+              {/* Motivational Carousel - Half Width */}
+              <MotivationalCarousel />
 
-              {/* Today's Priorities - Compact */}
+              {/* Combined Actions & Priorities */}
               <Card className="p-4">
-                <h3 className="font-bold mb-3">Today's Priorities</h3>
-                <div className="space-y-2">
+                <h3 className="font-bold mb-3">Today's Priorities & Actions</h3>
+                <div className="space-y-3">
+                  {/* Priority Items */}
                   <div className="flex items-center gap-2 p-2 bg-green-50 dark:bg-green-950 rounded">
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                     <div className="flex-1">
@@ -491,6 +498,26 @@ export default function Home() {
                     <Button size="sm" variant="outline">
                       Submit
                     </Button>
+                  </div>
+                  
+                  {/* Quick Action Buttons */}
+                  <div className="grid grid-cols-2 gap-2 mt-4">
+                    {quickActions.map((action) => {
+                      const Icon = action.icon;
+                      return (
+                        <Card key={action.title} className="p-2 hover:shadow-lg transition-all cursor-pointer" 
+                              onClick={() => navigate(action.path)}>
+                          <div className="flex items-center gap-2">
+                            <div className={`w-6 h-6 rounded-full bg-gradient-to-r ${action.color} flex items-center justify-center`}>
+                              <Icon className="w-3 h-3 text-white" />
+                            </div>
+                            <div className="flex-1">
+                              <h3 className="font-semibold text-xs">{action.title}</h3>
+                            </div>
+                          </div>
+                        </Card>
+                      );
+                    })}
                   </div>
                 </div>
               </Card>

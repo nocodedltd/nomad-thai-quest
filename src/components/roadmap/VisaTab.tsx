@@ -27,6 +27,8 @@ import { UserContent } from "@/components/shared/user-content";
 import { Paywall } from "@/components/shared/paywall";
 import { UpgradePrompt } from "@/components/shared/upgrade-prompt";
 import { cn } from "@/lib/utils";
+import VisaDetailViewer from "@/components/visa/visa-detail-viewer";
+import { visaDetails } from "@/data/visas/visa-details";
 
 const visaTypes = [
   {
@@ -524,7 +526,7 @@ function CompactVisaCard({ visa, userType, onVisaSelect }: {
 
 export default function VisaTab({ compact = false }: { compact?: boolean }) {
   const { userType } = useUser();
-  const [selectedVisa, setSelectedVisa] = useState("tourist");
+  const [selectedVisa, setSelectedVisa] = useState<string | null>(null);
   const [selectedDurationTab, setSelectedDurationTab] = useState<'0-1' | '1-3' | '3+'>('0-1');
 
   const hasAccess = (accessLevel: string) => {
@@ -533,9 +535,14 @@ export default function VisaTab({ compact = false }: { compact?: boolean }) {
   };
 
   const selectedVisaData = visaTypes.find(v => v.id === selectedVisa);
+  const selectedVisaDetail = visaDetails.find(v => v.id === selectedVisa);
 
   const handleVisaSelect = (visaId: string) => {
     setSelectedVisa(visaId);
+  };
+
+  const handleBackToVisaList = () => {
+    setSelectedVisa(null);
   };
 
   // Categorize visas by duration
@@ -573,6 +580,16 @@ export default function VisaTab({ compact = false }: { compact?: boolean }) {
       default: return '';
     }
   };
+
+  // If a visa is selected, show the detail viewer
+  if (selectedVisa && selectedVisaDetail) {
+    return (
+      <VisaDetailViewer 
+        visa={selectedVisaDetail} 
+        onBack={handleBackToVisaList}
+      />
+    );
+  }
 
   return (
     <div>

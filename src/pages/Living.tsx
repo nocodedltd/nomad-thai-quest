@@ -32,6 +32,7 @@ import { useUser } from "@/contexts/user-context";
 import { UserContent } from "@/components/shared/user-content";
 import { Paywall } from "@/components/shared/paywall";
 import { UpgradePrompt } from "@/components/shared/upgrade-prompt";
+import WorldpackersAffiliate from "@/components/accommodation/worldpackers-affiliate";
 
 const accommodationTypes = [
   {
@@ -204,7 +205,7 @@ const realEstateAgents = [
 export default function Living() {
   const navigate = useNavigate();
   const { userType, userState } = useUser();
-  const [selectedTab, setSelectedTab] = useState<'accommodation' | 'community'>('accommodation');
+  const [selectedTab, setSelectedTab] = useState<'accommodation' | 'community' | 'volunteering'>('accommodation');
   const [accommodationType, setAccommodationType] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -246,6 +247,12 @@ export default function Living() {
               onClick={() => setSelectedTab('community')}
             >
               👥 Community
+            </Button>
+            <Button
+              variant={selectedTab === 'volunteering' ? 'default' : 'ghost'}
+              onClick={() => setSelectedTab('volunteering')}
+            >
+              🤝 Volunteering
             </Button>
           </div>
         </div>
@@ -300,6 +307,28 @@ export default function Living() {
                       "Local networking groups", 
                       "Activity partners",
                       "Insider recommendations"
+                    ]}
+                  />
+                </div>
+              )}
+
+              {selectedTab === 'volunteering' && (
+                <div>
+                  <div className="text-center mb-8">
+                    <h3 className="text-2xl font-bold mb-4">Volunteering Opportunities</h3>
+                    <p className="text-muted-foreground">
+                      Exchange your skills for free accommodation while exploring Thailand
+                    </p>
+                  </div>
+                  
+                  <UpgradePrompt 
+                    title="Access Volunteering Platform"
+                    description="Get $10 off Worldpackers membership and access to global volunteering opportunities"
+                    features={[
+                      "Free accommodation in exchange for work",
+                      "Thailand-specific opportunities",
+                      "Flexible schedules for digital nomads",
+                      "Global network of hosts"
                     ]}
                   />
                 </div>
@@ -468,6 +497,12 @@ export default function Living() {
                       ))}
                     </div>
                   </Paywall>
+                </div>
+              )}
+
+              {selectedTab === 'volunteering' && (
+                <div>
+                  <WorldpackersAffiliate />
                 </div>
               )}
             </div>
@@ -656,6 +691,12 @@ export default function Living() {
                       );
                     })}
                   </div>
+                </div>
+              )}
+
+              {selectedTab === 'volunteering' && (
+                <div>
+                  <WorldpackersAffiliate />
                 </div>
               )}
             </div>

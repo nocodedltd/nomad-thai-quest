@@ -22,6 +22,7 @@ import { UpgradePrompt } from "@/components/shared/upgrade-prompt";
 import ShortTermHostels from "@/components/accommodation/short-term-hostels";
 import LongTermGuide from "@/components/accommodation/long-term-guide";
 import AccommodationResources from "@/components/accommodation/accommodation-resources";
+import WorldpackersAffiliate from "@/components/accommodation/worldpackers-affiliate";
 
 // Archived accommodation listings data - replaced with new module system
 // Original data moved to archived-listings.tsx
@@ -93,7 +94,7 @@ type LivingTabProps = {
 
 export default function LivingTab({ compact = false }: LivingTabProps) {
   const { userType } = useUser();
-  const [selectedTab, setSelectedTab] = useState<'short-term' | 'long-term' | 'resources' | 'community'>('short-term');
+  const [selectedTab, setSelectedTab] = useState<'short-term' | 'long-term' | 'resources' | 'community' | 'volunteering'>('short-term');
 
   const hasAccess = (accessLevel: string) => {
     if (accessLevel === "free") return true;
@@ -143,6 +144,13 @@ export default function LivingTab({ compact = false }: LivingTabProps) {
             className={`flex items-center gap-2 ${compact ? 'px-3 py-1 text-sm' : ''}`}
           >
             👥 Community
+          </Button>
+          <Button
+            variant={selectedTab === 'volunteering' ? 'default' : 'ghost'}
+            onClick={() => setSelectedTab('volunteering')}
+            className={`flex items-center gap-2 ${compact ? 'px-3 py-1 text-sm' : ''}`}
+          >
+            🤝 Volunteering
           </Button>
         </div>
       </div>
@@ -253,6 +261,28 @@ export default function LivingTab({ compact = false }: LivingTabProps) {
                 </Card>
               </div>
             )}
+
+            {selectedTab === 'volunteering' && (
+              <div>
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-bold mb-4">Volunteering Opportunities</h3>
+                  <p className="text-muted-foreground">
+                    Exchange your skills for free accommodation while exploring Thailand
+                  </p>
+                </div>
+                
+                <UpgradePrompt 
+                  title="Access Volunteering Platform"
+                  description="Get $10 off Worldpackers membership and access to global volunteering opportunities"
+                  features={[
+                    "Free accommodation in exchange for work",
+                    "Thailand-specific opportunities",
+                    "Flexible schedules for digital nomads",
+                    "Global network of hosts"
+                  ]}
+                />
+              </div>
+            )}
           </div>
         }
         
@@ -313,6 +343,12 @@ export default function LivingTab({ compact = false }: LivingTabProps) {
                 </Card>
               </div>
             )}
+
+            {selectedTab === 'volunteering' && (
+              <div>
+                <WorldpackersAffiliate />
+              </div>
+            )}
           </div>
         }
         
@@ -371,6 +407,12 @@ export default function LivingTab({ compact = false }: LivingTabProps) {
                     </p>
                   </div>
                 </Card>
+              </div>
+            )}
+
+            {selectedTab === 'volunteering' && (
+              <div>
+                <WorldpackersAffiliate />
               </div>
             )}
           </div>

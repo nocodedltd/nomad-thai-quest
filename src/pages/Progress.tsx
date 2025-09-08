@@ -3,188 +3,234 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ProgressBar } from "@/components/ui/progress-bar";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 import { 
+  User,
+  MapPin,
+  Calendar,
+  Globe,
   Target,
-  Award,
-  TrendingUp,
   Clock,
+  DollarSign,
+  Briefcase,
+  FileText,
+  Settings,
+  Save,
+  Edit,
   CheckCircle,
   Star,
-  Zap,
-  Calendar,
-  Trophy,
-  Fire,
-  BookOpen,
-  DollarSign,
-  FileText,
-  Building,
+  Award,
   Users,
   ArrowRight,
-  Download,
-  Share2
+  Plus,
+  Trash2
 } from "lucide-react";
 import { useUser } from "@/contexts/user-context";
 import { UserContent } from "@/components/shared/user-content";
 import { UpgradePrompt } from "@/components/shared/upgrade-prompt";
 
-const completedCourses = [
-  {
-    id: 1,
-    title: "Amazon FBA Fundamentals",
-    category: "Income",
-    completedDate: "2024-01-15",
-    xpEarned: 150,
-    certificate: true,
-    rating: 5
-  },
-  {
-    id: 2,
-    title: "Tourist Visa Guide",
-    category: "Legal",
-    completedDate: "2024-01-20", 
-    xpEarned: 100,
-    certificate: true,
-    rating: 4
+// User profile data structure
+interface UserProfile {
+  // Personal Information
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  currentCountry: string;
+  nationality: string;
+  
+  // Thailand Goals
+  thailandGoal: string;
+  targetTimeline: string;
+  currentObstacles: string[];
+  passports: string[];
+  
+  // Professional Information
+  currentOccupation: string;
+  incomeSource: string;
+  employmentType: string;
+  monthlyIncome: string;
+  
+  // Skills & Strengths
+  skills: string[];
+  strengths: string[];
+  experience: string;
+  
+  // Preferences
+  learningStyle: string;
+  studyTime: string;
+  notifications: {
+    email: boolean;
+    push: boolean;
+    reminders: boolean;
+  };
+}
+
+const defaultProfile: UserProfile = {
+  firstName: "",
+  lastName: "",
+  dateOfBirth: "",
+  currentCountry: "",
+  nationality: "",
+  thailandGoal: "",
+  targetTimeline: "",
+  currentObstacles: [],
+  passports: [],
+  currentOccupation: "",
+  incomeSource: "",
+  employmentType: "",
+  monthlyIncome: "",
+  skills: [],
+  strengths: [],
+  experience: "",
+  learningStyle: "",
+  studyTime: "",
+  notifications: {
+    email: true,
+    push: true,
+    reminders: true
   }
+};
+
+const thailandGoals = [
+  "Digital Nomad Lifestyle",
+  "Retirement in Thailand",
+  "Business Opportunities",
+  "Education/Study",
+  "Cultural Experience",
+  "Cost of Living Benefits",
+  "Climate & Weather",
+  "Healthcare Access",
+  "Other"
 ];
 
-const inProgressCourses = [
-  {
-    id: 3,
-    title: "Remote Work Mastery",
-    category: "Income",
-    progress: 65,
-    timeSpent: "3.5 hours",
-    nextLesson: "Building Client Relationships",
-    xpProgress: 65
-  },
-  {
-    id: 4,
-    title: "Bangkok Living Guide", 
-    category: "Living",
-    progress: 30,
-    timeSpent: "1.2 hours",
-    nextLesson: "Neighborhood Selection",
-    xpProgress: 30
-  }
+const timelineOptions = [
+  "ASAP (Within 3 months)",
+  "3-6 months",
+  "6-12 months",
+  "1-2 years",
+  "2+ years",
+  "Just exploring for now"
 ];
 
-const achievements = [
-  {
-    id: 1,
-    title: "First Steps",
-    description: "Completed your first lesson",
-    icon: "🎯",
-    category: "Milestone",
-    unlockedDate: "2024-01-10",
-    rarity: "Common"
-  },
-  {
-    id: 2,
-    title: "Income Explorer",
-    description: "Started exploring income options",
-    icon: "💰",
-    category: "Income",
-    unlockedDate: "2024-01-15",
-    rarity: "Common"
-  },
-  {
-    id: 3,
-    title: "Course Completed",
-    description: "Finished your first complete course",
-    icon: "🏆",
-    category: "Learning",
-    unlockedDate: "2024-01-15",
-    rarity: "Uncommon"
-  },
-  {
-    id: 4,
-    title: "Legal Eagle",
-    description: "Mastered visa requirements",
-    icon: "⚖️",
-    category: "Legal",
-    unlockedDate: "2024-01-20",
-    rarity: "Rare"
-  }
+const obstacles = [
+  "Financial constraints",
+  "Visa requirements",
+  "Job/Income concerns",
+  "Family commitments",
+  "Language barriers",
+  "Healthcare concerns",
+  "Cultural adaptation",
+  "Legal documentation",
+  "Housing uncertainty",
+  "Other"
 ];
 
-const learningGoals = [
-  {
-    id: 1,
-    title: "Complete Income Track",
-    description: "Finish all income-related courses",
-    progress: 40,
-    target: 100,
-    deadline: "2024-03-01",
-    priority: "High"
-  },
-  {
-    id: 2,
-    title: "Visa Application Ready",
-    description: "Gather all required documentation",
-    progress: 75,
-    target: 100,
-    deadline: "2024-02-15",
-    priority: "High"
-  },
-  {
-    id: 3,
-    title: "Community Integration",
-    description: "Connect with local expat groups",
-    progress: 20,
-    target: 100,
-    deadline: "2024-04-01",
-    priority: "Medium"
-  }
+const employmentTypes = [
+  "Full-time employee",
+  "Part-time employee",
+  "Freelancer/Contractor",
+  "Business owner",
+  "Remote worker",
+  "Unemployed",
+  "Student",
+  "Retired"
 ];
 
-const weeklyStats = [
-  { week: "Week 1", xp: 150, lessons: 3, time: "2.5h" },
-  { week: "Week 2", xp: 200, lessons: 4, time: "3.2h" },
-  { week: "Week 3", xp: 180, lessons: 3, time: "2.8h" },
-  { week: "Week 4", xp: 220, lessons: 5, time: "4.1h" },
+const incomeSources = [
+  "Online business",
+  "Remote work",
+  "Freelancing",
+  "Investment income",
+  "Traditional job",
+  "Passive income",
+  "Multiple sources",
+  "Other"
 ];
 
-export default function Progress() {
+const skills = [
+  "Digital Marketing",
+  "Web Development",
+  "Graphic Design",
+  "Content Writing",
+  "Teaching/Tutoring",
+  "Consulting",
+  "Sales",
+  "Customer Service",
+  "Project Management",
+  "Data Analysis",
+  "Photography",
+  "Video Editing",
+  "Language Teaching",
+  "Business Development",
+  "Other"
+];
+
+export default function Profile() {
   const navigate = useNavigate();
   const { userType, userState } = useUser();
-  const [selectedTab, setSelectedTab] = useState<'overview' | 'courses' | 'achievements' | 'goals'>('overview');
+  const [selectedTab, setSelectedTab] = useState<'personal' | 'thailand-goals' | 'professional' | 'skills' | 'settings'>('personal');
+  const [profile, setProfile] = useState<UserProfile>(defaultProfile);
+  const [isEditing, setIsEditing] = useState(false);
 
-  const totalXP = userState.progress?.totalXP || 1250;
-  const currentLevel = Math.floor(totalXP / 500) + 1;
-  const xpToNextLevel = ((currentLevel * 500) - totalXP);
-  const levelProgress = ((totalXP % 500) / 500) * 100;
+  const handleProfileUpdate = (field: keyof UserProfile, value: any) => {
+    setProfile(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleArrayUpdate = (field: keyof UserProfile, value: string, add: boolean) => {
+    setProfile(prev => {
+      const currentArray = prev[field] as string[];
+      if (add) {
+        return { ...prev, [field]: [...currentArray, value] };
+      } else {
+        return { ...prev, [field]: currentArray.filter(item => item !== value) };
+      }
+    });
+  };
+
+  const saveProfile = () => {
+    // TODO: Implement profile saving logic
+    setIsEditing(false);
+    console.log('Profile saved:', profile);
+  };
 
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto p-6">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-4">📊 Progress Analytics</h1>
+          <h1 className="text-4xl font-bold mb-4">👤 Your Profile</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Deep dive into your learning journey with detailed analytics, achievements, and performance insights
+            Tell us about yourself and your Thailand goals to get a personalized experience
           </p>
         </div>
 
         {/* Tabs */}
         <div className="flex justify-center mb-8">
-          <div className="flex bg-muted rounded-lg p-1">
+          <div className="flex bg-muted rounded-lg p-1 overflow-x-auto">
             {[
-              { id: 'overview', label: 'Analytics Overview', desc: 'Performance stats' },
-              { id: 'courses', label: 'Course History', desc: 'Learning progress' },
-              { id: 'achievements', label: 'Achievement Gallery', desc: 'All unlocked rewards' },
-              { id: 'goals', label: 'Goal Tracking', desc: 'Custom objectives' }
-            ].map((tab) => (
-              <Button
-                key={tab.id}
-                variant={selectedTab === tab.id ? 'default' : 'ghost'}
-                onClick={() => setSelectedTab(tab.id as any)}
-                className="flex flex-col px-4 py-3 h-auto"
-              >
-                <span className="font-medium">{tab.label}</span>
-                <span className="text-xs text-muted-foreground">{tab.desc}</span>
-              </Button>
-            ))}
+              { id: 'personal', label: 'Personal Info', desc: 'Basic details', icon: User },
+              { id: 'thailand-goals', label: 'Thailand Goals', desc: 'Your objectives', icon: Target },
+              { id: 'professional', label: 'Professional', desc: 'Work & income', icon: Briefcase },
+              { id: 'skills', label: 'Skills & Strengths', desc: 'Your abilities', icon: Star },
+              { id: 'settings', label: 'Settings', desc: 'Preferences', icon: Settings }
+            ].map((tab) => {
+              const Icon = tab.icon;
+              return (
+                <Button
+                  key={tab.id}
+                  variant={selectedTab === tab.id ? 'default' : 'ghost'}
+                  onClick={() => setSelectedTab(tab.id as any)}
+                  className="flex flex-col px-4 py-3 h-auto min-w-[120px]"
+                >
+                  <Icon className="w-4 h-4 mb-1" />
+                  <span className="font-medium text-xs">{tab.label}</span>
+                  <span className="text-xs text-muted-foreground">{tab.desc}</span>
+                </Button>
+              );
+            })}
           </div>
         </div>
 
@@ -192,21 +238,21 @@ export default function Progress() {
           guestContent={
             <div className="text-center">
               <div className="mb-8">
-                <Trophy className="w-24 h-24 mx-auto mb-4 text-muted-foreground" />
-                <h3 className="text-2xl font-bold mb-4">Track Your Thailand Journey</h3>
+                <User className="w-24 h-24 mx-auto mb-4 text-muted-foreground" />
+                <h3 className="text-2xl font-bold mb-4">Create Your Profile</h3>
                 <p className="text-muted-foreground max-w-md mx-auto">
-                  Create an account to track your progress, earn achievements, and monitor your learning journey
+                  Sign up to create your personalized profile and get tailored recommendations for your Thailand journey
                 </p>
               </div>
               
               <UpgradePrompt 
-                title="Start Tracking Your Progress"
-                description="Join thousands of learners who are successfully making their way to Thailand"
+                title="Start Your Thailand Journey"
+                description="Create your profile to get personalized guidance and track your progress"
                 features={[
-                  "Personal progress dashboard",
-                  "Achievement system",
-                  "Learning analytics",
-                  "Goal setting & tracking"
+                  "Personalized learning paths",
+                  "Custom goal setting",
+                  "Progress tracking",
+                  "Community access"
                 ]}
               />
             </div>
@@ -214,473 +260,948 @@ export default function Progress() {
           
           freeContent={
             <div>
-              {selectedTab === 'overview' && (
-                <div>
-                  {/* Level & XP Overview */}
-                  <Card className="p-6 mb-8 bg-gradient-to-br from-primary/10 to-primary/5">
-                    <div className="flex items-center justify-between mb-4">
-                      <div>
-                        <h3 className="text-2xl font-bold">Level {currentLevel}</h3>
-                        <p className="text-muted-foreground">Thailand Journey Explorer</p>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-3xl font-bold">{totalXP}</div>
-                        <div className="text-sm text-muted-foreground">Total XP</div>
+              {/* Personal Information Tab */}
+              {selectedTab === 'personal' && (
+                <Card className="p-6">
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-bold">Personal Information</h2>
+                    <Button onClick={() => setIsEditing(!isEditing)} variant="outline">
+                      <Edit className="w-4 h-4 mr-2" />
+                      {isEditing ? 'Cancel' : 'Edit'}
+                    </Button>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <Label htmlFor="firstName">First Name</Label>
+                      <Input
+                        id="firstName"
+                        value={profile.firstName}
+                        onChange={(e) => handleProfileUpdate('firstName', e.target.value)}
+                        disabled={!isEditing}
+                        placeholder="Enter your first name"
+                      />
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="lastName">Last Name</Label>
+                      <Input
+                        id="lastName"
+                        value={profile.lastName}
+                        onChange={(e) => handleProfileUpdate('lastName', e.target.value)}
+                        disabled={!isEditing}
+                        placeholder="Enter your last name"
+                      />
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="dateOfBirth">Date of Birth</Label>
+                      <Input
+                        id="dateOfBirth"
+                        type="date"
+                        value={profile.dateOfBirth}
+                        onChange={(e) => handleProfileUpdate('dateOfBirth', e.target.value)}
+                        disabled={!isEditing}
+                      />
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="currentCountry">Current Country</Label>
+                      <Select
+                        value={profile.currentCountry}
+                        onValueChange={(value) => handleProfileUpdate('currentCountry', value)}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your country" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="US">United States</SelectItem>
+                          <SelectItem value="UK">United Kingdom</SelectItem>
+                          <SelectItem value="CA">Canada</SelectItem>
+                          <SelectItem value="AU">Australia</SelectItem>
+                          <SelectItem value="DE">Germany</SelectItem>
+                          <SelectItem value="FR">France</SelectItem>
+                          <SelectItem value="other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="nationality">Nationality</Label>
+                      <Select
+                        value={profile.nationality}
+                        onValueChange={(value) => handleProfileUpdate('nationality', value)}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your nationality" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="US">American</SelectItem>
+                          <SelectItem value="UK">British</SelectItem>
+                          <SelectItem value="CA">Canadian</SelectItem>
+                          <SelectItem value="AU">Australian</SelectItem>
+                          <SelectItem value="DE">German</SelectItem>
+                          <SelectItem value="FR">French</SelectItem>
+                          <SelectItem value="other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                  
+                  {isEditing && (
+                    <div className="flex justify-end mt-6">
+                      <Button onClick={saveProfile}>
+                        <Save className="w-4 h-4 mr-2" />
+                        Save Changes
+                      </Button>
+                    </div>
+                  )}
+                </Card>
+              )}
+
+              {/* Thailand Goals Tab */}
+              {selectedTab === 'thailand-goals' && (
+                <Card className="p-6">
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-bold">Thailand Goals</h2>
+                    <Button onClick={() => setIsEditing(!isEditing)} variant="outline">
+                      <Edit className="w-4 h-4 mr-2" />
+                      {isEditing ? 'Cancel' : 'Edit'}
+                    </Button>
+                  </div>
+                  
+                  <div className="space-y-6">
+                    <div>
+                      <Label htmlFor="thailandGoal">What's your main goal in Thailand?</Label>
+                      <Select
+                        value={profile.thailandGoal}
+                        onValueChange={(value) => handleProfileUpdate('thailandGoal', value)}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your main goal" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {thailandGoals.map((goal) => (
+                            <SelectItem key={goal} value={goal}>{goal}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="targetTimeline">When do you want to move to Thailand?</Label>
+                      <Select
+                        value={profile.targetTimeline}
+                        onValueChange={(value) => handleProfileUpdate('targetTimeline', value)}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your timeline" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {timelineOptions.map((timeline) => (
+                            <SelectItem key={timeline} value={timeline}>{timeline}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div>
+                      <Label>What's currently stopping you from moving tomorrow?</Label>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-2">
+                        {obstacles.map((obstacle) => (
+                          <div key={obstacle} className="flex items-center space-x-2">
+                            <Checkbox
+                              id={obstacle}
+                              checked={profile.currentObstacles.includes(obstacle)}
+                              onCheckedChange={(checked) => 
+                                handleArrayUpdate('currentObstacles', obstacle, checked as boolean)
+                              }
+                              disabled={!isEditing}
+                            />
+                            <Label htmlFor={obstacle} className="text-sm">{obstacle}</Label>
+                          </div>
+                        ))}
                       </div>
                     </div>
                     
-                    <ProgressBar 
-                      progress={levelProgress}
-                      showPercentage={false}
-                      size="lg"
-                      className="mb-2"
-                    />
-                    <div className="text-sm text-muted-foreground">
-                      {xpToNextLevel} XP until Level {currentLevel + 1}
+                    <div>
+                      <Label>What passports do you hold?</Label>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-2">
+                        {['US', 'UK', 'CA', 'AU', 'EU', 'Other'].map((passport) => (
+                          <div key={passport} className="flex items-center space-x-2">
+                            <Checkbox
+                              id={passport}
+                              checked={profile.passports.includes(passport)}
+                              onCheckedChange={(checked) => 
+                                handleArrayUpdate('passports', passport, checked as boolean)
+                              }
+                              disabled={!isEditing}
+                            />
+                            <Label htmlFor={passport} className="text-sm">{passport}</Label>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </Card>
-
-                  {/* Stats Grid */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-                    <Card className="p-6 text-center">
-                      <BookOpen className="w-8 h-8 mx-auto mb-2 text-blue-500" />
-                      <div className="text-2xl font-bold">{userState.progress?.completedLessons || 8}</div>
-                      <div className="text-sm text-muted-foreground">Lessons Completed</div>
-                    </Card>
-                    <Card className="p-6 text-center">
-                      <Trophy className="w-8 h-8 mx-auto mb-2 text-yellow-500" />
-                      <div className="text-2xl font-bold">{achievements.length}</div>
-                      <div className="text-sm text-muted-foreground">Achievements</div>
-                    </Card>
-                    <Card className="p-6 text-center">
-                      <Clock className="w-8 h-8 mx-auto mb-2 text-green-500" />
-                      <div className="text-2xl font-bold">12.6h</div>
-                      <div className="text-sm text-muted-foreground">Time Invested</div>
-                    </Card>
-                    <Card className="p-6 text-center">
-                      <Target className="w-8 h-8 mx-auto mb-2 text-purple-500" />
-                      <div className="text-2xl font-bold">{userState.progress?.currentPhase || 2}</div>
-                      <div className="text-sm text-muted-foreground">Current Phase</div>
-                    </Card>
-                  </div>
-
-                  {/* Recent Achievements */}
-                  <Card className="p-6 mb-8">
-                    <h3 className="text-xl font-bold mb-4">Recent Achievements</h3>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      {achievements.slice(0, 4).map((achievement) => (
-                        <div key={achievement.id} className="text-center p-4 border rounded-lg">
-                          <div className="text-3xl mb-2">{achievement.icon}</div>
-                          <div className="font-semibold text-sm">{achievement.title}</div>
-                          <div className="text-xs text-muted-foreground">{achievement.description}</div>
-                        </div>
-                      ))}
-                    </div>
-                  </Card>
-
-                  <UpgradePrompt 
-                    compact
-                    title="Unlock Advanced Analytics"
-                    description="Get detailed insights, goal tracking, and comprehensive progress reports"
-                  />
-                </div>
-              )}
-              
-              {selectedTab === 'courses' && (
-                <div>
-                  {/* Completed Courses */}
-                  <Card className="p-6 mb-8">
-                    <h3 className="text-xl font-bold mb-4">Completed Courses</h3>
-                    <div className="space-y-4">
-                      {completedCourses.slice(0, 2).map((course) => (
-                        <div key={course.id} className="flex items-center justify-between p-4 border rounded-lg">
-                          <div className="flex items-center gap-4">
-                            <CheckCircle className="w-8 h-8 text-green-500" />
-                            <div>
-                              <h4 className="font-semibold">{course.title}</h4>
-                              <p className="text-sm text-muted-foreground">
-                                Completed {course.completedDate} • {course.xpEarned} XP earned
-                              </p>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <div className="flex">
-                              {[...Array(5)].map((_, i) => (
-                                <Star 
-                                  key={i} 
-                                  className={`w-4 h-4 ${i < course.rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} 
-                                />
-                              ))}
-                            </div>
-                            <Button size="sm" variant="outline">
-                              <Download className="w-4 h-4 mr-2" />
-                              Certificate
-                            </Button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </Card>
-
-                  {/* In Progress */}
-                  <Card className="p-6 mb-8">
-                    <h3 className="text-xl font-bold mb-4">In Progress</h3>
-                    <div className="space-y-4">
-                      {inProgressCourses.slice(0, 1).map((course) => (
-                        <div key={course.id} className="p-4 border rounded-lg">
-                          <div className="flex justify-between items-start mb-4">
-                            <div>
-                              <h4 className="font-semibold">{course.title}</h4>
-                              <p className="text-sm text-muted-foreground">
-                                Next: {course.nextLesson}
-                              </p>
-                            </div>
-                            <Badge variant="outline">{course.category}</Badge>
-                          </div>
-                          
-                          <ProgressBar 
-                            progress={course.progress}
-                            showPercentage={true}
-                            size="sm"
-                            className="mb-4"
-                          />
-                          
-                          <div className="flex justify-between items-center">
-                            <span className="text-sm text-muted-foreground">
-                              {course.timeSpent} spent • {course.xpProgress} XP earned
-                            </span>
-                            <Button size="sm">
-                              Continue <ArrowRight className="w-4 h-4 ml-2" />
-                            </Button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </Card>
-
-                  <UpgradePrompt 
-                    compact
-                    title="Access All Courses"
-                    description="Unlock premium courses and advanced learning paths"
-                  />
-                </div>
-              )}
-              
-              {selectedTab === 'achievements' && (
-                <div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {achievements.map((achievement) => (
-                      <Card key={achievement.id} className="p-6 text-center">
-                        <div className="text-4xl mb-4">{achievement.icon}</div>
-                        <h3 className="font-bold mb-2">{achievement.title}</h3>
-                        <p className="text-sm text-muted-foreground mb-4">{achievement.description}</p>
-                        <div className="flex justify-between items-center text-xs">
-                          <Badge variant="outline" className={`${
-                            achievement.rarity === 'Rare' ? 'bg-purple-100' :
-                            achievement.rarity === 'Uncommon' ? 'bg-blue-100' : 'bg-gray-100'
-                          }`}>
-                            {achievement.rarity}
-                          </Badge>
-                          <span className="text-muted-foreground">{achievement.unlockedDate}</span>
-                        </div>
-                      </Card>
-                    ))}
-                  </div>
-                </div>
-              )}
-              
-              {selectedTab === 'goals' && (
-                <div>
-                  <div className="space-y-6">
-                    {learningGoals.slice(0, 2).map((goal) => (
-                      <Card key={goal.id} className="p-6">
-                        <div className="flex justify-between items-start mb-4">
-                          <div>
-                            <h3 className="font-bold">{goal.title}</h3>
-                            <p className="text-sm text-muted-foreground">{goal.description}</p>
-                          </div>
-                          <Badge variant={goal.priority === 'High' ? 'destructive' : 'secondary'}>
-                            {goal.priority}
-                          </Badge>
-                        </div>
-                        
-                        <ProgressBar 
-                          progress={goal.progress}
-                          showPercentage={true}
-                          size="sm"
-                          className="mb-4"
-                        />
-                        
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm text-muted-foreground">
-                            Due: {goal.deadline}
-                          </span>
-                          <Button size="sm" variant="outline">Update Progress</Button>
-                        </div>
-                      </Card>
-                    ))}
                   </div>
                   
-                  <UpgradePrompt 
-                    compact
-                    title="Advanced Goal Tracking"
-                    description="Create custom goals, set reminders, and track detailed analytics"
-                  />
-                </div>
+                  {isEditing && (
+                    <div className="flex justify-end mt-6">
+                      <Button onClick={saveProfile}>
+                        <Save className="w-4 h-4 mr-2" />
+                        Save Changes
+                      </Button>
+                    </div>
+                  )}
+                </Card>
+              )}
+
+              {/* Professional Information Tab */}
+              {selectedTab === 'professional' && (
+                <Card className="p-6">
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-bold">Professional Information</h2>
+                    <Button onClick={() => setIsEditing(!isEditing)} variant="outline">
+                      <Edit className="w-4 h-4 mr-2" />
+                      {isEditing ? 'Cancel' : 'Edit'}
+                    </Button>
+                  </div>
+                  
+                  <div className="space-y-6">
+                    <div>
+                      <Label htmlFor="currentOccupation">Current Occupation</Label>
+                      <Input
+                        id="currentOccupation"
+                        value={profile.currentOccupation}
+                        onChange={(e) => handleProfileUpdate('currentOccupation', e.target.value)}
+                        disabled={!isEditing}
+                        placeholder="e.g., Software Developer, Teacher, Consultant"
+                      />
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="employmentType">Employment Type</Label>
+                      <Select
+                        value={profile.employmentType}
+                        onValueChange={(value) => handleProfileUpdate('employmentType', value)}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your employment type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {employmentTypes.map((type) => (
+                            <SelectItem key={type} value={type}>{type}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="incomeSource">Primary Income Source</Label>
+                      <Select
+                        value={profile.incomeSource}
+                        onValueChange={(value) => handleProfileUpdate('incomeSource', value)}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your income source" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {incomeSources.map((source) => (
+                            <SelectItem key={source} value={source}>{source}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="monthlyIncome">Monthly Income Range</Label>
+                      <Select
+                        value={profile.monthlyIncome}
+                        onValueChange={(value) => handleProfileUpdate('monthlyIncome', value)}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your income range" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="0-1000">$0 - $1,000</SelectItem>
+                          <SelectItem value="1000-2500">$1,000 - $2,500</SelectItem>
+                          <SelectItem value="2500-5000">$2,500 - $5,000</SelectItem>
+                          <SelectItem value="5000-10000">$5,000 - $10,000</SelectItem>
+                          <SelectItem value="10000+">$10,000+</SelectItem>
+                          <SelectItem value="prefer-not-to-say">Prefer not to say</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                  
+                  {isEditing && (
+                    <div className="flex justify-end mt-6">
+                      <Button onClick={saveProfile}>
+                        <Save className="w-4 h-4 mr-2" />
+                        Save Changes
+                      </Button>
+                    </div>
+                  )}
+                </Card>
+              )}
+
+              {/* Skills & Strengths Tab */}
+              {selectedTab === 'skills' && (
+                <Card className="p-6">
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-bold">Skills & Strengths</h2>
+                    <Button onClick={() => setIsEditing(!isEditing)} variant="outline">
+                      <Edit className="w-4 h-4 mr-2" />
+                      {isEditing ? 'Cancel' : 'Edit'}
+                    </Button>
+                  </div>
+                  
+                  <div className="space-y-6">
+                    <div>
+                      <Label>What skills do you have?</Label>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-2">
+                        {skills.map((skill) => (
+                          <div key={skill} className="flex items-center space-x-2">
+                            <Checkbox
+                              id={skill}
+                              checked={profile.skills.includes(skill)}
+                              onCheckedChange={(checked) => 
+                                handleArrayUpdate('skills', skill, checked as boolean)
+                              }
+                              disabled={!isEditing}
+                            />
+                            <Label htmlFor={skill} className="text-sm">{skill}</Label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="experience">Tell us about your experience</Label>
+                      <Textarea
+                        id="experience"
+                        value={profile.experience}
+                        onChange={(e) => handleProfileUpdate('experience', e.target.value)}
+                        disabled={!isEditing}
+                        placeholder="Describe your professional background, achievements, and relevant experience..."
+                        rows={4}
+                      />
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="strengths">What are your key strengths?</Label>
+                      <Textarea
+                        id="strengths"
+                        value={profile.strengths.join(', ')}
+                        onChange={(e) => handleProfileUpdate('strengths', e.target.value.split(', ').filter(s => s.trim()))}
+                        disabled={!isEditing}
+                        placeholder="e.g., Problem-solving, Communication, Leadership, Technical expertise..."
+                        rows={3}
+                      />
+                    </div>
+                  </div>
+                  
+                  {isEditing && (
+                    <div className="flex justify-end mt-6">
+                      <Button onClick={saveProfile}>
+                        <Save className="w-4 h-4 mr-2" />
+                        Save Changes
+                      </Button>
+                    </div>
+                  )}
+                </Card>
+              )}
+
+              {/* Settings Tab */}
+              {selectedTab === 'settings' && (
+                <Card className="p-6">
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-bold">Settings & Preferences</h2>
+                    <Button onClick={() => setIsEditing(!isEditing)} variant="outline">
+                      <Edit className="w-4 h-4 mr-2" />
+                      {isEditing ? 'Cancel' : 'Edit'}
+                    </Button>
+                  </div>
+                  
+                  <div className="space-y-6">
+                    <div>
+                      <Label htmlFor="learningStyle">Learning Style Preference</Label>
+                      <Select
+                        value={profile.learningStyle}
+                        onValueChange={(value) => handleProfileUpdate('learningStyle', value)}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your preferred learning style" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="visual">Visual (Videos, Images, Charts)</SelectItem>
+                          <SelectItem value="reading">Reading (Text, Articles, Guides)</SelectItem>
+                          <SelectItem value="hands-on">Hands-on (Practice, Exercises)</SelectItem>
+                          <SelectItem value="mixed">Mixed (Combination of all)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="studyTime">Preferred Study Time</Label>
+                      <Select
+                        value={profile.studyTime}
+                        onValueChange={(value) => handleProfileUpdate('studyTime', value)}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="When do you prefer to study?" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="morning">Morning (6 AM - 12 PM)</SelectItem>
+                          <SelectItem value="afternoon">Afternoon (12 PM - 6 PM)</SelectItem>
+                          <SelectItem value="evening">Evening (6 PM - 12 AM)</SelectItem>
+                          <SelectItem value="flexible">Flexible (Any time)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div>
+                      <Label>Notification Preferences</Label>
+                      <div className="space-y-3 mt-2">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <Label htmlFor="email-notifications">Email Notifications</Label>
+                            <p className="text-sm text-muted-foreground">Receive updates via email</p>
+                          </div>
+                          <Checkbox
+                            id="email-notifications"
+                            checked={profile.notifications.email}
+                            onCheckedChange={(checked) => 
+                              handleProfileUpdate('notifications', { ...profile.notifications, email: checked as boolean })
+                            }
+                            disabled={!isEditing}
+                          />
+                        </div>
+                        
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <Label htmlFor="push-notifications">Push Notifications</Label>
+                            <p className="text-sm text-muted-foreground">Receive browser notifications</p>
+                          </div>
+                          <Checkbox
+                            id="push-notifications"
+                            checked={profile.notifications.push}
+                            onCheckedChange={(checked) => 
+                              handleProfileUpdate('notifications', { ...profile.notifications, push: checked as boolean })
+                            }
+                            disabled={!isEditing}
+                          />
+                        </div>
+                        
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <Label htmlFor="reminders">Study Reminders</Label>
+                            <p className="text-sm text-muted-foreground">Get reminded to study</p>
+                          </div>
+                          <Checkbox
+                            id="reminders"
+                            checked={profile.notifications.reminders}
+                            onCheckedChange={(checked) => 
+                              handleProfileUpdate('notifications', { ...profile.notifications, reminders: checked as boolean })
+                            }
+                            disabled={!isEditing}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {isEditing && (
+                    <div className="flex justify-end mt-6">
+                      <Button onClick={saveProfile}>
+                        <Save className="w-4 h-4 mr-2" />
+                        Save Changes
+                      </Button>
+                    </div>
+                  )}
+                </Card>
               )}
             </div>
           }
           
           paidContent={
             <div>
-              {selectedTab === 'overview' && (
-                <div>
-                  {/* Level & XP Overview */}
-                  <Card className="p-6 mb-8 bg-gradient-to-br from-primary/10 to-primary/5">
-                    <div className="flex items-center justify-between mb-4">
-                      <div>
-                        <h3 className="text-2xl font-bold">Level {currentLevel}</h3>
-                        <p className="text-muted-foreground">Thailand Journey Master</p>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-3xl font-bold">{totalXP}</div>
-                        <div className="text-sm text-muted-foreground">Total XP</div>
-                      </div>
+              {/* Personal Information Tab */}
+              {selectedTab === 'personal' && (
+                <Card className="p-6">
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-bold">Personal Information</h2>
+                    <Button onClick={() => setIsEditing(!isEditing)} variant="outline">
+                      <Edit className="w-4 h-4 mr-2" />
+                      {isEditing ? 'Cancel' : 'Edit'}
+                    </Button>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <Label htmlFor="firstName">First Name</Label>
+                      <Input
+                        id="firstName"
+                        value={profile.firstName}
+                        onChange={(e) => handleProfileUpdate('firstName', e.target.value)}
+                        disabled={!isEditing}
+                        placeholder="Enter your first name"
+                      />
                     </div>
                     
-                    <ProgressBar 
-                      progress={levelProgress}
-                      showPercentage={false}
-                      size="lg"
-                      className="mb-2"
-                    />
-                    <div className="text-sm text-muted-foreground">
-                      {xpToNextLevel} XP until Level {currentLevel + 1}
+                    <div>
+                      <Label htmlFor="lastName">Last Name</Label>
+                      <Input
+                        id="lastName"
+                        value={profile.lastName}
+                        onChange={(e) => handleProfileUpdate('lastName', e.target.value)}
+                        disabled={!isEditing}
+                        placeholder="Enter your last name"
+                      />
                     </div>
-                  </Card>
-
-                  {/* Enhanced Stats Grid */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-                    <Card className="p-6 text-center">
-                      <BookOpen className="w-8 h-8 mx-auto mb-2 text-blue-500" />
-                      <div className="text-2xl font-bold">{userState.progress?.completedLessons || 8}</div>
-                      <div className="text-sm text-muted-foreground">Lessons Completed</div>
-                      <div className="text-xs text-green-600 mt-1">+3 this week</div>
-                    </Card>
-                    <Card className="p-6 text-center">
-                      <Trophy className="w-8 h-8 mx-auto mb-2 text-yellow-500" />
-                      <div className="text-2xl font-bold">{achievements.length}</div>
-                      <div className="text-sm text-muted-foreground">Achievements</div>
-                      <div className="text-xs text-green-600 mt-1">1 rare unlocked</div>
-                    </Card>
-                    <Card className="p-6 text-center">
-                      <Clock className="w-8 h-8 mx-auto mb-2 text-green-500" />
-                      <div className="text-2xl font-bold">12.6h</div>
-                      <div className="text-sm text-muted-foreground">Time Invested</div>
-                      <div className="text-xs text-green-600 mt-1">4.1h this week</div>
-                    </Card>
-                    <Card className="p-6 text-center">
-                      <Target className="w-8 h-8 mx-auto mb-2 text-purple-500" />
-                      <div className="text-2xl font-bold">{userState.progress?.currentPhase || 2}</div>
-                      <div className="text-sm text-muted-foreground">Current Phase</div>
-                      <div className="text-xs text-green-600 mt-1">On track</div>
-                    </Card>
+                    
+                    <div>
+                      <Label htmlFor="dateOfBirth">Date of Birth</Label>
+                      <Input
+                        id="dateOfBirth"
+                        type="date"
+                        value={profile.dateOfBirth}
+                        onChange={(e) => handleProfileUpdate('dateOfBirth', e.target.value)}
+                        disabled={!isEditing}
+                      />
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="currentCountry">Current Country</Label>
+                      <Select
+                        value={profile.currentCountry}
+                        onValueChange={(value) => handleProfileUpdate('currentCountry', value)}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your country" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="US">United States</SelectItem>
+                          <SelectItem value="UK">United Kingdom</SelectItem>
+                          <SelectItem value="CA">Canada</SelectItem>
+                          <SelectItem value="AU">Australia</SelectItem>
+                          <SelectItem value="DE">Germany</SelectItem>
+                          <SelectItem value="FR">France</SelectItem>
+                          <SelectItem value="other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="nationality">Nationality</Label>
+                      <Select
+                        value={profile.nationality}
+                        onValueChange={(value) => handleProfileUpdate('nationality', value)}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your nationality" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="US">American</SelectItem>
+                          <SelectItem value="UK">British</SelectItem>
+                          <SelectItem value="CA">Canadian</SelectItem>
+                          <SelectItem value="AU">Australian</SelectItem>
+                          <SelectItem value="DE">German</SelectItem>
+                          <SelectItem value="FR">French</SelectItem>
+                          <SelectItem value="other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
-
-                  {/* Weekly Progress Chart */}
-                  <Card className="p-6 mb-8">
-                    <h3 className="text-xl font-bold mb-4">Weekly Progress</h3>
-                    <div className="grid grid-cols-4 gap-4">
-                      {weeklyStats.map((week, index) => (
-                        <div key={index} className="text-center">
-                          <div className="bg-primary/10 p-4 rounded-lg mb-2">
-                            <div className="text-lg font-bold">{week.xp}</div>
-                            <div className="text-xs text-muted-foreground">XP</div>
-                          </div>
-                          <div className="text-sm font-medium">{week.week}</div>
-                          <div className="text-xs text-muted-foreground">
-                            {week.lessons} lessons • {week.time}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </Card>
-
-                  {/* All Achievements */}
-                  <Card className="p-6">
-                    <h3 className="text-xl font-bold mb-4">All Achievements</h3>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      {achievements.map((achievement) => (
-                        <div key={achievement.id} className="text-center p-4 border rounded-lg hover:shadow-lg transition-shadow">
-                          <div className="text-3xl mb-2">{achievement.icon}</div>
-                          <div className="font-semibold text-sm">{achievement.title}</div>
-                          <div className="text-xs text-muted-foreground">{achievement.description}</div>
-                          <Badge 
-                            variant="outline" 
-                            className={`mt-2 text-xs ${
-                              achievement.rarity === 'Rare' ? 'bg-purple-100' :
-                              achievement.rarity === 'Uncommon' ? 'bg-blue-100' : 'bg-gray-100'
-                            }`}
-                          >
-                            {achievement.rarity}
-                          </Badge>
-                        </div>
-                      ))}
-                    </div>
-                  </Card>
-                </div>
-              )}
-              
-              {selectedTab === 'courses' && (
-                <div>
-                  {/* Completed Courses */}
-                  <Card className="p-6 mb-8">
-                    <div className="flex justify-between items-center mb-4">
-                      <h3 className="text-xl font-bold">Completed Courses</h3>
-                      <Button variant="outline" size="sm">
-                        <Share2 className="w-4 h-4 mr-2" />
-                        Share Progress
+                  
+                  {isEditing && (
+                    <div className="flex justify-end mt-6">
+                      <Button onClick={saveProfile}>
+                        <Save className="w-4 h-4 mr-2" />
+                        Save Changes
                       </Button>
                     </div>
-                    <div className="space-y-4">
-                      {completedCourses.map((course) => (
-                        <div key={course.id} className="flex items-center justify-between p-4 border rounded-lg hover:shadow-lg transition-shadow">
-                          <div className="flex items-center gap-4">
-                            <CheckCircle className="w-8 h-8 text-green-500" />
-                            <div>
-                              <h4 className="font-semibold">{course.title}</h4>
-                              <p className="text-sm text-muted-foreground">
-                                Completed {course.completedDate} • {course.xpEarned} XP earned
-                              </p>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <div className="flex">
-                              {[...Array(5)].map((_, i) => (
-                                <Star 
-                                  key={i} 
-                                  className={`w-4 h-4 ${i < course.rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} 
-                                />
-                              ))}
-                            </div>
-                            <Button size="sm" variant="outline">
-                              <Download className="w-4 h-4 mr-2" />
-                              Certificate
-                            </Button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </Card>
+                  )}
+                </Card>
+              )}
 
-                  {/* In Progress */}
-                  <Card className="p-6">
-                    <h3 className="text-xl font-bold mb-4">In Progress</h3>
-                    <div className="space-y-4">
-                      {inProgressCourses.map((course) => (
-                        <div key={course.id} className="p-4 border rounded-lg hover:shadow-lg transition-shadow">
-                          <div className="flex justify-between items-start mb-4">
-                            <div>
-                              <h4 className="font-semibold">{course.title}</h4>
-                              <p className="text-sm text-muted-foreground">
-                                Next: {course.nextLesson}
-                              </p>
-                            </div>
-                            <Badge variant="outline">{course.category}</Badge>
-                          </div>
-                          
-                          <ProgressBar 
-                            progress={course.progress}
-                            showPercentage={true}
-                            size="sm"
-                            className="mb-4"
-                          />
-                          
-                          <div className="flex justify-between items-center">
-                            <span className="text-sm text-muted-foreground">
-                              {course.timeSpent} spent • {course.xpProgress} XP earned
-                            </span>
-                            <Button size="sm">
-                              Continue <ArrowRight className="w-4 h-4 ml-2" />
-                            </Button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </Card>
-                </div>
-              )}
-              
-              {selectedTab === 'achievements' && (
-                <div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {achievements.map((achievement) => (
-                      <Card key={achievement.id} className="p-6 text-center hover:shadow-lg transition-shadow">
-                        <div className="text-4xl mb-4">{achievement.icon}</div>
-                        <h3 className="font-bold mb-2">{achievement.title}</h3>
-                        <p className="text-sm text-muted-foreground mb-4">{achievement.description}</p>
-                        <div className="flex justify-between items-center text-xs">
-                          <Badge variant="outline" className={`${
-                            achievement.rarity === 'Rare' ? 'bg-purple-100 text-purple-700' :
-                            achievement.rarity === 'Uncommon' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100'
-                          }`}>
-                            {achievement.rarity}
-                          </Badge>
-                          <span className="text-muted-foreground">{achievement.unlockedDate}</span>
-                        </div>
-                        <Button variant="outline" size="sm" className="w-full mt-4">
-                          <Share2 className="w-4 h-4 mr-2" />
-                          Share
-                        </Button>
-                      </Card>
-                    ))}
-                  </div>
-                </div>
-              )}
-              
-              {selectedTab === 'goals' && (
-                <div>
+              {/* Thailand Goals Tab */}
+              {selectedTab === 'thailand-goals' && (
+                <Card className="p-6">
                   <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl font-bold">Learning Goals</h2>
-                    <Button>
-                      <Target className="w-4 h-4 mr-2" />
-                      Add New Goal
+                    <h2 className="text-2xl font-bold">Thailand Goals</h2>
+                    <Button onClick={() => setIsEditing(!isEditing)} variant="outline">
+                      <Edit className="w-4 h-4 mr-2" />
+                      {isEditing ? 'Cancel' : 'Edit'}
                     </Button>
                   </div>
                   
                   <div className="space-y-6">
-                    {learningGoals.map((goal) => (
-                      <Card key={goal.id} className="p-6 hover:shadow-lg transition-shadow">
-                        <div className="flex justify-between items-start mb-4">
-                          <div>
-                            <h3 className="font-bold">{goal.title}</h3>
-                            <p className="text-sm text-muted-foreground">{goal.description}</p>
+                    <div>
+                      <Label htmlFor="thailandGoal">What's your main goal in Thailand?</Label>
+                      <Select
+                        value={profile.thailandGoal}
+                        onValueChange={(value) => handleProfileUpdate('thailandGoal', value)}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your main goal" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {thailandGoals.map((goal) => (
+                            <SelectItem key={goal} value={goal}>{goal}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="targetTimeline">When do you want to move to Thailand?</Label>
+                      <Select
+                        value={profile.targetTimeline}
+                        onValueChange={(value) => handleProfileUpdate('targetTimeline', value)}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your timeline" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {timelineOptions.map((timeline) => (
+                            <SelectItem key={timeline} value={timeline}>{timeline}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div>
+                      <Label>What's currently stopping you from moving tomorrow?</Label>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-2">
+                        {obstacles.map((obstacle) => (
+                          <div key={obstacle} className="flex items-center space-x-2">
+                            <Checkbox
+                              id={obstacle}
+                              checked={profile.currentObstacles.includes(obstacle)}
+                              onCheckedChange={(checked) => 
+                                handleArrayUpdate('currentObstacles', obstacle, checked as boolean)
+                              }
+                              disabled={!isEditing}
+                            />
+                            <Label htmlFor={obstacle} className="text-sm">{obstacle}</Label>
                           </div>
-                          <Badge variant={goal.priority === 'High' ? 'destructive' : 'secondary'}>
-                            {goal.priority}
-                          </Badge>
-                        </div>
-                        
-                        <ProgressBar 
-                          progress={goal.progress}
-                          showPercentage={true}
-                          size="sm"
-                          className="mb-4"
-                        />
-                        
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm text-muted-foreground">
-                            Due: {goal.deadline} • {goal.progress}% complete
-                          </span>
-                          <div className="flex gap-2">
-                            <Button size="sm" variant="outline">Edit</Button>
-                            <Button size="sm">Update Progress</Button>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <Label>What passports do you hold?</Label>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-2">
+                        {['US', 'UK', 'CA', 'AU', 'EU', 'Other'].map((passport) => (
+                          <div key={passport} className="flex items-center space-x-2">
+                            <Checkbox
+                              id={passport}
+                              checked={profile.passports.includes(passport)}
+                              onCheckedChange={(checked) => 
+                                handleArrayUpdate('passports', passport, checked as boolean)
+                              }
+                              disabled={!isEditing}
+                            />
+                            <Label htmlFor={passport} className="text-sm">{passport}</Label>
                           </div>
-                        </div>
-                      </Card>
-                    ))}
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                </div>
+                  
+                  {isEditing && (
+                    <div className="flex justify-end mt-6">
+                      <Button onClick={saveProfile}>
+                        <Save className="w-4 h-4 mr-2" />
+                        Save Changes
+                      </Button>
+                    </div>
+                  )}
+                </Card>
+              )}
+
+              {/* Professional Information Tab */}
+              {selectedTab === 'professional' && (
+                <Card className="p-6">
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-bold">Professional Information</h2>
+                    <Button onClick={() => setIsEditing(!isEditing)} variant="outline">
+                      <Edit className="w-4 h-4 mr-2" />
+                      {isEditing ? 'Cancel' : 'Edit'}
+                    </Button>
+                  </div>
+                  
+                  <div className="space-y-6">
+                    <div>
+                      <Label htmlFor="currentOccupation">Current Occupation</Label>
+                      <Input
+                        id="currentOccupation"
+                        value={profile.currentOccupation}
+                        onChange={(e) => handleProfileUpdate('currentOccupation', e.target.value)}
+                        disabled={!isEditing}
+                        placeholder="e.g., Software Developer, Teacher, Consultant"
+                      />
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="employmentType">Employment Type</Label>
+                      <Select
+                        value={profile.employmentType}
+                        onValueChange={(value) => handleProfileUpdate('employmentType', value)}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your employment type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {employmentTypes.map((type) => (
+                            <SelectItem key={type} value={type}>{type}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="incomeSource">Primary Income Source</Label>
+                      <Select
+                        value={profile.incomeSource}
+                        onValueChange={(value) => handleProfileUpdate('incomeSource', value)}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your income source" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {incomeSources.map((source) => (
+                            <SelectItem key={source} value={source}>{source}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="monthlyIncome">Monthly Income Range</Label>
+                      <Select
+                        value={profile.monthlyIncome}
+                        onValueChange={(value) => handleProfileUpdate('monthlyIncome', value)}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your income range" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="0-1000">$0 - $1,000</SelectItem>
+                          <SelectItem value="1000-2500">$1,000 - $2,500</SelectItem>
+                          <SelectItem value="2500-5000">$2,500 - $5,000</SelectItem>
+                          <SelectItem value="5000-10000">$5,000 - $10,000</SelectItem>
+                          <SelectItem value="10000+">$10,000+</SelectItem>
+                          <SelectItem value="prefer-not-to-say">Prefer not to say</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                  
+                  {isEditing && (
+                    <div className="flex justify-end mt-6">
+                      <Button onClick={saveProfile}>
+                        <Save className="w-4 h-4 mr-2" />
+                        Save Changes
+                      </Button>
+                    </div>
+                  )}
+                </Card>
+              )}
+
+              {/* Skills & Strengths Tab */}
+              {selectedTab === 'skills' && (
+                <Card className="p-6">
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-bold">Skills & Strengths</h2>
+                    <Button onClick={() => setIsEditing(!isEditing)} variant="outline">
+                      <Edit className="w-4 h-4 mr-2" />
+                      {isEditing ? 'Cancel' : 'Edit'}
+                    </Button>
+                  </div>
+                  
+                  <div className="space-y-6">
+                    <div>
+                      <Label>What skills do you have?</Label>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-2">
+                        {skills.map((skill) => (
+                          <div key={skill} className="flex items-center space-x-2">
+                            <Checkbox
+                              id={skill}
+                              checked={profile.skills.includes(skill)}
+                              onCheckedChange={(checked) => 
+                                handleArrayUpdate('skills', skill, checked as boolean)
+                              }
+                              disabled={!isEditing}
+                            />
+                            <Label htmlFor={skill} className="text-sm">{skill}</Label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="experience">Tell us about your experience</Label>
+                      <Textarea
+                        id="experience"
+                        value={profile.experience}
+                        onChange={(e) => handleProfileUpdate('experience', e.target.value)}
+                        disabled={!isEditing}
+                        placeholder="Describe your professional background, achievements, and relevant experience..."
+                        rows={4}
+                      />
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="strengths">What are your key strengths?</Label>
+                      <Textarea
+                        id="strengths"
+                        value={profile.strengths.join(', ')}
+                        onChange={(e) => handleProfileUpdate('strengths', e.target.value.split(', ').filter(s => s.trim()))}
+                        disabled={!isEditing}
+                        placeholder="e.g., Problem-solving, Communication, Leadership, Technical expertise..."
+                        rows={3}
+                      />
+                    </div>
+                  </div>
+                  
+                  {isEditing && (
+                    <div className="flex justify-end mt-6">
+                      <Button onClick={saveProfile}>
+                        <Save className="w-4 h-4 mr-2" />
+                        Save Changes
+                      </Button>
+                    </div>
+                  )}
+                </Card>
+              )}
+
+              {/* Settings Tab */}
+              {selectedTab === 'settings' && (
+                <Card className="p-6">
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-bold">Settings & Preferences</h2>
+                    <Button onClick={() => setIsEditing(!isEditing)} variant="outline">
+                      <Edit className="w-4 h-4 mr-2" />
+                      {isEditing ? 'Cancel' : 'Edit'}
+                    </Button>
+                  </div>
+                  
+                  <div className="space-y-6">
+                    <div>
+                      <Label htmlFor="learningStyle">Learning Style Preference</Label>
+                      <Select
+                        value={profile.learningStyle}
+                        onValueChange={(value) => handleProfileUpdate('learningStyle', value)}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your preferred learning style" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="visual">Visual (Videos, Images, Charts)</SelectItem>
+                          <SelectItem value="reading">Reading (Text, Articles, Guides)</SelectItem>
+                          <SelectItem value="hands-on">Hands-on (Practice, Exercises)</SelectItem>
+                          <SelectItem value="mixed">Mixed (Combination of all)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="studyTime">Preferred Study Time</Label>
+                      <Select
+                        value={profile.studyTime}
+                        onValueChange={(value) => handleProfileUpdate('studyTime', value)}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="When do you prefer to study?" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="morning">Morning (6 AM - 12 PM)</SelectItem>
+                          <SelectItem value="afternoon">Afternoon (12 PM - 6 PM)</SelectItem>
+                          <SelectItem value="evening">Evening (6 PM - 12 AM)</SelectItem>
+                          <SelectItem value="flexible">Flexible (Any time)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div>
+                      <Label>Notification Preferences</Label>
+                      <div className="space-y-3 mt-2">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <Label htmlFor="email-notifications">Email Notifications</Label>
+                            <p className="text-sm text-muted-foreground">Receive updates via email</p>
+                          </div>
+                          <Checkbox
+                            id="email-notifications"
+                            checked={profile.notifications.email}
+                            onCheckedChange={(checked) => 
+                              handleProfileUpdate('notifications', { ...profile.notifications, email: checked as boolean })
+                            }
+                            disabled={!isEditing}
+                          />
+                        </div>
+                        
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <Label htmlFor="push-notifications">Push Notifications</Label>
+                            <p className="text-sm text-muted-foreground">Receive browser notifications</p>
+                          </div>
+                          <Checkbox
+                            id="push-notifications"
+                            checked={profile.notifications.push}
+                            onCheckedChange={(checked) => 
+                              handleProfileUpdate('notifications', { ...profile.notifications, push: checked as boolean })
+                            }
+                            disabled={!isEditing}
+                          />
+                        </div>
+                        
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <Label htmlFor="reminders">Study Reminders</Label>
+                            <p className="text-sm text-muted-foreground">Get reminded to study</p>
+                          </div>
+                          <Checkbox
+                            id="reminders"
+                            checked={profile.notifications.reminders}
+                            onCheckedChange={(checked) => 
+                              handleProfileUpdate('notifications', { ...profile.notifications, reminders: checked as boolean })
+                            }
+                            disabled={!isEditing}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {isEditing && (
+                    <div className="flex justify-end mt-6">
+                      <Button onClick={saveProfile}>
+                        <Save className="w-4 h-4 mr-2" />
+                        Save Changes
+                      </Button>
+                    </div>
+                  )}
+                </Card>
               )}
             </div>
           }

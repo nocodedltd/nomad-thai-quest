@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Home, Map, DollarSign, FileText, Building, Target, Lock, ChevronDown } from "lucide-react";
+import { Menu, X, Home, Map, DollarSign, FileText, Building, Target, Lock, ChevronDown, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Badge } from "@/components/ui/badge";
@@ -37,8 +37,8 @@ const Navigation = () => {
     },
     { 
       path: "/progress", 
-      label: "Progress", 
-      icon: Target, 
+      label: "Profile", 
+      icon: User, 
       access: ['free', 'paid'] as const
     },
   ];

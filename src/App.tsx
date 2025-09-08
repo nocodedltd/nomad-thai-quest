@@ -10,7 +10,7 @@ import { DevUserSwitcher } from "./components/layout/dev-user-switcher";
 import { FloatingActionButton } from "./components/layout/floating-action-button";
 import Home from "./pages/Home";
 import Roadmap from "./pages/Roadmap";
-import Progress from "./pages/Progress";
+import Profile from "./pages/Progress";
 import Lesson from "./pages/Lesson";
 import NotFound from "./pages/NotFound";
 
@@ -30,7 +30,7 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/roadmap" element={<Roadmap />} />
-                <Route path="/progress" element={<Progress />} />
+                <Route path="/progress" element={<Profile />} />
                 <Route path="/lesson" element={<Lesson />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

@@ -23,6 +23,7 @@ import CourseViewer from "@/components/lesson/course-viewer";
 import { amazonFBACourse, aiAutomationCourse, consultingCourse } from "@/data/courses/amazon-fba-course";
 import { CompactCourseCard } from "@/components/roadmap/CompactCourseCard";
 import AffiliateDashboard from "@/components/income/affiliate-dashboard";
+import EnglishTeachingBoard from "@/components/income/english-teaching-board";
 
 const courses = [
   {
@@ -143,7 +144,7 @@ type IncomeTabProps = {
 
 export default function IncomeTab({ compact = false }: IncomeTabProps) {
   const { userType } = useUser();
-  const [selectedTab, setSelectedTab] = useState<'courses' | 'jobs' | 'affiliate'>('courses');
+  const [selectedTab, setSelectedTab] = useState<'courses' | 'jobs' | 'affiliate' | 'teaching'>('courses');
   const [searchTerm, setSearchTerm] = useState("");
   const [currentView, setCurrentView] = useState<'overview' | 'course'>('overview');
   const [selectedCourseId, setSelectedCourseId] = useState<string>('');
@@ -236,15 +237,20 @@ export default function IncomeTab({ compact = false }: IncomeTabProps) {
 
       {/* Compact Tabs */}
       <div className={`flex justify-center ${compact ? 'mb-4' : 'mb-6'}`}>
-        <div className="flex bg-muted rounded-lg p-1">
-          {['courses', 'jobs', 'affiliate'].map((tab) => (
+        <div className="flex bg-muted rounded-lg p-1 flex-wrap">
+          {[
+            { key: 'courses', label: 'Courses' },
+            { key: 'jobs', label: 'Jobs' },
+            { key: 'teaching', label: 'Teaching' },
+            { key: 'affiliate', label: 'Affiliate' }
+          ].map((tab) => (
             <Button
-              key={tab}
-              variant={selectedTab === tab ? 'default' : 'ghost'}
-              onClick={() => setSelectedTab(tab as any)}
+              key={tab.key}
+              variant={selectedTab === tab.key ? 'default' : 'ghost'}
+              onClick={() => setSelectedTab(tab.key as any)}
               className={`capitalize ${compact ? 'px-3 py-1 text-sm' : ''}`}
             >
-              {tab}
+              {tab.label}
             </Button>
           ))}
         </div>
@@ -286,6 +292,26 @@ export default function IncomeTab({ compact = false }: IncomeTabProps) {
                   title="Access Remote Job Board"
                   description="Find Thailand-friendly remote positions and freelance opportunities"
                 />
+              </div>
+            )}
+            
+            {selectedTab === 'teaching' && (
+              <div>
+                <div className="text-center py-8">
+                  <div className="max-w-md mx-auto">
+                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <GraduationCap className="w-8 h-8 text-primary" />
+                    </div>
+                    <h2 className="text-xl font-bold mb-3">English Teaching Opportunities</h2>
+                    <p className="text-muted-foreground mb-6">
+                      Create a free account to access our English teaching job board and get matched with positions across Thailand
+                    </p>
+                    <UpgradePrompt 
+                      title="Start Your Teaching Journey"
+                      description="Join our network of English teachers and access exclusive job opportunities"
+                    />
+                  </div>
+                </div>
               </div>
             )}
             
@@ -389,7 +415,11 @@ export default function IncomeTab({ compact = false }: IncomeTabProps) {
               </div>
             )}
             
-
+            {selectedTab === 'teaching' && (
+              <div>
+                <EnglishTeachingBoard />
+              </div>
+            )}
             
             {selectedTab === 'affiliate' && (
               <div>
@@ -479,7 +509,11 @@ export default function IncomeTab({ compact = false }: IncomeTabProps) {
               </div>
             )}
             
-
+            {selectedTab === 'teaching' && (
+              <div>
+                <EnglishTeachingBoard />
+              </div>
+            )}
             
             {selectedTab === 'affiliate' && (
               <div>

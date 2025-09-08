@@ -30,6 +30,7 @@ import { Paywall } from "@/components/shared/paywall";
 import { UpgradePrompt } from "@/components/shared/upgrade-prompt";
 import { CompactCourseCard } from "@/components/roadmap/CompactCourseCard";
 import AffiliateDashboard from "@/components/income/affiliate-dashboard";
+import EnglishTeachingBoard from "@/components/income/english-teaching-board";
 
 const courses = [
   {
@@ -184,7 +185,7 @@ const incomeStrategies = [
 export default function Income() {
   const navigate = useNavigate();
   const { userType, userState } = useUser();
-  const [selectedTab, setSelectedTab] = useState<'courses' | 'jobs' | 'strategies' | 'affiliate'>('courses');
+  const [selectedTab, setSelectedTab] = useState<'courses' | 'jobs' | 'strategies' | 'affiliate' | 'teaching'>('courses');
   const [searchTerm, setSearchTerm] = useState("");
 
   const getCourseAccess = (courseId: string) => {
@@ -222,15 +223,21 @@ export default function Income() {
 
         {/* Tabs */}
         <div className="flex justify-center mb-6 sm:mb-8">
-          <div className="flex bg-muted rounded-lg p-1 w-full max-w-lg">
-            {['courses', 'jobs', 'strategies', 'affiliate'].map((tab) => (
+          <div className="flex bg-muted rounded-lg p-1 w-full max-w-lg flex-wrap">
+            {[
+              { key: 'courses', label: 'Courses' },
+              { key: 'jobs', label: 'Jobs' },
+              { key: 'strategies', label: 'Strategies' },
+              { key: 'teaching', label: 'Teaching' },
+              { key: 'affiliate', label: 'Affiliate' }
+            ].map((tab) => (
               <Button
-                key={tab}
-                variant={selectedTab === tab ? 'default' : 'ghost'}
-                onClick={() => setSelectedTab(tab as any)}
+                key={tab.key}
+                variant={selectedTab === tab.key ? 'default' : 'ghost'}
+                onClick={() => setSelectedTab(tab.key as any)}
                 className="capitalize flex-1 text-xs sm:text-sm"
               >
-                {tab}
+                {tab.label}
               </Button>
             ))}
           </div>
@@ -305,6 +312,26 @@ export default function Income() {
                     title="Access Remote Job Board"
                     description="Find Thailand-friendly remote positions and freelance opportunities"
                   />
+                </div>
+              )}
+              
+              {selectedTab === 'teaching' && (
+                <div>
+                  <div className="text-center py-8">
+                    <div className="max-w-md mx-auto">
+                      <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <GraduationCap className="w-8 h-8 text-primary" />
+                      </div>
+                      <h2 className="text-xl font-bold mb-3">English Teaching Opportunities</h2>
+                      <p className="text-muted-foreground mb-6">
+                        Create a free account to access our English teaching job board and get matched with positions across Thailand
+                      </p>
+                      <UpgradePrompt 
+                        title="Start Your Teaching Journey"
+                        description="Join our network of English teachers and access exclusive job opportunities"
+                      />
+                    </div>
+                  </div>
                 </div>
               )}
               
@@ -471,6 +498,12 @@ export default function Income() {
                 </div>
               )}
               
+              {selectedTab === 'teaching' && (
+                <div>
+                  <EnglishTeachingBoard />
+                </div>
+              )}
+              
               {selectedTab === 'affiliate' && (
                 <div>
                   <AffiliateDashboard />
@@ -598,6 +631,12 @@ export default function Income() {
                       );
                     })}
                   </div>
+                </div>
+              )}
+              
+              {selectedTab === 'teaching' && (
+                <div>
+                  <EnglishTeachingBoard />
                 </div>
               )}
               

@@ -37,60 +37,135 @@ import { visaDetails } from "@/data/visas/visa-details";
 
 const visaTypes = [
   {
-    id: "tourist",
-    title: "Tourist Visa (TR)",
-    subtitle: "60 days + 30 day extension",
+    id: "tourist-visa",
+    title: "Tourist Visa / Visa Exemption",
+    subtitle: "30-60 days",
     description: "Perfect for testing the waters and short-term stays",
     icon: Plane,
-    duration: "60+30 days",
-    cost: "$40-60",
+    duration: "30-60 days",
+    cost: "Free - $40",
     difficulty: "Easy",
-    processing: "3-5 days",
+    processing: "Immediate",
     renewable: "Yes (border runs)",
     workAllowed: false,
     gradient: "from-blue-500 to-blue-600",
     requirements: [
       "Valid passport (6+ months)",
       "Return flight ticket",
-      "Bank statement ($3,000+)",
-      "Accommodation booking",
-      "Passport photos"
+      "Proof of accommodation",
+      "Sufficient funds (20,000 THB)",
+      "Return ticket or onward ticket"
     ],
     access: "free" as const,
-    pros: ["Quick processing", "Low cost", "Easy requirements"],
-    cons: ["No work allowed", "Requires border runs", "Limited duration"],
-    quickRequirements: ["Passport", "Flight ticket", "Bank statement"]
+    pros: ["No visa fee for visa exemption", "Quick entry process", "Can be extended once for 30 days"],
+    cons: ["Cannot work on tourist visa", "Limited to 30-60 days stay", "Must show proof of onward travel"],
+    quickRequirements: ["Passport", "Flight ticket", "Accommodation"]
   },
   {
-    id: "education",
-    title: "Education Visa (ED)",
+    id: "muay-thai-education-visa",
+    title: "Muay Thai Education Visa",
     subtitle: "1 year renewable",
-    description: "Learn Thai language or skills while living in Thailand",
+    description: "Learn Muay Thai while living legally in Thailand with long-term stay",
     icon: GraduationCap,
     duration: "1 year",
-    cost: "$500-2,000/year",
+    cost: "$200-400",
     difficulty: "Medium",
     processing: "2-4 weeks",
     renewable: "Yes (up to 3 years)",
     workAllowed: false,
-    gradient: "from-purple-500 to-purple-600",
+    gradient: "from-red-500 to-orange-500",
     requirements: [
-      "Acceptance letter from school",
-      "Educational background documents",
-      "Bank statement ($5,000+)",
-      "Health certificate",
-      "Police clearance"
+      "Enrollment in approved Muay Thai school",
+      "Valid passport (6+ months remaining)",
+      "Medical certificate",
+      "Criminal background check",
+      "Proof of financial means"
     ],
     access: "paid" as const,
-    pros: ["Long-term stay", "Legal residence", "Study opportunities"],
-    cons: ["Must attend classes", "No work allowed", "School dependency"],
-    quickRequirements: ["School acceptance", "Documents", "Bank statement"]
+    pros: ["Stay up to 1 year", "Learn authentic Muay Thai", "Immerse in Thai culture"],
+    cons: ["Must attend classes regularly", "Cannot work on this visa", "Must report to immigration every 90 days"],
+    quickRequirements: ["School acceptance", "Training schedule", "Bank statement"]
   },
   {
-    id: "elite",
-    title: "Elite Visa", 
+    id: "dtv-visa",
+    title: "Digital Nomad Visa (DTV)",
+    subtitle: "5 years renewable",
+    description: "Thailand's new Digital Nomad Visa allows remote workers to stay long-term",
+    icon: Building,
+    duration: "5 years",
+    cost: "$500-1,000",
+    difficulty: "Hard",
+    processing: "4-8 weeks",
+    renewable: "Yes",
+    workAllowed: true,
+    gradient: "from-green-500 to-emerald-500",
+    requirements: [
+      "Remote work income of $80,000+ annually",
+      "Valid passport (6+ months remaining)",
+      "Health insurance coverage",
+      "Criminal background check",
+      "Proof of remote work"
+    ],
+    access: "paid" as const,
+    pros: ["Stay up to 5 years", "Work remotely legally", "Access to Thai healthcare"],
+    cons: ["Higher income requirement", "Complex application", "Health insurance needed"],
+    quickRequirements: ["Remote work proof", "Income proof", "Health insurance"]
+  },
+  {
+    id: "smart-business-visa",
+    title: "SMART Business Visa",
+    subtitle: "4 years renewable",
+    description: "Thailand's Smart Visa program for high-tech and innovative businesses",
+    icon: Building,
+    duration: "4 years",
+    cost: "$1,000-2,000",
+    difficulty: "Hard",
+    processing: "6-12 weeks",
+    renewable: "Yes",
+    workAllowed: true,
+    gradient: "from-purple-500 to-pink-500",
+    requirements: [
+      "Business investment of $200,000+",
+      "Valid passport (6+ months remaining)",
+      "Business plan or investment proof",
+      "Health insurance",
+      "Criminal background check"
+    ],
+    access: "paid" as const,
+    pros: ["Stay up to 4 years", "Work in your business", "Bring family members"],
+    cons: ["High investment requirement", "Complex approval process", "Business focus required"],
+    quickRequirements: ["Business plan", "Investment proof", "Expertise proof"]
+  },
+  {
+    id: "non-b-business-visa",
+    title: "Non-B Business Visa",
+    subtitle: "1 year renewable",
+    description: "Traditional business visa for working in Thailand with local companies",
+    icon: Building,
+    duration: "1 year",
+    cost: "$200-500",
+    difficulty: "Hard",
+    processing: "4-8 weeks",
+    renewable: "Yes",
+    workAllowed: true,
+    gradient: "from-indigo-500 to-blue-500",
+    requirements: [
+      "Job offer from Thai company OR business activities",
+      "Valid passport (6+ months remaining)",
+      "Work permit application",
+      "Company documents",
+      "Medical certificate"
+    ],
+    access: "paid" as const,
+    pros: ["Work legally in Thailand", "Stay up to 1 year", "Can be renewed annually"],
+    cons: ["Complex process", "Employer dependency", "Strict requirements"],
+    quickRequirements: ["Job offer", "Work permit", "Degree", "Experience"]
+  },
+  {
+    id: "elite-visa",
+    title: "Thailand Elite Visa",
     subtitle: "5-20 years",
-    description: "Premium visa program for affluent individuals",
+    description: "Premium visa program offering long-term stay with exclusive benefits",
     icon: Crown,
     duration: "5-20 years",
     cost: "$15,000-60,000",
@@ -98,69 +173,93 @@ const visaTypes = [
     processing: "30-60 days",
     renewable: "No (but long-term)",
     workAllowed: false,
-    gradient: "from-yellow-500 to-yellow-600",
+    gradient: "from-yellow-500 to-amber-500",
     requirements: [
-      "Payment of membership fee",
-      "Valid passport",
+      "Valid passport (6+ months remaining)",
+      "Proof of financial means",
       "Clean criminal record",
-      "Medical certificate",
-      "Financial documentation"
+      "Health insurance (some tiers)",
+      "Application fee payment"
     ],
     access: "paid" as const,
-    pros: ["Very long-term", "VIP services", "Airport assistance"],
-    cons: ["Very expensive", "No work rights", "High financial barrier"],
+    pros: ["Stay 5-20 years", "VIP airport services", "Exclusive member events"],
+    cons: ["High cost investment", "Cannot work (some exceptions)", "Must maintain membership"],
     quickRequirements: ["Membership fee", "Clean record", "Medical cert"]
   },
   {
-    id: "work",
-    title: "Work Visa (B)",
+    id: "retirement-visa",
+    title: "Retirement Visa (Non-Immigrant O)",
     subtitle: "1 year renewable",
-    description: "For those employed by Thai companies or remote workers",
-    icon: Building,
-    duration: "1 year",
-    cost: "$200-500",
-    difficulty: "Hard",
-    processing: "4-8 weeks", 
-    renewable: "Yes",
-    workAllowed: true,
-    gradient: "from-green-500 to-green-600",
-    requirements: [
-      "Job offer from Thai company",
-      "Work permit application",
-      "University degree",
-      "Experience certificates",
-      "Health certificate",
-      "Police clearance"
-    ],
-    access: "paid" as const,
-    pros: ["Work legally", "Path to residency", "Stable status"],
-    cons: ["Complex process", "Employer dependency", "Strict requirements"],
-    quickRequirements: ["Job offer", "Work permit", "Degree", "Experience"]
-  },
-  {
-    id: "retirement",
-    title: "Retirement Visa",
-    subtitle: "1 year renewable",
-    description: "For those 50+ with sufficient funds",
+    description: "For retirees aged 50+ who want to live in Thailand long-term",
     icon: Heart,
     duration: "1 year",
-    cost: "$200",
+    cost: "$200-500",
     difficulty: "Medium",
     processing: "2-4 weeks",
     renewable: "Yes",
     workAllowed: false,
-    gradient: "from-pink-500 to-pink-600",
+    gradient: "from-pink-500 to-rose-500",
     requirements: [
-      "Age 50+ years",
-      "Bank balance ($25,000+)",
-      "Health insurance",
-      "Police clearance",
-      "Medical certificate"
+      "Age 50 or older",
+      "Valid passport (6+ months remaining)",
+      "Retirement income OR bank deposit",
+      "Medical certificate",
+      "Criminal background check"
     ],
     access: "paid" as const,
-    pros: ["Long-term stability", "Straightforward renewal", "Retirement focus"],
-    cons: ["Age requirement", "High financial requirement", "No work allowed"],
+    pros: ["Stay up to 1 year", "Can be renewed annually", "No work permit needed"],
+    cons: ["Cannot work in Thailand", "Must maintain financial requirements", "Annual renewal required"],
     quickRequirements: ["Age 50+", "Bank balance", "Health insurance"]
+  },
+  {
+    id: "ltr-visa",
+    title: "Long-Term Resident (LTR) Visa",
+    subtitle: "10 years renewable",
+    description: "New long-term visa program for high-income individuals, retirees, and professionals",
+    icon: Star,
+    duration: "10 years",
+    cost: "$1,000-2,000",
+    difficulty: "Hard",
+    processing: "8-12 weeks",
+    renewable: "Yes",
+    workAllowed: true,
+    gradient: "from-emerald-500 to-teal-500",
+    requirements: [
+      "High income OR significant assets",
+      "Valid passport (6+ months remaining)",
+      "Health insurance",
+      "Criminal background check",
+      "Financial statements"
+    ],
+    access: "paid" as const,
+    pros: ["Stay up to 10 years", "Work permit included", "Tax benefits"],
+    cons: ["High income/asset requirements", "Must maintain category requirements", "Limited to specific activities"],
+    quickRequirements: ["Wealth proof", "Investment plan", "Health insurance"]
+  },
+  {
+    id: "marriage-visa",
+    title: "Marriage Visa (Non-Immigrant O)",
+    subtitle: "1 year renewable",
+    description: "For those married to Thai citizens with long-term stay rights",
+    icon: Heart,
+    duration: "1 year",
+    cost: "$200-500",
+    difficulty: "Medium",
+    processing: "2-4 weeks",
+    renewable: "Yes",
+    workAllowed: true,
+    gradient: "from-rose-500 to-pink-500",
+    requirements: [
+      "Marriage to Thai citizen",
+      "Valid passport (6+ months remaining)",
+      "Marriage certificate",
+      "Thai spouse's documents",
+      "Financial proof"
+    ],
+    access: "paid" as const,
+    pros: ["Stay up to 1 year", "Can work with work permit", "Can be renewed annually"],
+    cons: ["Must maintain marriage", "Annual renewal required", "Must report to immigration every 90 days"],
+    quickRequirements: ["Marriage cert", "Spouse documents", "Financial proof"]
   }
 ];
 
@@ -436,29 +535,34 @@ export default function Visa() {
               {/* Visa Overview for Guests */}
               <div className="grid gap-6 mb-8">
                 <Card className="p-6 bg-transparent border border-gray-200 dark:border-gray-700">
-                  <h3 className="text-2xl font-bold mb-4">Tourist Visa (Free Guide)</h3>
+                  <h3 className="text-2xl font-bold mb-4">Tourist Visa / Visa Exemption (Free Guide)</h3>
                   <p className="text-muted-foreground mb-4">
-                    Perfect for first-time visitors and short-term stays up to 90 days total.
+                    Perfect for first-time visitors and short-term stays up to 60 days total.
                   </p>
                   <div className="grid md:grid-cols-3 gap-4 mb-6">
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-blue-500">60+30</div>
+                      <div className="text-2xl font-bold text-blue-500">30-60</div>
                       <div className="text-sm text-muted-foreground">Days</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-green-500">$40-60</div>
+                      <div className="text-2xl font-bold text-green-500">Free - $40</div>
                       <div className="text-sm text-muted-foreground">Cost</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-purple-500">3-5</div>
-                      <div className="text-sm text-muted-foreground">Days Processing</div>
+                      <div className="text-2xl font-bold text-purple-500">Immediate</div>
+                      <div className="text-sm text-muted-foreground">Processing</div>
                     </div>
                   </div>
-                  <Button className="w-full">Learn Tourist Visa Process</Button>
+                  <Button 
+                    className="w-full"
+                    onClick={() => handleVisaSelect("tourist-visa")}
+                  >
+                    Learn Tourist Visa Process
+                  </Button>
                 </Card>
 
                 {/* Locked visa types */}
-                {visaTypes.slice(1, 3).map((visa) => {
+                {visaTypes.slice(1, 4).map((visa) => {
                   const Icon = visa.icon;
                   return (
                     <Card key={visa.id} className="p-6 opacity-50 border-dashed bg-transparent border border-gray-200 dark:border-gray-700">
@@ -482,7 +586,7 @@ export default function Visa() {
                 title="Unlock Complete Visa Guide"
                 description="Get detailed guides for all visa types, document templates, and step-by-step processes"
                 features={[
-                  "All 5 visa type guides",
+                  "All 9 visa type guides",
                   "Document templates & checklists", 
                   "Application timelines",
                   "Legal consultation access"
@@ -507,7 +611,7 @@ export default function Visa() {
               
               <UpgradePrompt 
                 compact
-                title="Unlock All Visa Types & Tools"
+                title="Unlock All 9 Visa Types & Tools"
                 description="Get complete guides, document templates, and legal support"
               />
             </div>

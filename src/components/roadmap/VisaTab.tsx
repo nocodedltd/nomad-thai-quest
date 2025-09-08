@@ -32,7 +32,7 @@ import { visaDetails } from "@/data/visas/visa-details";
 
 const visaTypes = [
   {
-    id: "tourist",
+    id: "tourist-visa",
     title: "Tourist Visa / Visa Exemption",
     subtitle: "30-60 days + extensions",
     description: "Perfect for short-term visits and testing the waters in Thailand",
@@ -60,7 +60,7 @@ const visaTypes = [
     upgradePrompt: "Upgrade to Premium to stay longer and access advanced visa options"
   },
   {
-    id: "muay-thai-education",
+    id: "muay-thai-education-visa",
     title: "Muay Thai Education Visa",
     subtitle: "1 year renewable",
     description: "Learn Muay Thai while living legally in Thailand with long-term stay",
@@ -89,7 +89,7 @@ const visaTypes = [
     upgradePrompt: null
   },
   {
-    id: "dtv",
+    id: "dtv-visa",
     title: "DTV - Digital Nomad Visa",
     subtitle: "5 years renewable",
     description: "Thailand's official digital nomad visa for remote workers and entrepreneurs",
@@ -118,7 +118,7 @@ const visaTypes = [
     upgradePrompt: null
   },
   {
-    id: "smart-business",
+    id: "smart-business-visa",
     title: "SMART Business Visa",
     subtitle: "4 years renewable",
     description: "Thailand's Smart Visa program for high-tech and innovative businesses",
@@ -147,7 +147,7 @@ const visaTypes = [
     upgradePrompt: null
   },
   {
-    id: "non-b-business",
+    id: "non-b-business-visa",
     title: "Non-B Business Visa",
     subtitle: "1 year renewable",
     description: "Traditional business visa for working in Thailand with local companies",
@@ -177,7 +177,7 @@ const visaTypes = [
     upgradePrompt: null
   },
   {
-    id: "elite",
+    id: "elite-visa",
     title: "Thailand Privilege Visa (Elite)",
     subtitle: "5-20 years",
     description: "Premium visa program for affluent individuals with VIP services and long-term stay",
@@ -206,7 +206,7 @@ const visaTypes = [
     upgradePrompt: null
   },
   {
-    id: "retirement",
+    id: "retirement-visa",
     title: "Retirement Visa (Non-Immigrant O)",
     subtitle: "1 year renewable",
     description: "For those 50+ with sufficient funds to retire in Thailand",
@@ -235,7 +235,7 @@ const visaTypes = [
     upgradePrompt: null
   },
   {
-    id: "ltr",
+    id: "ltr-visa",
     title: "Long-Term Resident (LTR) Visa",
     subtitle: "10 years renewable",
     description: "Thailand's newest long-term visa for wealthy individuals and professionals",
@@ -264,7 +264,7 @@ const visaTypes = [
     upgradePrompt: null
   },
   {
-    id: "marriage",
+    id: "marriage-visa",
     title: "Marriage Visa (Non-Immigrant O)",
     subtitle: "1 year renewable",
     description: "For those married to Thai nationals with long-term stay rights",

@@ -210,7 +210,7 @@ export default function Profile() {
 
         {/* Tabs */}
         <div className="flex justify-center mb-8">
-          <div className="flex bg-muted rounded-lg p-1 overflow-x-auto">
+          <div className="subsection-nav-frosted flex overflow-x-auto">
             {[
               { id: 'personal', label: 'Personal Info', desc: 'Basic details', icon: User },
               { id: 'thailand-goals', label: 'Thailand Goals', desc: 'Your objectives', icon: Target },
@@ -220,16 +220,15 @@ export default function Profile() {
             ].map((tab) => {
               const Icon = tab.icon;
               return (
-                <Button
+                <button
                   key={tab.id}
-                  variant={selectedTab === tab.id ? 'default' : 'ghost'}
                   onClick={() => setSelectedTab(tab.id as any)}
-                  className="flex flex-col px-4 py-3 h-auto min-w-[120px]"
+                  className={`subsection-button-frosted flex flex-col px-4 py-3 h-auto min-w-[120px] ${selectedTab === tab.id ? 'selected' : ''}`}
                 >
                   <Icon className="w-4 h-4 mb-1" />
                   <span className="font-medium text-xs">{tab.label}</span>
                   <span className="text-xs text-muted-foreground">{tab.desc}</span>
-                </Button>
+                </button>
               );
             })}
           </div>

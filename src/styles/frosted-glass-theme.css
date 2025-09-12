@@ -558,36 +558,31 @@
   /* Navigation Button Styles */
   .nav-button-frosted {
     @apply relative overflow-hidden px-4 py-2 text-sm font-medium transition-all duration-300;
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(15px);
-    border: 0.5px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
     border-radius: 12px;
-    color: var(--frosted-text-primary);
-    box-shadow: 
-      0 4px 16px rgba(0, 0, 0, 0.3),
-      0 0 0 0.5px rgba(255, 255, 255, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    color: var(--frosted-text-secondary);
+    box-shadow: none;
   }
 
   .nav-button-frosted:hover {
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(18px);
-    border-color: rgba(255, 255, 255, 0.3);
-    transform: translateY(-1px);
-    box-shadow: 
-      0 6px 20px rgba(0, 0, 0, 0.4),
-      0 0 0 0.5px rgba(255, 255, 255, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    border: none;
+    transform: none;
+    box-shadow: none;
   }
 
   .nav-button-frosted.selected {
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(18px);
-    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(12px);
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
+    color: var(--frosted-text-primary);
     box-shadow: 
-      0 6px 20px rgba(0, 0, 0, 0.4),
-      0 0 0 0.5px rgba(255, 255, 255, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      0 4px 12px rgba(0, 0, 0, 0.3),
+      0 0 0 0.5px rgba(255, 255, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
   .nav-button-frosted::before {

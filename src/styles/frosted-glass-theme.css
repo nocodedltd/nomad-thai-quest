@@ -222,13 +222,11 @@
     @apply border-border;
   }
 
-  /* Override Tailwind base styles with higher specificity */
-  html body,
   body {
-    font-family: var(--frosted-font-primary) !important;
+    font-family: var(--frosted-font-primary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: var(--frosted-text-primary) !important;
+    color: var(--frosted-text-primary);
     background: var(--frosted-bg-primary) !important;
     background-image: 
       linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
@@ -239,11 +237,11 @@
       radial-gradient(circle at 20% 80%, rgba(245, 158, 11, 0.2) 0%, transparent 60%),
       radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 60%),
       radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.1) 0%, transparent 70%) !important;
-    background-size: cover, cover, auto, auto, auto, auto, auto, auto !important;
-    background-position: center, center, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0 !important;
-    background-attachment: fixed, fixed, fixed, fixed, fixed, fixed, fixed, fixed !important;
-    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat !important;
-    min-height: 100vh !important;
+    background-size: cover, cover, auto, auto, auto, auto, auto, auto;
+    background-position: center, center, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
+    background-attachment: fixed, fixed, fixed, fixed, fixed, fixed, fixed, fixed;
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+    min-height: 100vh;
   }
 
   /* Exclude landing page from background image */
@@ -286,54 +284,6 @@
         radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 60%),
         radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.1) 0%, transparent 70%) !important;
     }
-  }
-}
-
-/* Override Tailwind base styles with maximum specificity */
-@layer utilities {
-  html body {
-    background-attachment: fixed !important;
-    background-image: 
-      linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
-      url('./src/assets/thailand-hero.jpg'),
-      linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, transparent 25%),
-      linear-gradient(225deg, rgba(245, 158, 11, 0.1) 0%, transparent 25%),
-      linear-gradient(45deg, rgba(245, 158, 11, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 20% 80%, rgba(245, 158, 11, 0.2) 0%, transparent 60%),
-      radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 60%),
-      radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.1) 0%, transparent 70%) !important;
-    background-size: cover, cover, auto, auto, auto, auto, auto, auto !important;
-    background-position: center, center, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0 !important;
-    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat !important;
-  }
-  
-  /* Fixed background using pseudo-element - more reliable than background-attachment */
-  html body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
-      linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
-      url('./src/assets/thailand-hero.jpg'),
-      linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, transparent 25%),
-      linear-gradient(225deg, rgba(245, 158, 11, 0.1) 0%, transparent 25%),
-      linear-gradient(45deg, rgba(245, 158, 11, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 20% 80%, rgba(245, 158, 11, 0.2) 0%, transparent 60%),
-      radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 60%),
-      radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
-    background-size: cover, cover, auto, auto, auto, auto, auto, auto;
-    background-position: center, center, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
-    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
-    z-index: -1;
-    pointer-events: none;
-  }
-  
-  /* Ensure body has transparent background so pseudo-element shows through */
-  html body {
-    background: transparent !important;
   }
 
   /* Frosted Glass Theme Body */

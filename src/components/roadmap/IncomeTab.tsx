@@ -237,21 +237,20 @@ export default function IncomeTab({ compact = false }: IncomeTabProps) {
 
       {/* Compact Tabs */}
       <div className={`flex justify-center ${compact ? 'mb-4' : 'mb-6'}`}>
-        <div className="flex bg-muted rounded-lg p-1 flex-wrap">
+        <div className="subsection-nav-frosted">
           {[
             { key: 'courses', label: 'Courses' },
             { key: 'jobs', label: 'Jobs' },
             { key: 'teaching', label: 'Teaching' },
             { key: 'affiliate', label: 'Affiliate' }
           ].map((tab) => (
-            <Button
+            <button
               key={tab.key}
-              variant={selectedTab === tab.key ? 'default' : 'ghost'}
               onClick={() => setSelectedTab(tab.key as any)}
-              className={`capitalize ${compact ? 'px-3 py-1 text-sm' : ''}`}
+              className={`subsection-button-frosted capitalize ${selectedTab === tab.key ? 'selected' : ''}`}
             >
               {tab.label}
-            </Button>
+            </button>
           ))}
         </div>
       </div>

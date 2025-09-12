@@ -226,28 +226,25 @@ export default function Roadmap() {
 
         {/* Main Section Tabs */}
         <div className="flex justify-center mb-4">
-          <div className="flex bg-muted rounded-lg p-1">
-            <Button
-              variant={selectedTab === 'income' ? 'default' : 'ghost'}
+          <div className="flex gap-2 p-2 subsection-nav-frosted">
+            <button
               onClick={() => handleTabChange('income')}
-              className="px-4 py-2 text-sm"
+              className={`nav-button-frosted ${selectedTab === 'income' ? 'selected' : ''}`}
             >
               💰 Income Setup
-            </Button>
-            <Button
-              variant={selectedTab === 'visa' ? 'default' : 'ghost'}
+            </button>
+            <button
               onClick={() => handleTabChange('visa')}
-              className="px-4 py-2 text-sm"
+              className={`nav-button-frosted ${selectedTab === 'visa' ? 'selected' : ''}`}
             >
               📋 Visa & Legal
-            </Button>
-            <Button
-              variant={selectedTab === 'living' ? 'default' : 'ghost'}
+            </button>
+            <button
               onClick={() => handleTabChange('living')}
-              className="px-4 py-2 text-sm"
+              className={`nav-button-frosted ${selectedTab === 'living' ? 'selected' : ''}`}
             >
               🏠 Living Setup
-            </Button>
+            </button>
           </div>
         </div>
 

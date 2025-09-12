@@ -555,6 +555,115 @@
     color: rgba(255, 255, 255, 0.4) !important;
   }
 
+  /* Navigation Button Styles */
+  .nav-button-frosted {
+    @apply relative overflow-hidden px-4 py-2 text-sm font-medium transition-all duration-300;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(15px);
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    color: var(--frosted-text-primary);
+    box-shadow: 
+      0 4px 16px rgba(0, 0, 0, 0.3),
+      0 0 0 0.5px rgba(255, 255, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .nav-button-frosted:hover {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(18px);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 
+      0 6px 20px rgba(0, 0, 0, 0.4),
+      0 0 0 0.5px rgba(255, 255, 255, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+
+  .nav-button-frosted.selected {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(18px);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 
+      0 6px 20px rgba(0, 0, 0, 0.4),
+      0 0 0 0.5px rgba(255, 255, 255, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+
+  .nav-button-frosted::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s;
+  }
+
+  .nav-button-frosted:hover::before {
+    left: 100%;
+  }
+
+  /* Subsection Navigation Styles */
+  .subsection-nav-frosted {
+    @apply flex flex-wrap gap-2 p-2;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border: 0.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+  }
+
+  .subsection-button-frosted {
+    @apply relative overflow-hidden px-3 py-1 text-sm font-medium transition-all duration-300;
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(12px);
+    border: 0.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: var(--frosted-text-secondary);
+    box-shadow: 
+      0 2px 8px rgba(0, 0, 0, 0.2),
+      0 0 0 0.5px rgba(255, 255, 255, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .subsection-button-frosted:hover {
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(15px);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+    box-shadow: 
+      0 4px 12px rgba(0, 0, 0, 0.3),
+      0 0 0 0.5px rgba(255, 255, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  .subsection-button-frosted.selected {
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(15px);
+    border-color: rgba(255, 255, 255, 0.25);
+    color: var(--frosted-text-primary);
+    box-shadow: 
+      0 4px 12px rgba(0, 0, 0, 0.3),
+      0 0 0 0.5px rgba(255, 255, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  .subsection-button-frosted::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+    transition: left 0.4s;
+  }
+
+  .subsection-button-frosted:hover::before {
+    left: 100%;
+  }
+
   /* Animations */
   @keyframes float {
     0%, 100% {

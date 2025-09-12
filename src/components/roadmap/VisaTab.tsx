@@ -610,16 +610,15 @@ export default function VisaTab({ compact = false }: { compact?: boolean }) {
 
       {/* Duration-based Sub Navigation */}
       <div className="flex justify-center mb-6">
-        <div className="flex bg-muted rounded-lg p-1">
+        <div className="subsection-nav-frosted">
           {(['0-1', '1-3', '3+'] as const).map((tab) => (
-            <Button
+            <button
               key={tab}
-              variant={selectedDurationTab === tab ? 'default' : 'ghost'}
               onClick={() => setSelectedDurationTab(tab)}
-              className="capitalize px-4 py-2 text-sm"
+              className={`subsection-button-frosted capitalize ${selectedDurationTab === tab ? 'selected' : ''}`}
             >
               {getDurationLabel(tab)}
-            </Button>
+            </button>
           ))}
         </div>
       </div>

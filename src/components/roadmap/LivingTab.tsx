@@ -116,42 +116,37 @@ export default function LivingTab({ compact = false }: LivingTabProps) {
 
       {/* Tabs */}
       <div className={`flex justify-center ${compact ? 'mb-4' : 'mb-8'}`}>
-        <div className="flex bg-muted rounded-lg p-1 flex-wrap">
-          <Button
-            variant={selectedTab === 'short-term' ? 'default' : 'ghost'}
+        <div className="subsection-nav-frosted">
+          <button
             onClick={() => setSelectedTab('short-term')}
-            className={`flex items-center gap-2 ${compact ? 'px-3 py-1 text-sm' : ''}`}
+            className={`subsection-button-frosted flex items-center gap-2 ${selectedTab === 'short-term' ? 'selected' : ''}`}
           >
             🏨 Short-term
-          </Button>
-          <Button
-            variant={selectedTab === 'long-term' ? 'default' : 'ghost'}
+          </button>
+          <button
             onClick={() => setSelectedTab('long-term')}
-            className={`flex items-center gap-2 ${compact ? 'px-3 py-1 text-sm' : ''}`}
+            className={`subsection-button-frosted flex items-center gap-2 ${selectedTab === 'long-term' ? 'selected' : ''}`}
           >
             📚 Long-term Guide
-          </Button>
-          <Button
-            variant={selectedTab === 'resources' ? 'default' : 'ghost'}
+          </button>
+          <button
             onClick={() => setSelectedTab('resources')}
-            className={`flex items-center gap-2 ${compact ? 'px-3 py-1 text-sm' : ''}`}
+            className={`subsection-button-frosted flex items-center gap-2 ${selectedTab === 'resources' ? 'selected' : ''}`}
           >
             🔧 Resources
-          </Button>
-          <Button
-            variant={selectedTab === 'community' ? 'default' : 'ghost'}
+          </button>
+          <button
             onClick={() => setSelectedTab('community')}
-            className={`flex items-center gap-2 ${compact ? 'px-3 py-1 text-sm' : ''}`}
+            className={`subsection-button-frosted flex items-center gap-2 ${selectedTab === 'community' ? 'selected' : ''}`}
           >
             👥 Community
-          </Button>
-          <Button
-            variant={selectedTab === 'volunteering' ? 'default' : 'ghost'}
+          </button>
+          <button
             onClick={() => setSelectedTab('volunteering')}
-            className={`flex items-center gap-2 ${compact ? 'px-3 py-1 text-sm' : ''}`}
+            className={`subsection-button-frosted flex items-center gap-2 ${selectedTab === 'volunteering' ? 'selected' : ''}`}
           >
             🤝 Volunteering
-          </Button>
+          </button>
         </div>
       </div>
 

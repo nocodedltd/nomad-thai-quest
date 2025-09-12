@@ -49,10 +49,6 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     document.body.className = document.body.className.replace(/theme-\w+/g, '');
     document.body.classList.add(`theme-${theme}`);
     
-    // Debug logging
-    console.log('Theme changed to:', theme);
-    console.log('Root classes:', root.className);
-    console.log('Data theme:', root.getAttribute('data-theme'));
   }, [theme]);
 
   const toggleTheme = () => {

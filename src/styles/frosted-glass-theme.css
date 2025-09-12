@@ -103,6 +103,20 @@
     --frosted-gradient-hero: linear-gradient(135deg, var(--frosted-primary) 0%, var(--frosted-secondary) 50%, var(--frosted-success) 100%);
   }
 
+  /* Default Frosted Glass Theme */
+  :root {
+    /* Apply frosted glass theme by default */
+    background: var(--frosted-bg-primary);
+    background-image: 
+      linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, transparent 25%),
+      linear-gradient(225deg, rgba(245, 158, 11, 0.1) 0%, transparent 25%),
+      linear-gradient(45deg, rgba(245, 158, 11, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 20% 80%, rgba(245, 158, 11, 0.2) 0%, transparent 60%),
+      radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 60%),
+      radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
+    background-attachment: fixed;
+  }
+
   /* Frosted Glass Theme */
   .theme-frosted-glass,
   :root.theme-frosted-glass,
@@ -213,7 +227,14 @@
     font-family: var(--frosted-font-primary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: var(--frosted-bg-primary);
+    background: var(--frosted-bg-primary) !important;
+    background-image: 
+      linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, transparent 25%),
+      linear-gradient(225deg, rgba(245, 158, 11, 0.1) 0%, transparent 25%),
+      linear-gradient(45deg, rgba(245, 158, 11, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 20% 80%, rgba(245, 158, 11, 0.2) 0%, transparent 60%),
+      radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 60%),
+      radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.1) 0%, transparent 70%) !important;
     background-attachment: fixed;
   }
 
@@ -221,14 +242,14 @@
   .theme-frosted-glass body,
   :root.theme-frosted-glass body,
   body.theme-frosted-glass {
-    background: var(--frosted-bg-primary);
+    background: var(--frosted-bg-primary) !important;
     background-image: 
       linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, transparent 25%),
       linear-gradient(225deg, rgba(245, 158, 11, 0.1) 0%, transparent 25%),
       linear-gradient(45deg, rgba(245, 158, 11, 0.05) 0%, transparent 50%),
       radial-gradient(circle at 20% 80%, rgba(245, 158, 11, 0.2) 0%, transparent 60%),
       radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 60%),
-      radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
+      radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.1) 0%, transparent 70%) !important;
     background-attachment: fixed;
   }
 
@@ -236,11 +257,11 @@
   .theme-cyberpunk body,
   :root.theme-cyberpunk body,
   body.theme-cyberpunk {
-    background: #0e0e10;
+    background: #0e0e10 !important;
     background-image: 
       radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
       radial-gradient(circle at 80% 20%, rgba(179, 107, 255, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 40% 40%, rgba(170, 255, 0, 0.05) 0%, transparent 50%);
+      radial-gradient(circle at 40% 40%, rgba(170, 255, 0, 0.05) 0%, transparent 50%) !important;
     background-attachment: fixed;
   }
 

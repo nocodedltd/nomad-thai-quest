@@ -1,5 +1,4 @@
 @import './styles/frosted-glass-theme.css';
-@import './styles/futuristic-theme.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

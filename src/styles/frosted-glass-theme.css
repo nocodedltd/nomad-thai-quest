@@ -299,8 +299,8 @@
 @layer components {
   /* Glass Effect Utilities */
   .glass {
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(15px);
     border: 0.5px solid rgba(255, 255, 255, 0.2);
     border-radius: 16px;
     box-shadow: 
@@ -310,8 +310,8 @@
   }
 
   .glass-elevated {
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(18px);
     border: 0.5px solid rgba(255, 255, 255, 0.25);
     border-radius: 18px;
     box-shadow: 
@@ -321,8 +321,8 @@
   }
 
   .glass-strong {
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(12px);
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(20px);
     border: 0.5px solid rgba(255, 255, 255, 0.3);
     border-radius: 20px;
     box-shadow: 
@@ -402,8 +402,8 @@
   /* Card Styles */
   .card-frosted {
     @apply relative overflow-hidden p-6;
-    background: rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(15px);
     border: 0.5px solid rgba(255, 255, 255, 0.2);
     border-radius: 16px;
     box-shadow: 
@@ -423,8 +423,8 @@
 
   .card-frosted-elevated {
     @apply relative overflow-hidden p-6;
-    background: rgba(0, 0, 0, 0.55);
-    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(18px);
     border: 0.5px solid rgba(255, 255, 255, 0.25);
     border-radius: 18px;
     box-shadow: 
@@ -456,8 +456,8 @@
   /* Navigation Styles */
   .nav-frosted {
     @apply sticky top-0 z-50;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(15px);
     border-bottom: 0.5px solid rgba(255, 255, 255, 0.2);
     box-shadow: 
       0 4px 20px rgba(0, 0, 0, 0.4),
@@ -520,8 +520,8 @@
   /* Badge Styles */
   .badge-frosted {
     @apply px-3 py-1 text-sm font-medium;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(6px);
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(12px);
     border: 0.5px solid rgba(255, 255, 255, 0.25);
     border-radius: 12px;
     color: var(--frosted-text-secondary);
@@ -539,6 +539,20 @@
     color: #000000;
     border-color: rgba(16, 185, 129, 0.3);
     font-weight: 600;
+  }
+
+  /* Locked/Disabled Content Styles */
+  .locked-content,
+  .disabled-content {
+    background: rgba(0, 0, 0, 0.6) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 0.5px solid rgba(255, 255, 255, 0.15) !important;
+    opacity: 0.7;
+  }
+
+  .locked-content .text-muted-foreground,
+  .disabled-content .text-muted-foreground {
+    color: rgba(255, 255, 255, 0.4) !important;
   }
 
   /* Animations */

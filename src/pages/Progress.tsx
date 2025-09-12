@@ -32,6 +32,7 @@ import {
 import { useUser } from "@/contexts/user-context";
 import { UserContent } from "@/components/shared/user-content";
 import { UpgradePrompt } from "@/components/shared/upgrade-prompt";
+import { ThemeSelector } from "@/components/ui/theme-selector";
 
 // User profile data structure
 interface UserProfile {
@@ -630,6 +631,9 @@ export default function Profile() {
                   </div>
                   
                   <div className="space-y-6">
+                    {/* Theme Selector */}
+                    <ThemeSelector />
+                    
                     <div>
                       <Label htmlFor="learningStyle">Learning Style Preference</Label>
                       <Select
@@ -1104,6 +1108,9 @@ export default function Profile() {
                   </div>
                   
                   <div className="space-y-6">
+                    {/* Theme Selector */}
+                    <ThemeSelector />
+                    
                     <div>
                       <Label htmlFor="learningStyle">Learning Style Preference</Label>
                       <Select

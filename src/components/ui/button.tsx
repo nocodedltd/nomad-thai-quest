@@ -23,6 +23,11 @@ const buttonVariants = cva(
         warning: "bg-warning text-warning-foreground hover:bg-warning/90 hover:shadow-lg transform hover:scale-105",
         lesson: "bg-card border-2 border-primary/20 hover:border-primary hover:bg-primary/5 text-foreground hover:shadow-md transform hover:scale-102",
         completed: "bg-accent text-accent-foreground border-2 border-accent hover:bg-accent/90 relative overflow-hidden",
+        // Frosted Glass Variants
+        glass: "glass hover:glass-elevated text-foreground hover:text-primary border-border hover:border-primary",
+        "glass-primary": "btn-frosted",
+        "glass-secondary": "btn-frosted-secondary",
+        "glass-ghost": "btn-frosted-ghost",
       },
       size: {
         default: "h-10 px-4 py-2",

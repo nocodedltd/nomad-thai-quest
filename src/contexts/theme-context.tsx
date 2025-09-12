@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-type Theme = 'light' | 'dark';
+export type Theme = 'frosted-glass' | 'cyberpunk';
 
 interface ThemeContextType {
   theme: Theme;
+  setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
 }
 
@@ -25,11 +26,11 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>(() => {
     // Check localStorage for saved theme preference
     const savedTheme = localStorage.getItem('theme') as Theme;
-    if (savedTheme) {
+    if (savedTheme && (savedTheme === 'frosted-glass' || savedTheme === 'cyberpunk')) {
       return savedTheme;
     }
-    // Default to dark theme
-    return 'dark';
+    // Default to frosted glass theme
+    return 'frosted-glass';
   });
 
   useEffect(() => {
@@ -38,21 +39,19 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     
     // Apply theme to document
     const root = document.documentElement;
-    if (theme === 'light') {
-      root.classList.add('light-mode');
-      root.classList.remove('dark-mode');
-    } else {
-      root.classList.add('dark-mode');
-      root.classList.remove('light-mode');
-    }
+    root.className = root.className.replace(/theme-\w+/g, '');
+    root.classList.add(`theme-${theme}`);
+    
+    // Set data attribute for CSS targeting
+    root.setAttribute('data-theme', theme);
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
+    setTheme(prevTheme => prevTheme === 'frosted-glass' ? 'cyberpunk' : 'frosted-glass');
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );

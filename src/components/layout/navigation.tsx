@@ -64,8 +64,8 @@ const Navigation = () => {
               ? "block px-3 py-2 rounded-lg text-base font-medium transition-all duration-300 flex items-center gap-3 group"
               : "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-2 relative overflow-hidden group",
             isActive(item.path)
-              ? "bg-gradient-to-r from-futuristic-neon-blue to-futuristic-neon-purple text-futuristic-bg-primary shadow-glow-blue"
-              : "text-futuristic-text-secondary hover:text-futuristic-text-primary hover:bg-futuristic-bg-glass"
+              ? "bg-primary text-primary-foreground shadow-glow"
+              : "text-muted-foreground hover:text-foreground hover:glass"
           )}
         >
           <Icon className={cn(
@@ -87,7 +87,7 @@ const Navigation = () => {
             isMobile 
               ? "block px-3 py-2 rounded-lg text-base font-medium flex items-center gap-3 opacity-50 cursor-not-allowed"
               : "px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 opacity-50 cursor-not-allowed",
-            "text-futuristic-text-secondary"
+            "text-muted-foreground"
           )}
         >
           <Icon className={cn(isMobile ? "h-5 w-5" : "h-4 w-4")} />
@@ -102,10 +102,10 @@ const Navigation = () => {
 
   return (
     <nav className={cn(
-      "nav-futuristic fixed top-0 w-full z-50 backdrop-blur-md transition-all duration-300",
+      "nav-frosted fixed top-0 w-full z-50 backdrop-blur-lg transition-all duration-300",
       isScrolled 
-        ? "h-12 bg-futuristic-bg-primary/95 shadow-lg border-b border-futuristic-border-primary/20" 
-        : "h-16 bg-futuristic-bg-primary/80"
+        ? "h-12 glass shadow-lg border-b border-border/20" 
+        : "h-16 glass-elevated"
     )}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className={cn(
@@ -117,7 +117,7 @@ const Navigation = () => {
             <Link 
               to="/" 
               className={cn(
-                "font-display font-bold neon-text animate-neon-pulse transition-all duration-300",
+                "font-heading font-bold text-primary transition-all duration-300",
                 isScrolled ? "text-lg" : "text-xl"
               )}
             >
@@ -137,7 +137,7 @@ const Navigation = () => {
                 </span>
                 {userType !== 'guest' && (
                   <Badge variant="outline" className={cn(
-                    "capitalize transition-all duration-300",
+                    "capitalize transition-all duration-300 badge-frosted",
                     isScrolled ? "text-xs px-1 py-0" : "text-xs"
                   )}>
                     {userType}
@@ -162,7 +162,7 @@ const Navigation = () => {
               variant="ghost"
               size="sm"
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 text-futuristic-text-primary hover:text-futuristic-neon-blue hover:bg-futuristic-bg-glass transition-all duration-300"
+              className="p-2 text-foreground hover:text-primary hover:glass transition-all duration-300"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
@@ -171,8 +171,8 @@ const Navigation = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden animate-slide-down">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-futuristic-bg-glass backdrop-blur-md border-t border-futuristic-border-primary">
+          <div className="md:hidden animate-slide-up">
+            <div className="px-2 pt-2 pb-3 space-y-1 glass border-t border-border">
               {navItems.map((item) => renderNavItem(item, true))}
             </div>
           </div>

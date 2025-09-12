@@ -133,6 +133,11 @@ export default {
 				"frosted-xl": "var(--frosted-radius-xl)",
 				"frosted-2xl": "var(--frosted-radius-2xl)",
 				"frosted-full": "var(--frosted-radius-full)",
+				// Glass component border radius
+				"glass": "16px",
+				"glass-sm": "12px",
+				"glass-lg": "18px",
+				"glass-xl": "20px",
 			},
 			keyframes: {
 				"accordion-down": {

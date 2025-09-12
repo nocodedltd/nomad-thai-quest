@@ -104,7 +104,9 @@
   }
 
   /* Frosted Glass Theme */
-  .theme-frosted-glass {
+  .theme-frosted-glass,
+  :root.theme-frosted-glass,
+  html.theme-frosted-glass {
     /* Core Colors */
     --background: var(--frosted-bg-primary);
     --foreground: var(--frosted-text-primary);
@@ -152,7 +154,9 @@
   }
 
   /* Cyberpunk Theme (Legacy) */
-  .theme-cyberpunk {
+  .theme-cyberpunk,
+  :root.theme-cyberpunk,
+  html.theme-cyberpunk {
     /* Core Colors */
     --background: 0 0% 5%;
     --foreground: 0 0% 100%;
@@ -210,10 +214,34 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background: var(--frosted-bg-primary);
+    background-attachment: fixed;
+  }
+
+  /* Frosted Glass Theme Body */
+  .theme-frosted-glass body,
+  :root.theme-frosted-glass body,
+  body.theme-frosted-glass {
+    background: var(--frosted-bg-primary);
     background-image: 
-      radial-gradient(circle at 20% 80%, rgba(245, 158, 11, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+      linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, transparent 25%),
+      linear-gradient(225deg, rgba(245, 158, 11, 0.1) 0%, transparent 25%),
+      linear-gradient(45deg, rgba(245, 158, 11, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 20% 80%, rgba(245, 158, 11, 0.2) 0%, transparent 60%),
+      radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 60%),
+      radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
+    background-attachment: fixed;
+  }
+
+  /* Cyberpunk Theme Body */
+  .theme-cyberpunk body,
+  :root.theme-cyberpunk body,
+  body.theme-cyberpunk {
+    background: #0e0e10;
+    background-image: 
+      radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(179, 107, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(170, 255, 0, 0.05) 0%, transparent 50%);
+    background-attachment: fixed;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -235,38 +263,54 @@
 @layer components {
   /* Glass Effect Utilities */
   .glass {
-    background: var(--frosted-bg-glass);
-    backdrop-filter: var(--frosted-blur-md);
-    border: 1px solid var(--frosted-border-primary);
-    box-shadow: var(--frosted-shadow-glass);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(255, 255, 255, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
   .glass-elevated {
-    background: var(--frosted-bg-glass-elevated);
-    backdrop-filter: var(--frosted-blur-lg);
-    border: 1px solid var(--frosted-border-secondary);
-    box-shadow: var(--frosted-shadow-glass), var(--frosted-shadow-lg);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
   }
 
   .glass-strong {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: var(--frosted-blur-xl);
-    border: 1px solid var(--frosted-border-secondary);
-    box-shadow: var(--frosted-shadow-glass), var(--frosted-shadow-xl);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 
+      0 16px 48px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(255, 255, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
 
   /* Button Styles */
   .btn-frosted {
     @apply relative overflow-hidden px-6 py-3 rounded-lg font-medium transition-all duration-300;
-    background: var(--frosted-gradient-primary);
-    border: 1px solid var(--frosted-primary);
-    color: var(--frosted-text-primary);
-    box-shadow: var(--frosted-shadow-md);
+    background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    color: #000000;
+    box-shadow: 
+      0 4px 15px rgba(245, 158, 11, 0.3),
+      0 0 0 1px rgba(255, 255, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    font-weight: 600;
   }
 
   .btn-frosted:hover {
     transform: translateY(-2px);
-    box-shadow: var(--frosted-shadow-glow), var(--frosted-shadow-lg);
+    box-shadow: 
+      0 6px 20px rgba(245, 158, 11, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
   }
 
   .btn-frosted:active {
@@ -280,7 +324,7 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
     transition: left 0.5s;
   }
 
@@ -318,24 +362,33 @@
   /* Card Styles */
   .card-frosted {
     @apply relative overflow-hidden rounded-xl p-6;
-    background: var(--frosted-bg-glass);
-    backdrop-filter: var(--frosted-blur-md);
-    border: 1px solid var(--frosted-border-primary);
-    box-shadow: var(--frosted-shadow-glass);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(255, 255, 255, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
   .card-frosted:hover {
     transform: translateY(-4px);
-    box-shadow: var(--frosted-shadow-glass), var(--frosted-shadow-lg);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
     transition: var(--frosted-transition-normal);
   }
 
   .card-frosted-elevated {
     @apply relative overflow-hidden rounded-xl p-6;
-    background: var(--frosted-bg-glass-elevated);
-    backdrop-filter: var(--frosted-blur-lg);
-    border: 1px solid var(--frosted-border-secondary);
-    box-shadow: var(--frosted-shadow-glass), var(--frosted-shadow-lg);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
   }
 
   /* Input Styles */
@@ -359,10 +412,14 @@
 
   /* Navigation Styles */
   .nav-frosted {
-    @apply sticky top-0 z-50 backdrop-blur-md;
-    background: var(--frosted-bg-glass);
-    backdrop-filter: var(--frosted-blur-lg);
-    border-bottom: 1px solid var(--frosted-border-primary);
+    @apply sticky top-0 z-50;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 
+      0 4px 20px rgba(0, 0, 0, 0.2),
+      0 0 0 1px rgba(255, 255, 255, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
   /* Modal Styles */
@@ -420,22 +477,24 @@
   /* Badge Styles */
   .badge-frosted {
     @apply px-3 py-1 rounded-full text-sm font-medium;
-    background: var(--frosted-bg-glass);
-    backdrop-filter: var(--frosted-blur-sm);
-    border: 1px solid var(--frosted-border-primary);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: var(--frosted-text-secondary);
   }
 
   .badge-frosted-primary {
-    background: var(--frosted-primary);
-    color: var(--frosted-text-primary);
-    border-color: var(--frosted-primary);
+    background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+    color: #000000;
+    border-color: rgba(245, 158, 11, 0.3);
+    font-weight: 600;
   }
 
   .badge-frosted-success {
-    background: var(--frosted-success);
-    color: var(--frosted-text-primary);
-    border-color: var(--frosted-success);
+    background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+    color: #000000;
+    border-color: rgba(16, 185, 129, 0.3);
+    font-weight: 600;
   }
 
   /* Animations */

@@ -290,7 +290,7 @@ export default function Home() {
       <UserContent
         guestContent={
           // Guest users see motivation-driven landing
-          <div>
+          <div className="landing-page">
             <HeroSection />
             <MotivationSection />
             <FeaturesSection />

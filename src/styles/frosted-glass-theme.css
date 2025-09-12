@@ -616,37 +616,31 @@
 
   .subsection-button-frosted {
     @apply relative overflow-hidden px-3 py-1 text-sm font-medium transition-all duration-300;
-    background: rgba(0, 0, 0, 0.25);
-    backdrop-filter: blur(12px);
-    border: 0.5px solid rgba(255, 255, 255, 0.15);
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
     border-radius: 8px;
     color: var(--frosted-text-secondary);
-    box-shadow: 
-      0 2px 8px rgba(0, 0, 0, 0.2),
-      0 0 0 0.5px rgba(255, 255, 255, 0.05),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    box-shadow: none;
   }
 
   .subsection-button-frosted:hover {
-    background: rgba(0, 0, 0, 0.35);
-    backdrop-filter: blur(15px);
-    border-color: rgba(255, 255, 255, 0.25);
-    transform: translateY(-1px);
-    box-shadow: 
-      0 4px 12px rgba(0, 0, 0, 0.3),
-      0 0 0 0.5px rgba(255, 255, 255, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    border: none;
+    transform: none;
+    box-shadow: none;
   }
 
   .subsection-button-frosted.selected {
-    background: rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(15px);
-    border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(12px);
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
     color: var(--frosted-text-primary);
     box-shadow: 
-      0 4px 12px rgba(0, 0, 0, 0.3),
+      0 2px 8px rgba(0, 0, 0, 0.3),
       0 0 0 0.5px rgba(255, 255, 255, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
   .subsection-button-frosted::before {

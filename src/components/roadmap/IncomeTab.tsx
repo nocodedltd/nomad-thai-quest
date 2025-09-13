@@ -229,11 +229,6 @@ export default function IncomeTab({ compact = false }: IncomeTabProps) {
         </div>
       )}
 
-      {compact && (
-        <div className="text-center mb-2">
-          <h2 className="text-xl font-semibold">Income Setup</h2>
-        </div>
-      )}
 
       {/* Compact Tabs */}
       <div className={`flex justify-center ${compact ? 'mb-4' : 'mb-6'}`}>

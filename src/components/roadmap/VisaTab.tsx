@@ -602,11 +602,6 @@ export default function VisaTab({ compact = false }: { compact?: boolean }) {
         </div>
       )}
 
-      {compact && (
-        <div className="text-center mb-2">
-          <h2 className="text-xl font-semibold">Visa & Legal</h2>
-        </div>
-      )}
 
       {/* Duration-based Sub Navigation */}
       <div className="flex justify-center mb-6">

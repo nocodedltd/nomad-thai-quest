@@ -169,36 +169,33 @@ export default function LessonViewer({
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex gap-2">
-          <Button
-            variant={currentSection === 'video' ? 'default' : 'outline'}
+        <div className="flex gap-2 p-2 subsection-nav-frosted">
+          <button
             onClick={() => setCurrentSection('video')}
-            className="flex items-center gap-2"
+            className={`subsection-button-frosted flex items-center gap-2 ${currentSection === 'video' ? 'selected' : ''}`}
           >
             <Video className="w-4 h-4" />
             Watch Video
             {videoWatched && <CheckCircle className="w-4 h-4 text-green-500" />}
-          </Button>
-          <Button
-            variant={currentSection === 'quiz' ? 'default' : 'outline'}
+          </button>
+          <button
             onClick={() => setCurrentSection('quiz')}
-            className="flex items-center gap-2"
+            className={`subsection-button-frosted flex items-center gap-2 ${currentSection === 'quiz' ? 'selected' : ''} ${!videoWatched ? 'opacity-50 cursor-not-allowed' : ''}`}
             disabled={!videoWatched}
           >
             <BookOpen className="w-4 h-4" />
             Take Quiz
             {quizCompleted && <CheckCircle className="w-4 h-4 text-green-500" />}
-          </Button>
-          <Button
-            variant={currentSection === 'homework' ? 'default' : 'outline'}
+          </button>
+          <button
             onClick={() => setCurrentSection('homework')}
-            className="flex items-center gap-2"
+            className={`subsection-button-frosted flex items-center gap-2 ${currentSection === 'homework' ? 'selected' : ''} ${(!quizCompleted || quizScore < lesson.quiz.length * 0.7) ? 'opacity-50 cursor-not-allowed' : ''}`}
             disabled={!quizCompleted || quizScore < lesson.quiz.length * 0.7}
           >
             <FileText className="w-4 h-4" />
             Homework
             {homeworkSubmitted && <CheckCircle className="w-4 h-4 text-green-500" />}
-          </Button>
+          </button>
         </div>
       </Card>
 

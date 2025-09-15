@@ -2,18 +2,14 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ProgressBar } from "@/components/ui/progress-bar";
 import { 
   ArrowLeft, 
   BookOpen, 
   CheckCircle, 
   Clock, 
-  Award, 
   Users, 
-  Target,
   Play,
   Lock,
-  Trophy,
   Star
 } from "lucide-react";
 import LessonViewer, { LessonContent } from "./lesson-viewer";
@@ -158,45 +154,8 @@ export default function CourseViewer({
               </div>
             </div>
             
-            <div className="text-center sm:text-right">
-              <div className="text-xs sm:text-sm text-muted-foreground mb-2">Progress</div>
-              <div className="flex items-center justify-center sm:justify-end gap-2 sm:gap-3">
-                <ProgressBar 
-                  progress={completionPercentage} 
-                  showPercentage 
-                  size="sm" 
-                  className="w-24 sm:w-32" 
-                />
-                <Badge className={`text-xs ${completionPercentage === 100 ? 'bg-green-500' : ''}`}>
-                  {completedLessons.length}/{lessons.length}
-                </Badge>
-              </div>
-            </div>
           </div>
 
-          {/* Course Stats - Simplified for mobile */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 text-center">
-            <div className="p-2 sm:p-3 bg-blue-50 rounded-lg">
-              <Trophy className="w-4 h-4 sm:w-6 sm:h-6 mx-auto mb-1 sm:mb-2 text-blue-500" />
-              <div className="font-bold text-sm sm:text-base text-blue-700">{completedLessons.length}</div>
-              <div className="text-xs text-blue-600">Done</div>
-            </div>
-            <div className="p-2 sm:p-3 bg-green-50 rounded-lg">
-              <Target className="w-4 h-4 sm:w-6 sm:h-6 mx-auto mb-1 sm:mb-2 text-green-500" />
-              <div className="font-bold text-sm sm:text-base text-green-700">{Math.round(completionPercentage)}%</div>
-              <div className="text-xs text-green-600">Progress</div>
-            </div>
-            <div className="p-2 sm:p-3 bg-purple-50 rounded-lg sm:block">
-              <Award className="w-4 h-4 sm:w-6 sm:h-6 mx-auto mb-1 sm:mb-2 text-purple-500" />
-              <div className="font-bold text-sm sm:text-base text-purple-700">{lessons.reduce((total, lesson) => total + lesson.quiz.length, 0)}</div>
-              <div className="text-xs text-purple-600">Quizzes</div>
-            </div>
-            <div className="p-2 sm:p-3 bg-orange-50 rounded-lg">
-              <Star className="w-4 h-4 sm:w-6 sm:h-6 mx-auto mb-1 sm:mb-2 text-orange-500" />
-              <div className="font-bold text-xs sm:text-base text-orange-700">{completionPercentage === 100 ? 'Complete' : 'Active'}</div>
-              <div className="text-xs text-orange-600">Status</div>
-            </div>
-          </div>
         </Card>
       </div>
 

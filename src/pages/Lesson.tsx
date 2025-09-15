@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ProgressBar } from "@/components/ui/progress-bar";
@@ -345,7 +345,9 @@ const getCourseQuiz = (courseId: string, lessonId: string) => {
 
 export default function Lesson() {
   const navigate = useNavigate();
-  const { courseId, lessonId } = useParams();
+  const [searchParams] = useSearchParams();
+  const courseId = searchParams.get('course');
+  const lessonId = searchParams.get('lesson') || '1'; // Default to lesson 1 if not specified
   const [currentStep, setCurrentStep] = useState<'video' | 'quiz' | 'completion'>('video');
   const [quizScore, setQuizScore] = useState<number | null>(null);
   const [lessonData, setLessonData] = useState<any>(null);
@@ -360,8 +362,8 @@ export default function Lesson() {
         setLessonData(data);
         setQuizQuestions(quiz);
       } else {
-        // Redirect to 404 or course overview if lesson not found
-        navigate('/courses');
+        // Redirect to roadmap if lesson not found
+        navigate('/roadmap');
       }
     }
   }, [courseId, lessonId, navigate]);
@@ -380,7 +382,7 @@ export default function Lesson() {
   };
 
   const handleBackToCourse = () => {
-    navigate(`/course/${courseId}`);
+    navigate('/roadmap');
   };
 
   const progress = currentStep === 'video' ? 33 : currentStep === 'quiz' ? 66 : 100;

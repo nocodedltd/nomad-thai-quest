@@ -234,20 +234,37 @@ export function CompactCourseCard({
 
           {/* Action buttons */}
           <div className="mt-auto pt-2">
-            <Button
-              variant="default"
-              size="sm"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleCourseStart();
-              }}
-              disabled={isLocked}
-              className="w-full h-9 sm:h-11 text-xs sm:text-sm"
-              aria-label={`${course.completedLessons > 0 ? 'Continue' : 'Start'} ${course.title} course`}
-            >
-              <Play className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-              <span className="truncate">{course.completedLessons > 0 ? 'Continue' : 'Start Course'}</span>
-            </Button>
+            <div className="relative">
+              {/* Subtle glow effect */}
+              <div className={cn(
+                "absolute inset-0 rounded-lg transition-all duration-300",
+                "bg-gradient-to-r from-primary/10 to-primary/5 opacity-0",
+                !isLocked && "group-hover:opacity-100"
+              )} />
+              <Button
+                variant="default"
+                size="sm"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleCourseStart();
+                }}
+                disabled={isLocked}
+                className={cn(
+                  "w-full h-9 sm:h-11 text-xs sm:text-sm relative overflow-hidden transition-all duration-300",
+                  "border border-primary/20 rounded-lg",
+                  "bg-gradient-to-r from-primary to-primary/90",
+                  "hover:border-primary/40 hover:shadow-lg hover:shadow-primary/20",
+                  "hover:from-primary/90 hover:to-primary",
+                  "focus:ring-2 focus:ring-primary/20 focus:ring-offset-2",
+                  "disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none",
+                  !isLocked && "hover:scale-[1.02] active:scale-[0.98]"
+                )}
+                aria-label={`${course.completedLessons > 0 ? 'Continue' : 'Start'} ${course.title} course`}
+              >
+                <Play className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                <span className="truncate">{course.completedLessons > 0 ? 'Continue' : 'Start Course'}</span>
+              </Button>
+            </div>
           </div>
         </div>
       </div>

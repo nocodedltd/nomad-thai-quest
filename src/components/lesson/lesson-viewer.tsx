@@ -58,6 +58,7 @@ interface LessonViewerProps {
   isLocked: boolean;
   onComplete: (lessonId: string) => void;
   onNavigate: (lessonId: string) => void;
+  onBack: () => void;
   progress: number;
   userType?: UserType;
   isFirstLesson?: boolean;
@@ -69,6 +70,7 @@ export default function LessonViewer({
   isLocked, 
   onComplete, 
   onNavigate,
+  onBack,
   progress,
   userType = 'paid',
   isFirstLesson = false
@@ -123,6 +125,20 @@ export default function LessonViewer({
 
   return (
     <div className="max-w-4xl mx-auto">
+      {/* Back Button */}
+      <div className="mb-4">
+        <Button 
+          variant="outline" 
+          onClick={onBack}
+          className="flex items-center gap-2 h-9 sm:h-10"
+          size="sm"
+        >
+          <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4" />
+          <span className="hidden sm:inline">Back to Course</span>
+          <span className="sm:hidden">Back</span>
+        </Button>
+      </div>
+
       {/* Lesson Header */}
       <Card className="p-6 mb-6">
         <div className="flex items-start justify-between mb-4">

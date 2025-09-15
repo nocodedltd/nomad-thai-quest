@@ -85,6 +85,11 @@ export default function CourseViewer({
     }
   };
 
+  const handleBackToCourseOverview = () => {
+    setCurrentView('overview');
+    setSelectedLessonId('');
+  };
+
   if (currentView === 'lesson' && selectedLesson) {
     const lessonIndex = lessons.findIndex(l => l.id === selectedLessonId);
     const isCompleted = completedLessons.includes(selectedLessonId);
@@ -98,6 +103,7 @@ export default function CourseViewer({
         isLocked={isLocked}
         onComplete={handleLessonComplete}
         onNavigate={handleLessonNavigation}
+        onBack={handleBackToCourseOverview}
         progress={progress}
         userType={userType}
         isFirstLesson={lessonIndex === 0}

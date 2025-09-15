@@ -251,18 +251,20 @@ export function CompactCourseCard({
                 disabled={isLocked}
                 className={cn(
                   "w-full h-9 sm:h-11 text-xs sm:text-sm relative overflow-hidden transition-all duration-300",
-                  "border border-primary/20 rounded-lg",
-                  "bg-gradient-to-r from-primary to-primary/90",
-                  "hover:border-primary/40 hover:shadow-lg hover:shadow-primary/20",
-                  "hover:from-primary/90 hover:to-primary",
-                  "focus:ring-2 focus:ring-primary/20 focus:ring-offset-2",
+                  "border-2 border-transparent rounded-lg text-white",
+                  "bg-gradient-to-r from-slate-800 to-slate-900",
+                  "before:absolute before:inset-0 before:rounded-lg before:p-[2px] before:bg-gradient-to-r before:from-slate-600/50 before:to-slate-700/50",
+                  "before:mask-[linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:mask-composite-xor",
+                  "hover:before:from-slate-500/60 hover:before:to-slate-600/60",
+                  "hover:shadow-lg hover:shadow-slate-900/20",
+                  "focus:ring-2 focus:ring-slate-600/30 focus:ring-offset-2",
                   "disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none",
                   !isLocked && "hover:scale-[1.02] active:scale-[0.98]"
                 )}
                 aria-label={`${course.completedLessons > 0 ? 'Continue' : 'Start'} ${course.title} course`}
               >
-                <Play className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                <span className="truncate">{course.completedLessons > 0 ? 'Continue' : 'Start Course'}</span>
+                <Play className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 text-white" />
+                <span className="truncate text-white">{course.completedLessons > 0 ? 'Continue' : 'Start Course'}</span>
               </Button>
             </div>
           </div>

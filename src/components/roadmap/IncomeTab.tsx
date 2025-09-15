@@ -183,10 +183,6 @@ export default function IncomeTab({ compact = false }: IncomeTabProps) {
     }
   };
 
-  const handleMentorContact = (mentorName: string) => {
-    console.log(`Contacting mentor: ${mentorName}`);
-    // Implement mentor contact functionality
-  };
 
   const handleBackToCourses = () => {
     setCurrentView('overview');
@@ -262,7 +258,6 @@ export default function IncomeTab({ compact = false }: IncomeTabProps) {
                       course={course}
                       userType={userType}
                       onCourseSelect={handleCourseSelect}
-                      onMentorContact={handleMentorContact}
 
 
                     />
@@ -328,7 +323,6 @@ export default function IncomeTab({ compact = false }: IncomeTabProps) {
                       course={course}
                       userType={userType}
                       onCourseSelect={handleCourseSelect}
-                      onMentorContact={handleMentorContact}
 
 
                     />
@@ -433,7 +427,6 @@ export default function IncomeTab({ compact = false }: IncomeTabProps) {
                     course={course}
                     userType={userType}
                     onCourseSelect={handleCourseSelect}
-                    onMentorContact={handleMentorContact}
 
                   />
                 ))}

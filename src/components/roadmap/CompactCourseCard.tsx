@@ -7,7 +7,6 @@ import {
   ChevronDown,
   ChevronUp,
   Play,
-  MessageCircle,
   Star,
   Clock,
   Award,
@@ -36,7 +35,6 @@ interface CompactCourseCardProps {
   };
   userType: 'guest' | 'free' | 'paid';
   onCourseSelect: (courseId: string) => void;
-  onMentorContact?: (mentorName: string) => void;
   className?: string;
   style?: React.CSSProperties;
 }
@@ -45,7 +43,6 @@ export function CompactCourseCard({
   course,
   userType,
   onCourseSelect,
-  onMentorContact,
   className,
   style
 }: CompactCourseCardProps) {
@@ -82,11 +79,6 @@ export function CompactCourseCard({
     }
   };
 
-  const handleMentorContact = () => {
-    if (onMentorContact && !isLocked) {
-      onMentorContact(course.mentor);
-    }
-  };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -241,22 +233,7 @@ export function CompactCourseCard({
           </div>
 
           {/* Action buttons */}
-          <div className="flex flex-col sm:flex-row gap-2 mt-auto pt-2">
-            {userType === 'paid' && onMentorContact && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleMentorContact();
-                }}
-                className="flex-1 h-9 sm:h-11 text-xs sm:text-sm"
-                aria-label={`Contact mentor ${course.mentor}`}
-              >
-                <MessageCircle className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                <span className="truncate">Contact Mentor</span>
-              </Button>
-            )}
+          <div className="mt-auto pt-2">
             <Button
               variant="default"
               size="sm"
@@ -265,7 +242,7 @@ export function CompactCourseCard({
                 handleCourseStart();
               }}
               disabled={isLocked}
-              className="flex-1 h-9 sm:h-11 text-xs sm:text-sm"
+              className="w-full h-9 sm:h-11 text-xs sm:text-sm"
               aria-label={`${course.completedLessons > 0 ? 'Continue' : 'Start'} ${course.title} course`}
             >
               <Play className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />

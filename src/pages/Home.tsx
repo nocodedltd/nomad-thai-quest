@@ -39,7 +39,6 @@ import { UpgradePrompt } from "@/components/shared/upgrade-prompt";
 import { HeroSection } from "@/components/landing/hero-section";
 import { FeaturesSection } from "@/components/landing/features-section";
 import { CTASection } from "@/components/landing/cta-section";
-import { MotivationSection } from "@/components/home/MotivationSection";
 import { useState, useEffect } from "react";
 
 // Thailand motivation facts and statistics
@@ -292,7 +291,6 @@ export default function Home() {
           // Guest users see motivation-driven landing
           <div className="landing-page">
             <HeroSection />
-            <MotivationSection />
             <FeaturesSection />
             <CTASection />
           </div>

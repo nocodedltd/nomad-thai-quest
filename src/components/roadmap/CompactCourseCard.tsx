@@ -9,7 +9,6 @@ import {
   Play,
   Star,
   Clock,
-  Award,
   TrendingUp,
   User
 } from "lucide-react";
@@ -210,13 +209,6 @@ export function CompactCourseCard({
               <div className="min-w-0">
                 <div className="font-medium truncate">{course.timeToProfit}</div>
                 <div className="text-xs text-muted-foreground">Time to Profit</div>
-              </div>
-            </div>
-            <div className="flex items-center gap-2 min-w-0">
-              <Award className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground flex-shrink-0" />
-              <div className="min-w-0">
-                <div className="font-medium truncate">{course.xpReward} XP</div>
-                <div className="text-xs text-muted-foreground">Completion Reward</div>
               </div>
             </div>
           </div>

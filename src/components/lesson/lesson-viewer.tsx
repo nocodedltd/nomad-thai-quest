@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ProgressBar } from "@/components/ui/progress-bar";
 import { UpgradePrompt } from "@/components/shared/upgrade-prompt";
 import { UserType } from "@/types/user";
 import { 
@@ -161,10 +160,6 @@ export default function LessonViewer({
                 </Badge>
               )}
             </div>
-          </div>
-          <div className="text-right">
-            <div className="text-sm text-muted-foreground mb-2">Progress</div>
-            <ProgressBar progress={progress} showPercentage size="sm" className="w-32" />
           </div>
         </div>
 

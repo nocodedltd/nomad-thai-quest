@@ -214,8 +214,8 @@
     @apply border-border;
   }
 
-  /* Cross-platform background solution */
-  html {
+  /* Universal background solution */
+  body {
     background: var(--frosted-bg-primary);
     background-image:
       linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
@@ -227,55 +227,55 @@
       radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 60%),
       radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
     background-size: cover, cover, auto, auto, auto, auto, auto, auto;
-    background-position: center, center, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
+    background-position: center center, center center, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
     background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
     background-attachment: fixed;
     min-height: 100vh;
   }
 
-  /* iOS Safari specific override - use different approach */
-  @supports (-webkit-touch-callout: none) {
+  /* iOS specific workaround */
+  @supports (-webkit-overflow-scrolling: touch) {
     html {
-      background-attachment: local;
       height: 100%;
+      overflow: hidden;
     }
 
     body {
-      position: relative;
-      background: inherit;
-      background-attachment: fixed;
-      min-height: 100vh;
-      /* Force hardware acceleration on iOS */
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      background-attachment: scroll;
+      background-size: 100vw 100vh, 100vw 100vh, auto, auto, auto, auto, auto, auto;
     }
-  }
 
-  /* Webkit-based browsers (Safari, Chrome on iOS) */
-  @media screen and (-webkit-min-device-pixel-ratio: 0) {
-    @supports (-webkit-appearance: none) {
-      html {
-        background-attachment: scroll;
-      }
+    /* Create a fixed background container for iOS */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: var(--frosted-bg-primary);
+      background-image:
+        linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
+        url('/src/assets/thailand-hero.jpg'),
+        linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, transparent 25%),
+        linear-gradient(225deg, rgba(245, 158, 11, 0.1) 0%, transparent 25%),
+        linear-gradient(45deg, rgba(245, 158, 11, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 20% 80%, rgba(245, 158, 11, 0.2) 0%, transparent 60%),
+        radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 60%),
+        radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
+      background-size: cover, cover, auto, auto, auto, auto, auto, auto;
+      background-position: center center, center center, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
+      background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+      z-index: -1;
+      pointer-events: none;
+    }
 
-      body {
-        background: var(--frosted-bg-primary);
-        background-image:
-          linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
-          url('/src/assets/thailand-hero.jpg'),
-          linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, transparent 25%),
-          linear-gradient(225deg, rgba(245, 158, 11, 0.1) 0%, transparent 25%),
-          linear-gradient(45deg, rgba(245, 158, 11, 0.05) 0%, transparent 50%),
-          radial-gradient(circle at 20% 80%, rgba(245, 158, 11, 0.2) 0%, transparent 60%),
-          radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 60%),
-          radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
-        background-size: 100vw 100vh, 100vw 100vh, auto, auto, auto, auto, auto, auto;
-        background-position: center center, center center, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
-        background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
-        background-attachment: fixed;
-        position: relative;
-        min-height: 100vh;
-      }
+    body {
+      background: transparent;
     }
   }
 

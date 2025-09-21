@@ -397,7 +397,7 @@ export default function EnglishTeachingBoard() {
         <p className="text-green-800 dark:text-green-200 mb-4">
           Thank you for your interest in teaching English in Thailand. Our partner agencies will review your application and contact you within 3-5 business days with suitable opportunities.
         </p>
-        <div className="bg-white dark:bg-gray-800 p-4 rounded-lg border border-green-200 dark:border-green-800">
+        <div className="glass p-4 rounded-lg">
           <h4 className="font-semibold mb-2">What happens next?</h4>
           <ul className="text-sm text-left space-y-1">
             <li>• Our team will review your qualifications</li>

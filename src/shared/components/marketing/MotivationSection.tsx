@@ -101,7 +101,7 @@ export function MotivationSection() {
         
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {/* Western Costs */}
-          <Card className="p-6 border-red-200 bg-red-50 dark:bg-red-950">
+          <Card className="p-6 glass">
             <div className="text-center mb-4">
               <div className="text-2xl font-bold text-red-700 dark:text-red-300">🇺🇸🇬🇧 Western Life</div>
               <div className="text-sm text-muted-foreground">Making $3,500/month</div>
@@ -139,7 +139,7 @@ export function MotivationSection() {
           </Card>
 
           {/* Thailand Costs */}
-          <Card className="p-6 border-green-200 bg-green-50 dark:bg-green-950">
+          <Card className="p-6 glass">
             <div className="text-center mb-4">
               <div className="text-2xl font-bold text-green-700 dark:text-green-300">🇹🇭 Thailand Life</div>
               <div className="text-sm text-muted-foreground">Making $2,000/month</div>
@@ -263,9 +263,9 @@ export function MotivationSection() {
       <div className="grid md:grid-cols-3 gap-6 mb-12">
         {urgencyTriggers.map((trigger, index) => (
           <Card key={index} className={`p-6 border-l-4 ${
-            trigger.color === 'red' ? 'border-red-500 bg-red-50 dark:bg-red-950' :
+            trigger.color === 'red' ? 'glass text-red-400' :
             trigger.color === 'orange' ? 'border-orange-500 bg-orange-50 dark:bg-orange-950' :
-            'border-yellow-500 bg-yellow-50 dark:bg-yellow-950'
+            'glass text-yellow-400'
           }`}>
             <div className="flex items-start gap-3">
               <AlertTriangle className={`w-5 h-5 mt-1 ${

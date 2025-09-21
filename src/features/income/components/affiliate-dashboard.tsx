@@ -528,7 +528,7 @@ export default function AffiliateDashboard() {
               </Card>
 
               {/* Device Optimization Notice */}
-              <Card className="bg-blue-50 dark:bg-blue-950 border-blue-200 dark:border-blue-800">
+              <Card className="glass">
                 <CardContent className="p-4 sm:p-6">
                   <div className="flex items-start gap-3 sm:gap-4">
                     <div className="flex gap-2">

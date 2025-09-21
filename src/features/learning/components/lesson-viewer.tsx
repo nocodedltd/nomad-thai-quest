@@ -232,7 +232,7 @@ export default function LessonViewer({
           </div>
 
           {videoWatched && (
-            <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+            <div className="p-4 glass rounded-lg">
               <div className="flex items-center gap-2 text-green-700">
                 <CheckCircle className="w-5 h-5" />
                 <span className="font-medium">Video completed!</span>
@@ -287,7 +287,7 @@ export default function LessonViewer({
             </div>
           ) : (
             <div className="space-y-6">
-              <div className={`p-4 rounded-lg border ${quizScore >= lesson.quiz.length * 0.7 ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
+              <div className={`p-4 rounded-lg glass ${quizScore >= lesson.quiz.length * 0.7 ? 'text-green-400' : 'text-red-400'}`}>
                 <div className="flex items-center gap-2 mb-2">
                   <Trophy className={`w-5 h-5 ${quizScore >= lesson.quiz.length * 0.7 ? 'text-green-500' : 'text-red-500'}`} />
                   <span className="font-medium">
@@ -344,7 +344,7 @@ export default function LessonViewer({
           </h3>
 
           <div className="space-y-6">
-            <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <div className="p-4 glass rounded-lg">
               <h4 className="font-medium text-blue-900 mb-2">{lesson.homework.title}</h4>
               <p className="text-blue-800 mb-3">{lesson.homework.description}</p>
               <div className="flex items-center gap-4 text-sm text-blue-700">
@@ -393,7 +393,7 @@ export default function LessonViewer({
                 </Button>
               </div>
             ) : (
-              <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+              <div className="p-4 glass rounded-lg">
                 <div className="flex items-center gap-2 text-green-700">
                   <CheckCircle className="w-5 h-5" />
                   <span className="font-medium">Assignment submitted!</span>

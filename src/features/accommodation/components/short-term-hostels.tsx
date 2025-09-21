@@ -282,7 +282,7 @@ export default function ShortTermHostels() {
       </div>
 
       {/* Info Section */}
-      <Card className="p-6 mt-8 bg-blue-50 dark:bg-blue-950/20">
+      <Card className="p-6 mt-8 glass">
         <div className="flex items-start gap-4">
           <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center flex-shrink-0">
             <Users className="w-6 h-6 text-blue-600" />

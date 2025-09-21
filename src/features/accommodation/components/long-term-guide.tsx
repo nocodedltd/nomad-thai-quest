@@ -499,7 +499,7 @@ export default function LongTermGuide() {
                     <h4 className="font-semibold mb-3">💡 Pro Tips</h4>
                     <div className="grid gap-2">
                       {module.content.tips.map((tip, index) => (
-                        <div key={index} className="bg-blue-50 dark:bg-blue-950/20 p-3 rounded-lg text-sm">
+                        <div key={index} className="glass p-3 rounded-lg text-sm">
                           {tip}
                         </div>
                       ))}
@@ -532,7 +532,7 @@ export default function LongTermGuide() {
 
       {/* Summary Card */}
       {completedModules.length === guideModules.length && (
-        <Card className="p-6 mt-8 bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-800">
+        <Card className="p-6 mt-8 glass">
           <div className="text-center">
             <div className="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center mx-auto mb-4">
               <CheckCircle className="w-8 h-8 text-white" />

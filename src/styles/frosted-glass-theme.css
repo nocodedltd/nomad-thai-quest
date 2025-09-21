@@ -107,14 +107,6 @@
   :root {
     /* Apply frosted glass theme by default */
     background: var(--frosted-bg-primary);
-    background-image: 
-      linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, transparent 25%),
-      linear-gradient(225deg, rgba(245, 158, 11, 0.1) 0%, transparent 25%),
-      linear-gradient(45deg, rgba(245, 158, 11, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 20% 80%, rgba(245, 158, 11, 0.2) 0%, transparent 60%),
-      radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 60%),
-      radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
-    background-attachment: fixed;
   }
 
   /* Frosted Glass Theme */
@@ -228,10 +220,10 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background: var(--frosted-bg-primary);
-    background-image: 
+    background-image:
       linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
       url('/src/assets/thailand-hero.jpg'),
       linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, transparent 25%),
@@ -245,6 +237,13 @@
     background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
     z-index: -1;
     pointer-events: none;
+    /* iOS/Safari compatibility fixes */
+    transform: translateZ(0);
+    -webkit-transform: translate3d(0, 0, 0);
+    will-change: transform;
+    /* Ensure it stays fixed on all platforms */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
 
   body {
@@ -256,31 +255,12 @@
     min-height: 100vh;
   }
 
-  /* Exclude landing page from background image */
-  .landing-page {
-    background-image: 
-      linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, transparent 25%),
-      linear-gradient(225deg, rgba(245, 158, 11, 0.1) 0%, transparent 25%),
-      linear-gradient(45deg, rgba(245, 158, 11, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 20% 80%, rgba(245, 158, 11, 0.2) 0%, transparent 60%),
-      radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 60%),
-      radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.1) 0%, transparent 70%) !important;
-    background-attachment: fixed;
-  }
 
   /* Ensure proper scrolling behavior with fixed background */
   html {
     scroll-behavior: smooth;
   }
 
-  /* Mobile optimization for fixed backgrounds */
-  @media (max-width: 768px) {
-    body,
-    .theme-frosted-glass body,
-    .theme-cyberpunk body {
-      background-attachment: scroll; /* Fallback for mobile performance */
-    }
-  }
 
   /* High DPI display optimization */
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {

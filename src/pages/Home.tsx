@@ -90,14 +90,14 @@ const motivationalSlides = [
     content: (
       <div className="grid grid-cols-2 gap-3">
         <div className="text-center p-2 glass rounded">
-          <div className="text-xs text-muted-foreground">Western Life</div>
-          <div className="text-lg font-bold text-red-600">${thailandFacts.costComparison.western.total}</div>
-          <div className="text-xs">Monthly expenses</div>
+          <div className="text-xs text-white/80">Western Life</div>
+          <div className="text-lg font-bold text-red-400">${thailandFacts.costComparison.western.total}</div>
+          <div className="text-xs text-white">Monthly expenses</div>
         </div>
         <div className="text-center p-2 glass rounded">
-          <div className="text-xs text-muted-foreground">Thailand Life</div>
-          <div className="text-lg font-bold text-green-600">${thailandFacts.costComparison.thailand.total}</div>
-          <div className="text-xs">Monthly expenses</div>
+          <div className="text-xs text-white/80">Thailand Life</div>
+          <div className="text-lg font-bold text-green-400">${thailandFacts.costComparison.thailand.total}</div>
+          <div className="text-xs text-white">Monthly expenses</div>
         </div>
       </div>
     ),

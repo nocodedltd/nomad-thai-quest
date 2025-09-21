@@ -352,7 +352,7 @@ function CompactVisaCard({ visa, userType, onVisaSelect }: {
     <Card 
       className={cn(
         "group relative overflow-hidden transition-all duration-300 ease-in-out cursor-pointer",
-        "hover:shadow-lg border border-border/50",
+        "hover:shadow-lg",
         isExpanded ? "min-h-[400px] shadow-xl" : "h-[140px]",
         isLocked && "opacity-75",
         "bg-transparent"
@@ -510,7 +510,7 @@ function CompactVisaCard({ visa, userType, onVisaSelect }: {
 
       {/* Locked overlay */}
       {isLocked && (
-        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center">
+        <div className="absolute inset-0 glass flex items-center justify-center">
           <div className="text-center p-4">
             <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center mx-auto mb-2">
               <Lock className="w-6 h-6 text-muted-foreground" />

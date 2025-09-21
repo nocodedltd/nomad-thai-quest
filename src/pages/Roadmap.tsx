@@ -191,7 +191,7 @@ export default function Roadmap() {
     <div className="min-h-screen bg-background">
       <div className="container mx-auto p-4">
         {/* Hero Header Section */}
-        <Card className="p-6 sm:p-8 mb-8 bg-card/50 backdrop-blur-sm border-border/50">
+        <Card className="p-6 sm:p-8 mb-8">
           <div className="text-center">
             {/* User Level */}
             <div className="flex items-center justify-center gap-2 mb-4">

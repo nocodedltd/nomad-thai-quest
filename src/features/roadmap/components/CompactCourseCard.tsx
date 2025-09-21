@@ -90,7 +90,7 @@ export function CompactCourseCard({
     <Card 
       className={cn(
         "group relative overflow-hidden transition-all duration-300 ease-in-out cursor-pointer",
-        "hover:shadow-lg border border-border/50",
+        "hover:shadow-lg",
         isExpanded ? "min-h-[320px] sm:min-h-[300px] shadow-xl" : "h-[120px]",
         isLocked && "opacity-75",
         className
@@ -214,7 +214,7 @@ export function CompactCourseCard({
           </div>
 
           {/* Mentor info */}
-          <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4 p-2 sm:p-3 rounded-lg bg-background/50 border border-border/30">
+          <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4 p-2 sm:p-3 rounded-lg glass-elevated">
             <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-primary/20 to-primary/40 flex items-center justify-center flex-shrink-0">
               <User className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
             </div>
@@ -265,7 +265,7 @@ export function CompactCourseCard({
 
       {/* Locked overlay */}
       {isLocked && (
-        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center">
+        <div className="absolute inset-0 glass flex items-center justify-center">
           <div className="text-center p-4">
             <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center mx-auto mb-2">
               <Star className="w-6 h-6 text-muted-foreground" />

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ProgressBar } from "@/components/ui/progress-bar";
-import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
+import { Button } from "@/shared/components/ui/button";
+import { Badge } from "@/shared/components/ui/badge";
+import { ProgressBar } from "@/shared/components/ui/progress-bar";
+import { Input } from "@/shared/components/ui/input";
 import { 
   DollarSign, 
   Package,
@@ -24,13 +24,13 @@ import {
   MapPin,
   Building
 } from "lucide-react";
-import { useUser } from "@/contexts/user-context";
-import { UserContent } from "@/components/shared/user-content";
-import { Paywall } from "@/components/shared/paywall";
-import { UpgradePrompt } from "@/components/shared/upgrade-prompt";
-import { CompactCourseCard } from "@/components/roadmap/CompactCourseCard";
-import AffiliateDashboard from "@/components/income/affiliate-dashboard";
-import EnglishTeachingBoard from "@/components/income/english-teaching-board";
+import { useUser } from "@/shared/contexts/user-context";
+import { UserContent } from "@/shared/components/paywall/user-content";
+import { Paywall } from "@/shared/components/paywall/paywall";
+import { UpgradePrompt } from "@/shared/components/paywall/upgrade-prompt";
+import { CompactCourseCard } from "@/features/roadmap/components/CompactCourseCard";
+import AffiliateDashboard from "@/features/income/components/affiliate-dashboard";
+import EnglishTeachingBoard from "@/features/income/components/english-teaching-board";
 
 const courses = [
   {

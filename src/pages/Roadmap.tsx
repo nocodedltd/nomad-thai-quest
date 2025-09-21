@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ProgressBar } from "@/components/ui/progress-bar";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/shared/components/ui/button";
+import { Card } from "@/shared/components/ui/card";
+import { Badge } from "@/shared/components/ui/badge";
+import { ProgressBar } from "@/shared/components/ui/progress-bar";
+import { Input } from "@/shared/components/ui/input";
 import { 
   CheckCircle, 
   Clock, 
@@ -36,13 +36,13 @@ import {
   ChevronDown,
   ChevronRight
 } from "lucide-react";
-import { useUser } from "@/contexts/user-context";
-import { UserContent } from "@/components/shared/user-content";
-import { Paywall } from "@/components/shared/paywall";
-import { UpgradePrompt } from "@/components/shared/upgrade-prompt";
-import IncomeTab from "@/components/roadmap/IncomeTab";
-import VisaTab from "@/components/roadmap/VisaTab";
-import LivingTab from "@/components/roadmap/LivingTab";
+import { useUser } from "@/shared/contexts/user-context";
+import { UserContent } from "@/shared/components/paywall/user-content";
+import { Paywall } from "@/shared/components/paywall/paywall";
+import { UpgradePrompt } from "@/shared/components/paywall/upgrade-prompt";
+import IncomeTab from "@/features/roadmap/components/IncomeTab";
+import VisaTab from "@/features/roadmap/components/VisaTab";
+import LivingTab from "@/features/roadmap/components/LivingTab";
 
 // Journey phases data (removed preparation phase)
 const journeyPhases = [

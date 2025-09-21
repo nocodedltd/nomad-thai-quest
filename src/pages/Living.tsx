@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
+import { Button } from "@/shared/components/ui/button";
+import { Badge } from "@/shared/components/ui/badge";
+import { Input } from "@/shared/components/ui/input";
 import { 
   Building,
   Users,
@@ -28,11 +28,11 @@ import {
   Lock,
   ArrowRight
 } from "lucide-react";
-import { useUser } from "@/contexts/user-context";
-import { UserContent } from "@/components/shared/user-content";
-import { Paywall } from "@/components/shared/paywall";
-import { UpgradePrompt } from "@/components/shared/upgrade-prompt";
-import WorldpackersAffiliate from "@/components/accommodation/worldpackers-affiliate";
+import { useUser } from "@/shared/contexts/user-context";
+import { UserContent } from "@/shared/components/paywall/user-content";
+import { Paywall } from "@/shared/components/paywall/paywall";
+import { UpgradePrompt } from "@/shared/components/paywall/upgrade-prompt";
+import WorldpackersAffiliate from "@/features/accommodation/components/worldpackers-affiliate";
 
 const accommodationTypes = [
   {

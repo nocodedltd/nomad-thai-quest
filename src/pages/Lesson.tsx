@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ProgressBar } from "@/components/ui/progress-bar";
-import { QuizComponent } from "@/components/lesson/quiz-component";
+import { Card } from "@/shared/components/ui/card";
+import { Button } from "@/shared/components/ui/button";
+import { ProgressBar } from "@/shared/components/ui/progress-bar";
+import { QuizComponent } from "@/features/learning/components/quiz-component";
 import { 
   ArrowLeft, 
   Play, 

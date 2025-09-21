@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ProgressBar } from "@/components/ui/progress-bar";
+import { Button } from "@/shared/components/ui/button";
+import { Card } from "@/shared/components/ui/card";
+import { Badge } from "@/shared/components/ui/badge";
+import { ProgressBar } from "@/shared/components/ui/progress-bar";
 import { 
   ArrowRight, 
   Map, 
@@ -33,13 +33,13 @@ import {
   ChevronLeft,
   ChevronRight
 } from "lucide-react";
-import { useUser } from "@/contexts/user-context";
-import { UserContent } from "@/components/shared/user-content";
-import { UpgradePrompt } from "@/components/shared/upgrade-prompt";
-import { HeroSection } from "@/components/landing/hero-section";
-import { FeaturesSection } from "@/components/landing/features-section";
-import { CTASection } from "@/components/landing/cta-section";
-import { MotivationSection } from "@/components/home/MotivationSection";
+import { useUser } from "@/shared/contexts/user-context";
+import { UserContent } from "@/shared/components/paywall/user-content";
+import { UpgradePrompt } from "@/shared/components/paywall/upgrade-prompt";
+import { HeroSection } from "@/shared/components/marketing/hero-section";
+import { FeaturesSection } from "@/shared/components/marketing/features-section";
+import { CTASection } from "@/shared/components/marketing/cta-section";
+import { MotivationSection } from "@/shared/components/marketing/MotivationSection";
 import { useState, useEffect } from "react";
 
 // Thailand motivation facts and statistics

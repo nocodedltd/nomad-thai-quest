@@ -1,31 +1,26 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
+import { Card } from "@/shared/components/ui/card";
 import { Button } from "@/shared/components/ui/button";
 import { Badge } from "@/shared/components/ui/badge";
-import { ProgressBar } from "@/shared/components/ui/progress-bar";
 import { 
   FileText, 
   CheckCircle,
-  Clock,
   AlertCircle,
   Download,
   ExternalLink,
   Plane,
   Calendar,
-  DollarSign,
   GraduationCap,
   Building,
   Heart,
   Crown,
-  Star,
   ArrowRight,
   Lock,
   ChevronDown,
   ChevronUp,
   Briefcase,
-  Users,
-  Shield
+  Shield,
+  Star
 } from "lucide-react";
 import { useUser } from "@/shared/contexts/user-context";
 import { UserContent } from "@/shared/components/paywall/user-content";
@@ -39,13 +34,13 @@ const visaTypes = [
   {
     id: "tourist-visa",
     title: "Tourist Visa / Visa Exemption",
-    subtitle: "30-60 days",
-    description: "Perfect for testing the waters and short-term stays",
+    subtitle: "30-60 days + extensions",
+    description: "Perfect for short-term visits and testing the waters in Thailand",
     icon: Plane,
     duration: "30-60 days",
-    cost: "Free - $40",
+    cost: "$0-60",
     difficulty: "Easy",
-    processing: "Immediate",
+    processing: "0-5 days",
     renewable: "Yes (border runs)",
     workAllowed: false,
     gradient: "from-blue-500 to-blue-600",
@@ -53,13 +48,16 @@ const visaTypes = [
       "Valid passport (6+ months)",
       "Return flight ticket",
       "Proof of accommodation",
-      "Sufficient funds (20,000 THB)",
-      "Return ticket or onward ticket"
+      "Sufficient funds"
     ],
     access: "free" as const,
-    pros: ["No visa fee for visa exemption", "Quick entry process", "Can be extended once for 30 days"],
-    cons: ["Cannot work on tourist visa", "Limited to 30-60 days stay", "Must show proof of onward travel"],
-    quickRequirements: ["Passport", "Flight ticket", "Accommodation"]
+    pros: ["No application fee", "Quick entry", "Easy requirements"],
+    cons: ["Limited duration", "No work allowed", "Requires border runs"],
+    quickRequirements: ["Passport", "Flight ticket", "Accommodation"],
+    courseType: "video-quiz-nextsteps",
+    partner: null,
+    govWebsite: "https://www.immigration.go.th/",
+    upgradePrompt: "Upgrade to Premium to stay longer and access advanced visa options"
   },
   {
     id: "muay-thai-education-visa",
@@ -68,48 +66,56 @@ const visaTypes = [
     description: "Learn Muay Thai while living legally in Thailand with long-term stay",
     icon: GraduationCap,
     duration: "1 year",
-    cost: "$200-400",
+    cost: "$500-2,000/year",
     difficulty: "Medium",
     processing: "2-4 weeks",
     renewable: "Yes (up to 3 years)",
     workAllowed: false,
     gradient: "from-red-500 to-orange-500",
     requirements: [
-      "Enrollment in approved Muay Thai school",
-      "Valid passport (6+ months remaining)",
-      "Medical certificate",
-      "Criminal background check",
-      "Proof of financial means"
+      "Acceptance letter from Muay Thai school",
+      "Training schedule and curriculum",
+      "Bank statement ($5,000+)",
+      "Health certificate",
+      "Police clearance"
     ],
     access: "paid" as const,
-    pros: ["Stay up to 1 year", "Learn authentic Muay Thai", "Immerse in Thai culture"],
-    cons: ["Must attend classes regularly", "Cannot work on this visa", "Must report to immigration every 90 days"],
-    quickRequirements: ["School acceptance", "Training schedule", "Bank statement"]
+    pros: ["Long-term stay", "Learn Muay Thai", "Cultural immersion"],
+    cons: ["Must attend training", "No work allowed", "School dependency"],
+    quickRequirements: ["School acceptance", "Training schedule", "Bank statement"],
+    courseType: "video-quiz-nextsteps",
+    partner: null,
+    govWebsite: null,
+    upgradePrompt: null
   },
   {
     id: "dtv-visa",
-    title: "Digital Nomad Visa (DTV)",
+    title: "DTV - Digital Nomad Visa",
     subtitle: "5 years renewable",
-    description: "Thailand's new Digital Nomad Visa allows remote workers to stay long-term",
+    description: "Thailand's official digital nomad visa for remote workers and entrepreneurs",
     icon: Building,
     duration: "5 years",
-    cost: "$500-1,000",
-    difficulty: "Hard",
+    cost: "$1,500-3,000",
+    difficulty: "Medium",
     processing: "4-8 weeks",
     renewable: "Yes",
     workAllowed: true,
     gradient: "from-green-500 to-emerald-500",
     requirements: [
-      "Remote work income of $80,000+ annually",
-      "Valid passport (6+ months remaining)",
+      "Proof of remote work or business",
+      "Minimum income $80,000/year",
       "Health insurance coverage",
-      "Criminal background check",
-      "Proof of remote work"
+      "Clean criminal record",
+      "University degree or work experience"
     ],
     access: "paid" as const,
-    pros: ["Stay up to 5 years", "Work remotely legally", "Access to Thai healthcare"],
+    pros: ["Long-term stability", "Work legally", "No border runs needed"],
     cons: ["Higher income requirement", "Complex application", "Health insurance needed"],
-    quickRequirements: ["Remote work proof", "Income proof", "Health insurance"]
+    quickRequirements: ["Remote work proof", "Income proof", "Health insurance"],
+    courseType: "video-quiz-nextsteps",
+    partner: "https://www.issacompass.com/",
+    govWebsite: null,
+    upgradePrompt: null
   },
   {
     id: "smart-business-visa",
@@ -118,23 +124,27 @@ const visaTypes = [
     description: "Thailand's Smart Visa program for high-tech and innovative businesses",
     icon: Building,
     duration: "4 years",
-    cost: "$1,000-2,000",
+    cost: "$2,000-5,000",
     difficulty: "Hard",
     processing: "6-12 weeks",
     renewable: "Yes",
     workAllowed: true,
     gradient: "from-purple-500 to-pink-500",
     requirements: [
-      "Business investment of $200,000+",
-      "Valid passport (6+ months remaining)",
-      "Business plan or investment proof",
-      "Health insurance",
-      "Criminal background check"
+      "Business plan approval",
+      "Investment minimum $50,000",
+      "Technology focus area",
+      "Job creation for Thais",
+      "Expertise in target field"
     ],
     access: "paid" as const,
-    pros: ["Stay up to 4 years", "Work in your business", "Bring family members"],
+    pros: ["Long-term business visa", "Work permit included", "Fast-track processing"],
     cons: ["High investment requirement", "Complex approval process", "Business focus required"],
-    quickRequirements: ["Business plan", "Investment proof", "Expertise proof"]
+    quickRequirements: ["Business plan", "Investment proof", "Expertise proof"],
+    courseType: "video-quiz-nextsteps",
+    partner: null,
+    govWebsite: null,
+    upgradePrompt: null
   },
   {
     id: "non-b-business-visa",
@@ -150,22 +160,27 @@ const visaTypes = [
     workAllowed: true,
     gradient: "from-indigo-500 to-blue-500",
     requirements: [
-      "Job offer from Thai company OR business activities",
-      "Valid passport (6+ months remaining)",
+      "Job offer from Thai company",
       "Work permit application",
-      "Company documents",
-      "Medical certificate"
+      "University degree",
+      "Experience certificates",
+      "Health certificate",
+      "Police clearance"
     ],
     access: "paid" as const,
-    pros: ["Work legally in Thailand", "Stay up to 1 year", "Can be renewed annually"],
+    pros: ["Work legally", "Path to residency", "Stable status"],
     cons: ["Complex process", "Employer dependency", "Strict requirements"],
-    quickRequirements: ["Job offer", "Work permit", "Degree", "Experience"]
+    quickRequirements: ["Job offer", "Work permit", "Degree", "Experience"],
+    courseType: "video-quiz-nextsteps",
+    partner: "https://atathailand.com/",
+    govWebsite: null,
+    upgradePrompt: null
   },
   {
     id: "elite-visa",
-    title: "Thailand Elite Visa",
+    title: "Thailand Privilege Visa (Elite)",
     subtitle: "5-20 years",
-    description: "Premium visa program offering long-term stay with exclusive benefits",
+    description: "Premium visa program for affluent individuals with VIP services and long-term stay",
     icon: Crown,
     duration: "5-20 years",
     cost: "$15,000-60,000",
@@ -175,91 +190,108 @@ const visaTypes = [
     workAllowed: false,
     gradient: "from-yellow-500 to-amber-500",
     requirements: [
-      "Valid passport (6+ months remaining)",
-      "Proof of financial means",
+      "Payment of membership fee",
+      "Valid passport",
       "Clean criminal record",
-      "Health insurance (some tiers)",
-      "Application fee payment"
+      "Medical certificate",
+      "Financial documentation"
     ],
     access: "paid" as const,
-    pros: ["Stay 5-20 years", "VIP airport services", "Exclusive member events"],
-    cons: ["High cost investment", "Cannot work (some exceptions)", "Must maintain membership"],
-    quickRequirements: ["Membership fee", "Clean record", "Medical cert"]
+    pros: ["Very long-term", "VIP services", "Airport assistance"],
+    cons: ["Very expensive", "No work rights", "High financial barrier"],
+    quickRequirements: ["Membership fee", "Clean record", "Medical cert"],
+    courseType: "video-quiz-nextsteps",
+    partner: null,
+    govWebsite: null,
+    upgradePrompt: null
   },
   {
     id: "retirement-visa",
     title: "Retirement Visa (Non-Immigrant O)",
     subtitle: "1 year renewable",
-    description: "For retirees aged 50+ who want to live in Thailand long-term",
+    description: "For those 50+ with sufficient funds to retire in Thailand",
     icon: Heart,
     duration: "1 year",
-    cost: "$200-500",
+    cost: "$200",
     difficulty: "Medium",
     processing: "2-4 weeks",
     renewable: "Yes",
     workAllowed: false,
     gradient: "from-pink-500 to-rose-500",
     requirements: [
-      "Age 50 or older",
-      "Valid passport (6+ months remaining)",
-      "Retirement income OR bank deposit",
-      "Medical certificate",
-      "Criminal background check"
+      "Age 50+ years",
+      "Bank balance ($25,000+)",
+      "Health insurance",
+      "Police clearance",
+      "Medical certificate"
     ],
     access: "paid" as const,
-    pros: ["Stay up to 1 year", "Can be renewed annually", "No work permit needed"],
-    cons: ["Cannot work in Thailand", "Must maintain financial requirements", "Annual renewal required"],
-    quickRequirements: ["Age 50+", "Bank balance", "Health insurance"]
+    pros: ["Long-term stability", "Straightforward renewal", "Retirement focus"],
+    cons: ["Age requirement", "High financial requirement", "No work allowed"],
+    quickRequirements: ["Age 50+", "Bank balance", "Health insurance"],
+    courseType: "video-quiz-nextsteps",
+    partner: null,
+    govWebsite: null,
+    upgradePrompt: null
   },
   {
     id: "ltr-visa",
     title: "Long-Term Resident (LTR) Visa",
     subtitle: "10 years renewable",
-    description: "New long-term visa program for high-income individuals, retirees, and professionals",
+    description: "Thailand's newest long-term visa for wealthy individuals and professionals",
     icon: Star,
     duration: "10 years",
-    cost: "$1,000-2,000",
-    difficulty: "Hard",
+    cost: "$5,000-10,000",
+    difficulty: "Medium",
     processing: "8-12 weeks",
     renewable: "Yes",
     workAllowed: true,
     gradient: "from-emerald-500 to-teal-500",
     requirements: [
-      "High income OR significant assets",
-      "Valid passport (6+ months remaining)",
+      "High net worth ($1M+) or high income ($80K+/year)",
+      "Investment in Thailand",
       "Health insurance",
-      "Criminal background check",
-      "Financial statements"
+      "Clean criminal record",
+      "Professional expertise"
     ],
     access: "paid" as const,
-    pros: ["Stay up to 10 years", "Work permit included", "Tax benefits"],
-    cons: ["High income/asset requirements", "Must maintain category requirements", "Limited to specific activities"],
-    quickRequirements: ["Wealth proof", "Investment plan", "Health insurance"]
+    pros: ["Very long-term", "Work rights", "Investment opportunities"],
+    cons: ["High financial requirements", "Investment commitment", "Complex application"],
+    quickRequirements: ["Wealth proof", "Investment plan", "Health insurance"],
+    courseType: "video-quiz-nextsteps",
+    partner: null,
+    govWebsite: null,
+    upgradePrompt: null
   },
   {
     id: "marriage-visa",
     title: "Marriage Visa (Non-Immigrant O)",
     subtitle: "1 year renewable",
-    description: "For those married to Thai citizens with long-term stay rights",
+    description: "For those married to Thai nationals with long-term stay rights",
     icon: Heart,
     duration: "1 year",
-    cost: "$200-500",
+    cost: "$200",
     difficulty: "Medium",
     processing: "2-4 weeks",
     renewable: "Yes",
     workAllowed: true,
     gradient: "from-rose-500 to-pink-500",
     requirements: [
-      "Marriage to Thai citizen",
-      "Valid passport (6+ months remaining)",
       "Marriage certificate",
-      "Thai spouse's documents",
-      "Financial proof"
+      "Thai spouse's ID and house registration",
+      "Proof of relationship",
+      "Financial support evidence",
+      "Health certificate",
+      "Police clearance"
     ],
     access: "paid" as const,
-    pros: ["Stay up to 1 year", "Can work with work permit", "Can be renewed annually"],
-    cons: ["Must maintain marriage", "Annual renewal required", "Must report to immigration every 90 days"],
-    quickRequirements: ["Marriage cert", "Spouse documents", "Financial proof"]
+    pros: ["Long-term stability", "Work rights", "Family unity"],
+    cons: ["Marriage requirement", "Spouse dependency", "Regular renewal needed"],
+    quickRequirements: ["Marriage cert", "Spouse documents", "Financial proof"],
+    courseType: "video-quiz-nextsteps",
+    partner: null,
+    govWebsite: null,
+    upgradePrompt: null
   }
 ];
 
@@ -420,7 +452,7 @@ function CompactVisaCard({ visa, userType, onVisaSelect }: {
           {/* Visa metrics grid */}
           <div className="grid grid-cols-2 gap-3 mb-4 text-sm">
             <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-muted-foreground" />
+              <Calendar className="w-4 h-4 text-muted-foreground" />
               <div>
                 <div className="font-medium">{visa.processing}</div>
                 <div className="text-xs text-muted-foreground">Processing</div>
@@ -441,12 +473,19 @@ function CompactVisaCard({ visa, userType, onVisaSelect }: {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <DollarSign className="w-4 h-4 text-muted-foreground" />
+              <Calendar className="w-4 h-4 text-muted-foreground" />
               <div>
                 <div className="font-medium">{visa.cost}</div>
                 <div className="text-xs text-muted-foreground">Total Cost</div>
               </div>
             </div>
+          </div>
+
+          {/* Course type indicator */}
+          <div className="mb-4">
+            <Badge variant="outline" className="text-xs">
+              📹 {visa.courseType === "video-quiz-nextsteps" ? "Video Course + Quiz + Next Steps" : "Full Course"}
+            </Badge>
           </div>
 
           {/* Action button */}
@@ -485,11 +524,10 @@ function CompactVisaCard({ visa, userType, onVisaSelect }: {
   );
 }
 
-export default function Visa() {
-  const navigate = useNavigate();
-  const { userType, userState } = useUser();
+export default function VisaTab({ compact = false }: { compact?: boolean }) {
+  const { userType } = useUser();
   const [selectedVisa, setSelectedVisa] = useState<string | null>(null);
-  const [currentView, setCurrentView] = useState<'overview' | 'details'>('overview');
+  const [selectedDurationTab, setSelectedDurationTab] = useState<'0-1' | '1-3' | '3+'>('0-1');
 
   const hasAccess = (accessLevel: string) => {
     if (accessLevel === "free") return true;
@@ -501,139 +539,158 @@ export default function Visa() {
 
   const handleVisaSelect = (visaId: string) => {
     setSelectedVisa(visaId);
-    setCurrentView('details');
   };
 
-  const handleBackToOverview = () => {
-    setCurrentView('overview');
+  const handleBackToVisaList = () => {
     setSelectedVisa(null);
   };
 
-  // Show detailed view if a visa is selected
-  if (currentView === 'details' && selectedVisaDetail) {
+  // Categorize visas by duration
+  const visaCategories = {
+    '0-1': visaTypes.filter(visa => {
+      const duration = visa.duration.toLowerCase();
+      return duration.includes('days') || duration.includes('month') || 
+             (duration.includes('1 year') && !duration.includes('renewable'));
+    }),
+    '1-3': visaTypes.filter(visa => {
+      const duration = visa.duration.toLowerCase();
+      return duration.includes('1 year renewable') || duration.includes('2') || duration.includes('3');
+    }),
+    '3+': visaTypes.filter(visa => {
+      const duration = visa.duration.toLowerCase();
+      return duration.includes('4') || duration.includes('5') || duration.includes('10') || 
+             duration.includes('20') || duration.includes('long-term');
+    })
+  };
+
+  const getDurationLabel = (tab: string) => {
+    switch (tab) {
+      case '0-1': return '0-1 Years';
+      case '1-3': return '1-3 Years';
+      case '3+': return '3+ Years';
+      default: return tab;
+    }
+  };
+
+  const getDurationDescription = (tab: string) => {
+    switch (tab) {
+      case '0-1': return 'Short-term stays and entry-level visas';
+      case '1-3': return 'Medium-term visas for education and business';
+      case '3+': return 'Long-term and premium visa options';
+      default: return '';
+    }
+  };
+
+  // If a visa is selected, show the detail viewer
+  if (selectedVisa && selectedVisaDetail) {
     return (
       <VisaDetailViewer 
         visa={selectedVisaDetail} 
-        onBack={handleBackToOverview}
+        onBack={handleBackToVisaList}
       />
     );
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto p-6">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-4">📋 Visa & Legal Guide</h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+    <div>
+      {!compact && (
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-bold mb-2">📋 Visa & Legal</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Navigate Thailand's visa system with confidence and stay legally compliant
           </p>
         </div>
+      )}
 
-        <UserContent
-          guestContent={
-            <div>
-              {/* Visa Overview for Guests */}
-              <div className="grid gap-6 mb-8">
-                <Card className="p-6 bg-transparent border border-gray-200 dark:border-gray-700">
-                  <h3 className="text-2xl font-bold mb-4">Tourist Visa / Visa Exemption (Free Guide)</h3>
-                  <p className="text-muted-foreground mb-4">
-                    Perfect for first-time visitors and short-term stays up to 60 days total.
-                  </p>
-                  <div className="grid md:grid-cols-3 gap-4 mb-6">
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-blue-500">30-60</div>
-                      <div className="text-sm text-muted-foreground">Days</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-green-500">Free - $40</div>
-                      <div className="text-sm text-muted-foreground">Cost</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-purple-500">Immediate</div>
-                      <div className="text-sm text-muted-foreground">Processing</div>
-                    </div>
-                  </div>
-                  <Button 
-                    className="w-full"
-                    onClick={() => handleVisaSelect("tourist-visa")}
-                  >
-                    Learn Tourist Visa Process
-                  </Button>
-                </Card>
 
-                {/* Locked visa types */}
-                {visaTypes.slice(1, 4).map((visa) => {
-                  const Icon = visa.icon;
-                  return (
-                    <Card key={visa.id} className="p-6 opacity-50 border-dashed bg-transparent border border-gray-200 dark:border-gray-700">
-                      <div className="flex items-center gap-4 mb-4">
-                        <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${visa.gradient} flex items-center justify-center`}>
-                          <Lock className="w-6 h-6 text-white" />
-                        </div>
-                        <div>
-                          <h3 className="text-xl font-bold">{visa.title}</h3>
-                          <p className="text-muted-foreground">{visa.subtitle}</p>
-                        </div>
-                        <Badge variant="outline">🔒 Premium</Badge>
-                      </div>
-                      <p className="text-muted-foreground">{visa.description}</p>
-                    </Card>
-                  );
-                })}
-              </div>
-
-              <UpgradePrompt 
-                title="Unlock Complete Visa Guide"
-                description="Get detailed guides for all visa types, document templates, and step-by-step processes"
-                features={[
-                  "All 9 visa type guides",
-                  "Document templates & checklists", 
-                  "Application timelines",
-                  "Legal consultation access"
-                ]}
-              />
-            </div>
-          }
-          
-          freeContent={
-            <div>
-              {/* Compact Visa Cards */}
-              <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3">
-                {visaTypes.map((visa) => (
-                  <CompactVisaCard
-                    key={visa.id}
-                    visa={visa}
-                    userType={userType}
-                    onVisaSelect={handleVisaSelect}
-                  />
-                ))}
-              </div>
-              
-              <UpgradePrompt 
-                compact
-                title="Unlock All 9 Visa Types & Tools"
-                description="Get complete guides, document templates, and legal support"
-              />
-            </div>
-          }
-          
-          paidContent={
-            <div>
-              {/* Compact Visa Cards */}
-              <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3">
-                {visaTypes.map((visa) => (
-                  <CompactVisaCard
-                    key={visa.id}
-                    visa={visa}
-                    userType={userType}
-                    onVisaSelect={handleVisaSelect}
-                  />
-                ))}
-              </div>
-            </div>
-          }
-        />
+      {/* Duration-based Sub Navigation */}
+      <div className="flex justify-center mb-6">
+        <div className="subsection-nav-frosted">
+          {(['0-1', '1-3', '3+'] as const).map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setSelectedDurationTab(tab)}
+              className={`subsection-button-frosted capitalize ${selectedDurationTab === tab ? 'selected' : ''}`}
+            >
+              {getDurationLabel(tab)}
+            </button>
+          ))}
+        </div>
       </div>
+
+      {/* Duration Description */}
+      <div className="text-center mb-6">
+        <p className="text-sm text-muted-foreground">
+          {getDurationDescription(selectedDurationTab)}
+        </p>
+      </div>
+
+      <UserContent
+        guestContent={
+          <div>
+            {/* Compact Visa Cards for Selected Duration */}
+            <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3">
+              {visaCategories[selectedDurationTab].map((visa) => (
+                <CompactVisaCard
+                  key={visa.id}
+                  visa={visa}
+                  userType={userType}
+                  onVisaSelect={handleVisaSelect}
+                />
+              ))}
+            </div>
+            
+            <UpgradePrompt 
+              title="Unlock Complete Visa Guide"
+              description="Get detailed guides for all visa types, document templates, and step-by-step processes"
+              features={[
+                "All 9 visa type guides",
+                "Document templates & checklists", 
+                "Application timelines",
+                "Legal consultation access"
+              ]}
+            />
+          </div>
+        }
+        
+        freeContent={
+          <div>
+            {/* Compact Visa Cards for Selected Duration */}
+            <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3">
+              {visaCategories[selectedDurationTab].map((visa) => (
+                <CompactVisaCard
+                  key={visa.id}
+                  visa={visa}
+                  userType={userType}
+                  onVisaSelect={handleVisaSelect}
+                />
+              ))}
+            </div>
+            
+            <UpgradePrompt 
+              compact
+              title="Unlock All Visa Types & Tools"
+              description="Get complete guides, document templates, and legal support"
+            />
+          </div>
+        }
+        
+        paidContent={
+          <div>
+            {/* Compact Visa Cards for Selected Duration */}
+            <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3">
+              {visaCategories[selectedDurationTab].map((visa) => (
+                <CompactVisaCard
+                  key={visa.id}
+                  visa={visa}
+                  userType={userType}
+                  onVisaSelect={handleVisaSelect}
+                />
+              ))}
+            </div>
+          </div>
+        }
+      />
     </div>
   );
 }

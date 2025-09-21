@@ -89,12 +89,12 @@ const motivationalSlides = [
     subtitle: "$2,000/month in Thailand = More than $3,500/month in the West",
     content: (
       <div className="grid grid-cols-2 gap-3">
-        <div className="text-center p-2 bg-transparent border border-red-200 dark:border-red-800 rounded">
+        <div className="text-center p-2 glass rounded">
           <div className="text-xs text-muted-foreground">Western Life</div>
           <div className="text-lg font-bold text-red-600">${thailandFacts.costComparison.western.total}</div>
           <div className="text-xs">Monthly expenses</div>
         </div>
-        <div className="text-center p-2 bg-transparent border border-green-200 dark:border-green-800 rounded">
+        <div className="text-center p-2 glass rounded">
           <div className="text-xs text-muted-foreground">Thailand Life</div>
           <div className="text-lg font-bold text-green-600">${thailandFacts.costComparison.thailand.total}</div>
           <div className="text-xs">Monthly expenses</div>
@@ -110,12 +110,12 @@ const motivationalSlides = [
     subtitle: "Smart money is moving to Thailand",
     content: (
       <div className="grid grid-cols-2 gap-3">
-        <div className="text-center p-2 bg-transparent border border-red-200 dark:border-red-800 rounded">
+        <div className="text-center p-2 glass rounded">
           <TrendingDown className="w-6 h-6 mx-auto text-red-500 mb-1" />
           <div className="text-lg font-bold text-red-600">-8,500</div>
           <div className="text-xs">UK millionaires left</div>
         </div>
-        <div className="text-center p-2 bg-transparent border border-green-200 dark:border-green-800 rounded">
+        <div className="text-center p-2 glass rounded">
           <TrendingUpIcon className="w-6 h-6 mx-auto text-green-500 mb-1" />
           <div className="text-lg font-bold text-green-600">+3,000</div>
           <div className="text-xs">Thailand millionaires</div>
@@ -139,7 +139,7 @@ const motivationalSlides = [
           <div className="text-lg font-bold text-blue-600">47K+</div>
           <div className="text-xs">Digital Nomads</div>
         </div>
-        <div className="text-center p-2 bg-transparent border border-green-200 dark:border-green-800 rounded">
+        <div className="text-center p-2 glass rounded">
           <div className="text-lg font-bold text-green-600">+65%</div>
           <div className="text-xs">Income Boost</div>
         </div>
@@ -359,7 +359,7 @@ export default function Home() {
                 <h3 className="font-bold mb-3">Today's Priorities & Actions</h3>
                 <div className="space-y-3">
                   {/* Priority Items */}
-                  <div className="flex items-center gap-2 p-2 bg-transparent border border-green-200 dark:border-green-800 rounded">
+                  <div className="flex items-center gap-2 p-2 glass rounded">
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                     <div className="flex-1">
                       <p className="text-sm font-medium">Continue AI Course</p>
@@ -484,7 +484,7 @@ export default function Home() {
                 <h3 className="font-bold mb-3">Today's Priorities & Actions</h3>
                 <div className="space-y-3">
                   {/* Priority Items */}
-                  <div className="flex items-center gap-2 p-2 bg-transparent border border-green-200 dark:border-green-800 rounded">
+                  <div className="flex items-center gap-2 p-2 glass rounded">
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                     <div className="flex-1">
                       <p className="text-sm font-medium">Continue AI Course</p>

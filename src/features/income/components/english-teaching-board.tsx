@@ -140,7 +140,7 @@ export default function EnglishTeachingBoard() {
   };
 
   const PartnershipIntro = () => (
-    <Card className="mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 border-blue-200 dark:border-blue-800">
+    <Card className="mb-8">
       <CardContent className="p-6">
         <div className="flex items-start gap-4">
           <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
@@ -386,7 +386,7 @@ export default function EnglishTeachingBoard() {
   );
 
   const SuccessMessage = () => (
-    <Card className="bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-800">
+    <Card className="">
       <CardContent className="p-6 text-center">
         <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
           <CheckCircle className="w-8 h-8 text-white" />

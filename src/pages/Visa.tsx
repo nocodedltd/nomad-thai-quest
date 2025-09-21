@@ -471,14 +471,14 @@ function CompactVisaCard({ visa, userType, onVisaSelect }: {
 
       {/* Locked overlay */}
       {isLocked && (
-        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center">
-          <div className="text-center p-4">
-            <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center mx-auto mb-2">
-              <Lock className="w-6 h-6 text-muted-foreground" />
+        <div className="absolute inset-0 bg-background/90 backdrop-blur-sm flex items-center justify-center">
+          <Card className="max-w-sm mx-4 p-4 text-center border-2">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center mx-auto mb-3">
+              <Lock className="w-6 h-6 text-white" />
             </div>
-            <p className="text-sm font-medium">Premium Access Required</p>
-            <p className="text-xs text-muted-foreground">Upgrade to unlock this visa guide</p>
-          </div>
+            <h4 className="text-lg font-bold mb-2">Premium Access Required</h4>
+            <p className="text-sm text-muted-foreground">Upgrade to unlock this visa guide</p>
+          </Card>
         </div>
       )}
     </Card>

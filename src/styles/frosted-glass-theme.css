@@ -107,6 +107,14 @@
   :root {
     /* Apply frosted glass theme by default */
     background: var(--frosted-bg-primary);
+    background-image: 
+      linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, transparent 25%),
+      linear-gradient(225deg, rgba(245, 158, 11, 0.1) 0%, transparent 25%),
+      linear-gradient(45deg, rgba(245, 158, 11, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 20% 80%, rgba(245, 158, 11, 0.2) 0%, transparent 60%),
+      radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 60%),
+      radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
+    background-attachment: fixed;
   }
 
   /* Frosted Glass Theme */
@@ -214,10 +222,21 @@
     @apply border-border;
   }
 
+<<<<<<< HEAD
   /* Universal background solution */
   body {
+=======
+  /* Fixed background layer - separate from scrollable content */
+  html::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+>>>>>>> parent of f7ca63c (no more backround scrolling on apple devices)
     background: var(--frosted-bg-primary);
-    background-image:
+    background-image: 
       linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
       url('/src/assets/thailand-hero.jpg'),
       linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, transparent 25%),
@@ -229,6 +248,7 @@
     background-size: cover, cover, auto, auto, auto, auto, auto, auto;
     background-position: center center, center center, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
     background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+<<<<<<< HEAD
     background-attachment: fixed;
     min-height: 100vh;
   }
@@ -277,6 +297,10 @@
     body {
       background: transparent;
     }
+=======
+    z-index: -1;
+    pointer-events: none;
+>>>>>>> parent of f7ca63c (no more backround scrolling on apple devices)
   }
 
   body {
@@ -288,12 +312,31 @@
     min-height: 100vh;
   }
 
+  /* Exclude landing page from background image */
+  .landing-page {
+    background-image: 
+      linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, transparent 25%),
+      linear-gradient(225deg, rgba(245, 158, 11, 0.1) 0%, transparent 25%),
+      linear-gradient(45deg, rgba(245, 158, 11, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 20% 80%, rgba(245, 158, 11, 0.2) 0%, transparent 60%),
+      radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 60%),
+      radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.1) 0%, transparent 70%) !important;
+    background-attachment: fixed;
+  }
 
   /* Ensure proper scrolling behavior with fixed background */
   html {
     scroll-behavior: smooth;
   }
 
+  /* Mobile optimization for fixed backgrounds */
+  @media (max-width: 768px) {
+    body,
+    .theme-frosted-glass body,
+    .theme-cyberpunk body {
+      background-attachment: scroll; /* Fallback for mobile performance */
+    }
+  }
 
   /* High DPI display optimization */
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {

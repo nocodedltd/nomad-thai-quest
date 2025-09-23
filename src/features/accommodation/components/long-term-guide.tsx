@@ -19,7 +19,9 @@ import {
   ExternalLink,
   BookOpen,
   Target,
-  Lightbulb
+  Lightbulb,
+  Phone,
+  Mail
 } from "lucide-react";
 
 const guideModules = [
@@ -91,7 +93,39 @@ const guideModules = [
         "Verify agent credentials and reviews",
         "Use Google Translate for Thai communications",
         "Join multiple groups for better coverage"
-      ]
+      ],
+      resources: {
+        groups: [
+          {
+            name: "Bangkok Apartments for Rent",
+            description: "Active group with daily listings in Bangkok area",
+            url: "https://www.facebook.com/groups/bangkokapartments",
+            features: ["Daily Posts", "Direct Contact", "Local Prices", "Negotiable"],
+            members: "45K+ members"
+          },
+          {
+            name: "Chiang Mai Expats Housing",
+            description: "Northern Thailand housing community",
+            url: "https://www.facebook.com/groups/chiangmaihousing",
+            features: ["Expat Community", "Local Tips", "Verified Members", "Support"],
+            members: "28K+ members"
+          },
+          {
+            name: "Phuket Villas & Rentals",
+            description: "Beach properties and vacation rentals",
+            url: "https://www.facebook.com/groups/phuketvillas",
+            features: ["Beach Properties", "Luxury Options", "Seasonal Rates", "Tourist Areas"],
+            members: "15K+ members"
+          },
+          {
+            name: "Thailand Digital Nomad Housing",
+            description: "Nomad-focused accommodation sharing",
+            url: "https://www.facebook.com/groups/nomadthaihousing",
+            features: ["Nomad Focus", "Short-term OK", "WiFi Verified", "Community"],
+            members: "12K+ members"
+          }
+        ]
+      }
     }
   },
   {
@@ -165,7 +199,65 @@ const guideModules = [
         "Request to see similar properties at different price points",
         "Get everything in writing before committing",
         "Ask about hidden fees or additional costs"
-      ]
+      ],
+      resources: {
+        websites: [
+          {
+            name: "DDProperty",
+            description: "Thailand's largest property portal with extensive listings",
+            url: "https://www.ddproperty.com",
+            features: ["English Interface", "Verified Listings", "Agent Contact", "Price Filters"],
+            rating: 4.5
+          },
+          {
+            name: "FazWaz",
+            description: "International-focused platform with quality properties",
+            url: "https://www.fazwaz.com",
+            features: ["International Focus", "High-end Properties", "Professional Agents", "Virtual Tours"],
+            rating: 4.3
+          },
+          {
+            name: "Hipflat",
+            description: "Modern interface with good search functionality",
+            url: "https://www.hipflat.co.th",
+            features: ["Modern UI", "Advanced Filters", "Map Search", "Mobile App"],
+            rating: 4.2
+          },
+          {
+            name: "Thailand-Property",
+            description: "Comprehensive listings across all price ranges",
+            url: "https://www.thailand-property.com",
+            features: ["Wide Range", "Local Agents", "Area Guides", "Investment Info"],
+            rating: 4.0
+          }
+        ],
+        agents: [
+          {
+            name: "Bangkok Property Pro",
+            description: "Specializes in Bangkok condos and apartments",
+            contact: "+66 2 123 4567",
+            email: "info@bangkokpropertypro.com",
+            features: ["English Speaking", "Condo Specialist", "Negotiation Help", "Legal Support"],
+            areas: ["Sukhumvit", "Silom", "Sathorn", "Thonglor"]
+          },
+          {
+            name: "Chiang Mai Living Solutions",
+            description: "Northern Thailand property experts",
+            contact: "+66 53 123 456",
+            email: "hello@chiangmailiving.com",
+            features: ["Local Expertise", "Expat Friendly", "Long-term Focus", "Area Guidance"],
+            areas: ["Old City", "Nimmanhaemin", "Hang Dong", "Mae Rim"]
+          },
+          {
+            name: "Island Property Phuket",
+            description: "Beach and island property specialists",
+            contact: "+66 76 123 456",
+            email: "rentals@islandpropertyphuket.com",
+            features: ["Beach Properties", "Luxury Focus", "Vacation Rentals", "Investment"],
+            areas: ["Patong", "Kata", "Karon", "Kamala"]
+          }
+        ]
+      }
     }
   },
   {
@@ -505,6 +597,153 @@ export default function LongTermGuide() {
                       ))}
                     </div>
                   </div>
+
+                  {/* Resources Section */}
+                  {module.content.resources && (
+                    <div>
+                      <h4 className="font-semibold mb-4 flex items-center gap-2">
+                        <ExternalLink className="w-4 h-4" />
+                        Helpful Resources
+                      </h4>
+
+                      {/* Facebook Groups */}
+                      {module.content.resources.groups && (
+                        <div className="mb-6">
+                          <h5 className="font-semibold mb-3 flex items-center gap-2">
+                            <Facebook className="w-4 h-4" />
+                            Facebook Groups
+                          </h5>
+                          <div className="grid gap-4 md:grid-cols-2">
+                            {module.content.resources.groups.map((group, index) => (
+                              <Card key={index} className="p-4">
+                                <div className="flex justify-between items-start mb-3">
+                                  <div>
+                                    <h6 className="font-medium mb-1">{group.name}</h6>
+                                    <p className="text-sm text-muted-foreground mb-2">{group.description}</p>
+                                  </div>
+                                </div>
+                                <div className="flex flex-wrap gap-1 mb-3">
+                                  {group.features.map((feature) => (
+                                    <Badge key={feature} variant="secondary" className="text-xs">
+                                      {feature}
+                                    </Badge>
+                                  ))}
+                                </div>
+                                <p className="text-sm text-muted-foreground mb-3 flex items-center gap-1">
+                                  <Users className="w-3 h-3" />
+                                  {group.members}
+                                </p>
+                                <Button
+                                  size="sm"
+                                  className="w-full"
+                                  onClick={() => window.open(group.url, '_blank')}
+                                >
+                                  Join Group
+                                </Button>
+                              </Card>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Property Websites */}
+                      {module.content.resources.websites && (
+                        <div className="mb-6">
+                          <h5 className="font-semibold mb-3 flex items-center gap-2">
+                            <Globe className="w-4 h-4" />
+                            Property Websites
+                          </h5>
+                          <div className="grid gap-4 md:grid-cols-2">
+                            {module.content.resources.websites.map((website, index) => (
+                              <Card key={index} className="p-4">
+                                <div className="flex justify-between items-start mb-3">
+                                  <div>
+                                    <h6 className="font-medium mb-1">{website.name}</h6>
+                                    <p className="text-sm text-muted-foreground mb-2">{website.description}</p>
+                                  </div>
+                                  <div className="flex items-center gap-1">
+                                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                                    <span className="text-sm">{website.rating}</span>
+                                  </div>
+                                </div>
+                                <div className="flex flex-wrap gap-1 mb-3">
+                                  {website.features.map((feature) => (
+                                    <Badge key={feature} variant="secondary" className="text-xs">
+                                      {feature}
+                                    </Badge>
+                                  ))}
+                                </div>
+                                <Button
+                                  size="sm"
+                                  className="w-full"
+                                  onClick={() => window.open(website.url, '_blank')}
+                                >
+                                  <ExternalLink className="w-3 h-3 mr-2" />
+                                  Visit Website
+                                </Button>
+                              </Card>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Recommended Agents */}
+                      {module.content.resources.agents && (
+                        <div className="mb-6">
+                          <h5 className="font-semibold mb-3 flex items-center gap-2">
+                            <Users className="w-4 h-4" />
+                            Recommended Agents
+                          </h5>
+                          <div className="grid gap-4 md:grid-cols-2">
+                            {module.content.resources.agents.map((agent, index) => (
+                              <Card key={index} className="p-4">
+                                <div className="mb-3">
+                                  <h6 className="font-medium mb-1">{agent.name}</h6>
+                                  <p className="text-sm text-muted-foreground mb-2">{agent.description}</p>
+                                </div>
+                                <div className="text-sm text-muted-foreground mb-3 space-y-1">
+                                  <p className="flex items-center gap-2">
+                                    <Phone className="w-3 h-3" />
+                                    {agent.contact}
+                                  </p>
+                                  <p className="flex items-center gap-2">
+                                    <Mail className="w-3 h-3" />
+                                    {agent.email}
+                                  </p>
+                                </div>
+                                <div className="flex flex-wrap gap-1 mb-3">
+                                  {agent.features.map((feature) => (
+                                    <Badge key={feature} variant="secondary" className="text-xs">
+                                      {feature}
+                                    </Badge>
+                                  ))}
+                                </div>
+                                <div className="mb-3">
+                                  <p className="text-xs font-medium mb-1">Coverage Areas:</p>
+                                  <div className="flex flex-wrap gap-1">
+                                    {agent.areas.map((area) => (
+                                      <Badge key={area} variant="outline" className="text-xs">
+                                        {area}
+                                      </Badge>
+                                    ))}
+                                  </div>
+                                </div>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  className="w-full"
+                                  onClick={() => window.location.href = `mailto:${agent.email}`}
+                                >
+                                  <Phone className="w-3 h-3 mr-2" />
+                                  Contact Agent
+                                </Button>
+                              </Card>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                   {/* Mark Complete Button */}
                   <div className="flex justify-end pt-4 border-t">

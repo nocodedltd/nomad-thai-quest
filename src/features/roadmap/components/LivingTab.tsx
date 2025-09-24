@@ -291,7 +291,7 @@ export default function LivingTab({ compact = false }: LivingTabProps) {
 
             {selectedTab === 'long-term' && (
               <div>
-                <LongTermGuide />
+                <LongTermGuide userType={userType} />
               </div>
             )}
 
@@ -357,7 +357,7 @@ export default function LivingTab({ compact = false }: LivingTabProps) {
 
             {selectedTab === 'long-term' && (
               <div>
-                <LongTermGuide />
+                <LongTermGuide userType={userType} />
               </div>
             )}
 

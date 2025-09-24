@@ -328,11 +328,28 @@ const accommodationGuides = {
   }
 };
 
+interface AccommodationType {
+  id: string;
+  title: string;
+  termType: string;
+  description: string;
+  idealFor: string;
+  icon: React.ComponentType<{ className?: string }>;
+  gradient: string;
+  quickRequirements: string[];
+  timeToSource: string;
+  savings: string;
+  mainPositive: string;
+  mainDrawback: string;
+  resourcesIncluded: string;
+  access: 'free' | 'paid';
+}
+
 export default function AccommodationDetailViewer({
   accommodation,
   onBack
 }: {
-  accommodation: any;
+  accommodation: AccommodationType;
   onBack: () => void;
 }) {
   const [currentSection, setCurrentSection] = useState(0);

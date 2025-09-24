@@ -69,12 +69,29 @@ const accommodationTypes = [
   }
 ];
 
+interface AccommodationType {
+  id: string;
+  title: string;
+  termType: string;
+  description: string;
+  idealFor: string;
+  icon: React.ComponentType<{ className?: string }>;
+  gradient: string;
+  quickRequirements: string[];
+  timeToSource: string;
+  savings: string;
+  mainPositive: string;
+  mainDrawback: string;
+  resourcesIncluded: string;
+  access: 'free' | 'paid';
+}
+
 function CompactAccommodationCard({
   accommodation,
   userType,
   onAccommodationSelect
 }: {
-  accommodation: any;
+  accommodation: AccommodationType;
   userType: 'guest' | 'free' | 'paid';
   onAccommodationSelect: (accommodationId: string) => void;
 }) {

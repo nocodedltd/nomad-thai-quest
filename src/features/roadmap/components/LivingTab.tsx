@@ -21,7 +21,6 @@ import { Paywall } from "@/shared/components/paywall/paywall";
 import { UpgradePrompt } from "@/shared/components/paywall/upgrade-prompt";
 import ShortTermHostels from "@/features/accommodation/components/short-term-hostels";
 import LongTermGuide from "@/features/accommodation/components/long-term-guide";
-import AccommodationResources from "@/features/accommodation/components/accommodation-resources";
 import WorldpackersAffiliate from "@/features/accommodation/components/worldpackers-affiliate";
 
 // Archived accommodation listings data - replaced with new module system
@@ -94,7 +93,7 @@ type LivingTabProps = {
 
 export default function LivingTab({ compact = false }: LivingTabProps) {
   const { userType } = useUser();
-  const [selectedTab, setSelectedTab] = useState<'short-term' | 'long-term' | 'resources' | 'community' | 'volunteering'>('short-term');
+  const [selectedTab, setSelectedTab] = useState<'short-term' | 'long-term' | 'community' | 'volunteering'>('short-term');
 
   const hasAccess = (accessLevel: string) => {
     if (accessLevel === "free") return true;
@@ -128,12 +127,6 @@ export default function LivingTab({ compact = false }: LivingTabProps) {
             className={`subsection-button-frosted flex items-center gap-2 ${selectedTab === 'long-term' ? 'selected' : ''}`}
           >
             📚 Long-term Guide
-          </button>
-          <button
-            onClick={() => setSelectedTab('resources')}
-            className={`subsection-button-frosted flex items-center gap-2 ${selectedTab === 'resources' ? 'selected' : ''}`}
-          >
-            🔧 Resources
           </button>
           <button
             onClick={() => setSelectedTab('community')}
@@ -197,28 +190,6 @@ export default function LivingTab({ compact = false }: LivingTabProps) {
               </div>
             )}
 
-            {selectedTab === 'resources' && (
-              <div>
-                <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold mb-4">Essential Resources & Tools</h3>
-                  <p className="text-muted-foreground">
-                    Access our curated collection of websites, agents, and tools
-                  </p>
-                </div>
-                
-                <UpgradePrompt 
-                  title="Access All Resources"
-                  description="Get our complete resource library for accommodation hunting"
-                  features={[
-                    "Verified real estate websites",
-                    "Trusted agent contacts",
-                    "Facebook group directory",
-                    "Essential tools & calculators"
-                  ]}
-                />
-              </div>
-            )}
-            
             {selectedTab === 'community' && (
               <div>
                 {/* Discord Invite Section */}
@@ -295,12 +266,6 @@ export default function LivingTab({ compact = false }: LivingTabProps) {
               </div>
             )}
 
-            {selectedTab === 'resources' && (
-              <div>
-                <AccommodationResources />
-              </div>
-            )}
-            
             {selectedTab === 'community' && (
               <div>
                 {/* Discord Invite Section */}
@@ -361,12 +326,6 @@ export default function LivingTab({ compact = false }: LivingTabProps) {
               </div>
             )}
 
-            {selectedTab === 'resources' && (
-              <div>
-                <AccommodationResources />
-              </div>
-            )}
-            
             {selectedTab === 'community' && (
               <div>
                 {/* Discord Invite Section */}

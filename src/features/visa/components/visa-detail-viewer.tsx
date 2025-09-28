@@ -243,7 +243,7 @@ export default function VisaDetailViewer({ visa, onBack }: VisaDetailViewerProps
                   {videoPlaying ? (
                     <div className="aspect-video bg-black rounded-lg flex items-center justify-center">
                       <div className="text-center text-white">
-                        <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <div className="w-12 h-12 bg-frosted-bg-glass rounded-full flex items-center justify-center mx-auto mb-3">
                           <Play className="w-6 h-6" />
                         </div>
                         <h3 className="text-base font-semibold mb-2">Video Coming Soon</h3>
@@ -254,7 +254,7 @@ export default function VisaDetailViewer({ visa, onBack }: VisaDetailViewerProps
                           variant="outline" 
                           size="sm"
                           onClick={() => setVideoPlaying(false)}
-                          className="text-white border-white hover:bg-white hover:text-black"
+                          className="btn-frosted-ghost"
                         >
                           Close Preview
                         </Button>
@@ -266,7 +266,7 @@ export default function VisaDetailViewer({ visa, onBack }: VisaDetailViewerProps
                       onClick={() => setVideoPlaying(true)}
                     >
                       <div className="text-center text-white">
-                        <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <div className="w-16 h-16 bg-frosted-bg-glass rounded-full flex items-center justify-center mx-auto mb-3">
                           <Play className="w-8 h-8" />
                         </div>
                         <h3 className="text-lg font-semibold mb-1">Watch Visa Guide</h3>
@@ -556,7 +556,7 @@ export default function VisaDetailViewer({ visa, onBack }: VisaDetailViewerProps
                   {videoPlaying ? (
                     <div className="aspect-video bg-black rounded-lg flex items-center justify-center">
                       <div className="text-center text-white">
-                        <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <div className="w-12 h-12 bg-frosted-bg-glass rounded-full flex items-center justify-center mx-auto mb-3">
                           <Play className="w-6 h-6" />
                         </div>
                         <h3 className="text-base font-semibold mb-2">Video Coming Soon</h3>
@@ -567,7 +567,7 @@ export default function VisaDetailViewer({ visa, onBack }: VisaDetailViewerProps
                           variant="outline" 
                           size="sm"
                           onClick={() => setVideoPlaying(false)}
-                          className="text-white border-white hover:bg-white hover:text-black"
+                          className="btn-frosted-ghost"
                         >
                           Close Preview
                         </Button>
@@ -579,7 +579,7 @@ export default function VisaDetailViewer({ visa, onBack }: VisaDetailViewerProps
                       onClick={() => setVideoPlaying(true)}
                     >
                       <div className="text-center text-white">
-                        <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <div className="w-16 h-16 bg-frosted-bg-glass rounded-full flex items-center justify-center mx-auto mb-3">
                           <Play className="w-8 h-8" />
                         </div>
                         <h3 className="text-lg font-semibold mb-1">Watch Visa Guide</h3>

@@ -183,7 +183,7 @@ export default function CourseViewer({
                   {/* Visual Status Indicator */}
                   <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
                     isCompleted ? 'bg-green-500 text-white' :
-                    isLocked ? 'bg-gray-300 text-gray-600' :
+                    isLocked ? 'bg-frosted-bg-tertiary text-frosted-text-muted' :
                     isCurrent ? 'bg-primary text-primary-foreground' :
                     'bg-blue-500 text-white'
                   }`}>
@@ -224,7 +224,7 @@ export default function CourseViewer({
                       {/* Action Button */}
                       <div className="flex flex-col items-end gap-2 flex-shrink-0">
                         {isCompleted && (
-                          <Badge className="bg-green-500 text-xs hidden sm:flex">
+                          <Badge variant="glass-success" className="text-xs hidden sm:flex">
                             <Trophy className="w-3 h-3 mr-1" />
                             Complete
                           </Badge>
@@ -272,7 +272,7 @@ export default function CourseViewer({
                 You've completed the {courseTitle} course. You're now ready to apply your knowledge!
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
-                <Button className="bg-green-500 hover:bg-green-600 text-sm">
+                <Button variant="glass-success" className="text-sm">
                   Download Certificate
                 </Button>
                 <Button variant="outline" className="text-sm">

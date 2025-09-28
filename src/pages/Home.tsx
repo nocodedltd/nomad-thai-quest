@@ -230,7 +230,7 @@ function MotivationalCarousel() {
 
       {/* Navigation dots and arrows */}
       <div className="flex items-center justify-between mt-3">
-        <Button variant="ghost" size="sm" onClick={prevSlide} className="p-1 hover:bg-white/20 transition-colors">
+        <Button variant="ghost" size="sm" onClick={prevSlide} className="p-1 hover:bg-frosted-bg-glass transition-colors">
           <ChevronLeft className="w-4 h-4" />
         </Button>
         
@@ -242,20 +242,20 @@ function MotivationalCarousel() {
               className={`w-2 h-2 rounded-full transition-all duration-300 ${
                 index === currentSlide 
                   ? 'bg-green-500 scale-125' 
-                  : 'bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500'
+                  : 'bg-frosted-bg-tertiary hover:bg-frosted-bg-glass'
               }`}
             />
           ))}
         </div>
         
-        <Button variant="ghost" size="sm" onClick={nextSlide} className="p-1 hover:bg-white/20 transition-colors">
+        <Button variant="ghost" size="sm" onClick={nextSlide} className="p-1 hover:bg-frosted-bg-glass transition-colors">
           <ChevronRight className="w-4 h-4" />
         </Button>
       </div>
 
       {/* Progress bar for auto-advance */}
       <div className="mt-3">
-        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1 overflow-hidden">
+        <div className="w-full bg-frosted-bg-tertiary rounded-full h-1 overflow-hidden">
           <div 
             className="bg-green-500 h-1 rounded-full"
             style={{ 
@@ -307,7 +307,7 @@ export default function Home() {
                 <h1 className="text-2xl font-bold">Welcome! 👋</h1>
                 <p className="text-sm text-muted-foreground">Your Thailand journey awaits</p>
               </div>
-              <Badge className="bg-green-500 text-white">Free</Badge>
+              <Badge variant="glass-success">Free</Badge>
             </div>
 
             {/* Two-column layout for progress and motivation */}
@@ -365,7 +365,7 @@ export default function Home() {
                       <p className="text-sm font-medium">Continue AI Course</p>
                       <p className="text-xs text-muted-foreground">Lesson 6: Client Acquisition</p>
                     </div>
-                    <Button size="sm" className="bg-green-500 hover:bg-green-600">
+                    <Button size="sm" variant="glass-success">
                       Continue
                     </Button>
                   </div>
@@ -426,7 +426,7 @@ export default function Home() {
                 <h1 className="text-2xl font-bold">Welcome back! 👋</h1>
                 <p className="text-sm text-muted-foreground">Ready to continue your Thailand journey?</p>
               </div>
-              <Badge className="bg-purple-500 text-white">Premium</Badge>
+              <Badge variant="glass-primary">Premium</Badge>
             </div>
 
             {/* Two-column layout for progress and motivation */}
@@ -490,7 +490,7 @@ export default function Home() {
                       <p className="text-sm font-medium">Continue AI Course</p>
                       <p className="text-xs text-muted-foreground">Lesson 6: Client Acquisition</p>
                     </div>
-                    <Button size="sm" className="bg-green-500 hover:bg-green-600">
+                    <Button size="sm" variant="glass-success">
                       Continue
                     </Button>
                   </div>

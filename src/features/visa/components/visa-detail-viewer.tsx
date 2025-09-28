@@ -262,7 +262,7 @@ export default function VisaDetailViewer({ visa, onBack }: VisaDetailViewerProps
                     </div>
                   ) : (
                     <div 
-                      className="aspect-video bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity"
+                      className="aspect-video glass-elevated rounded-lg flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity"
                       onClick={() => setVideoPlaying(true)}
                     >
                       <div className="text-center text-white">
@@ -575,7 +575,7 @@ export default function VisaDetailViewer({ visa, onBack }: VisaDetailViewerProps
                     </div>
                   ) : (
                     <div 
-                      className="aspect-video bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity"
+                      className="aspect-video glass-elevated rounded-lg flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity"
                       onClick={() => setVideoPlaying(true)}
                     >
                       <div className="text-center text-white">

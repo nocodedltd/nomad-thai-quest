@@ -279,7 +279,7 @@ export default function AffiliateDashboard() {
           freeContent={
             <div className="space-y-4 sm:space-y-6">
               {/* Welcome Banner for Free Users */}
-              <Card className="bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20">
+              <Card>
                 <CardContent className="p-4 sm:p-6">
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                     <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
@@ -552,7 +552,7 @@ export default function AffiliateDashboard() {
           paidContent={
             <div className="space-y-4 sm:space-y-6">
               {/* Premium Welcome Banner */}
-              <Card className="bg-gradient-to-r from-yellow-50 to-yellow-100 dark:from-yellow-950 dark:to-yellow-900 border-yellow-200 dark:border-yellow-800">
+              <Card>
                 <CardContent className="p-4 sm:p-6">
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                     <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0">

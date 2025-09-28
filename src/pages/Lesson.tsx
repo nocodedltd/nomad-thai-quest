@@ -490,7 +490,7 @@ export default function Lesson() {
 
         {currentStep === 'completion' && (
           <div className="text-center space-y-6">
-            <Card className="p-8 bg-gradient-to-br from-accent/10 to-accent/5">
+            <Card className="p-8">
               <CheckCircle className="w-16 h-16 text-accent mx-auto mb-4" />
               <h2 className="text-3xl font-bold mb-4">Lesson Complete! 🎉</h2>
               <p className="text-lg text-muted-foreground mb-6">

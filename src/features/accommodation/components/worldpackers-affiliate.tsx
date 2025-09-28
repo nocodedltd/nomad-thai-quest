@@ -53,7 +53,7 @@ export default function WorldpackersAffiliate() {
       {/* Main Content */}
       <div className="grid md:grid-cols-2 gap-6">
         {/* What is Worldpackers */}
-        <Card className="border-2 border-blue-100 dark:border-blue-900">
+        <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-blue-700 dark:text-blue-300">
               <Home className="w-5 h-5" />
@@ -86,7 +86,7 @@ export default function WorldpackersAffiliate() {
         </Card>
 
         {/* Benefits for Digital Nomads */}
-        <Card className="border-2 border-purple-100 dark:border-purple-900">
+        <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-purple-700 dark:text-purple-300">
               <Users className="w-5 h-5" />
@@ -160,7 +160,7 @@ export default function WorldpackersAffiliate() {
       </Card>
 
       {/* CTA Section */}
-      <Card className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950 border-2 border-blue-200 dark:border-blue-800">
+      <Card>
         <CardContent className="text-center py-8">
           <div className="space-y-4">
             <div className="flex justify-center">
@@ -185,7 +185,7 @@ export default function WorldpackersAffiliate() {
               <Button 
                 variant="outline" 
                 onClick={copyDiscountCode}
-                className="border-blue-200 text-blue-700 hover:bg-blue-50 dark:border-blue-800 dark:text-blue-300 dark:hover:bg-blue-950"
+                className="btn-frosted-ghost"
               >
                 Copy Discount Code
               </Button>

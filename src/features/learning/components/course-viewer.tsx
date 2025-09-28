@@ -264,7 +264,7 @@ export default function CourseViewer({
 
         {/* Course Completion Message - Mobile Optimized */}
         {completionPercentage === 100 && (
-          <Card className="p-4 sm:p-6 mt-4 sm:mt-6 bg-gradient-to-r from-green-50 to-blue-50 border-green-200">
+          <Card className="p-4 sm:p-6 mt-4 sm:mt-6">
             <div className="text-center">
               <Trophy className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 text-yellow-500" />
               <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-green-700 mb-2">Congratulations!</h3>

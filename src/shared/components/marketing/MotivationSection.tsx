@@ -81,7 +81,7 @@ export function MotivationSection() {
   return (
     <div className="container mx-auto px-4 py-12">
       {/* Urgency Banner */}
-      <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white p-4 rounded-lg mb-8 text-center">
+      <div className="glass-elevated text-frosted-text-primary p-4 rounded-lg mb-8 text-center">
         <div className="flex items-center justify-center gap-2 mb-2">
           <Flame className="w-5 h-5" />
           <span className="font-bold text-lg">⚡ The Thailand Window is Closing Fast</span>
@@ -91,7 +91,7 @@ export function MotivationSection() {
       </div>
 
       {/* Cost Comparison Hero */}
-      <div className="bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-950 dark:to-blue-950 p-8 rounded-xl mb-12">
+      <div className="glass-elevated p-8 rounded-xl mb-12">
         <div className="text-center mb-8">
           <h2 className="text-4xl font-bold mb-4">💰 The Thailand Money Hack</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -101,7 +101,7 @@ export function MotivationSection() {
         
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {/* Western Costs */}
-          <Card className="p-6 glass">
+          <Card className="p-6">
             <div className="text-center mb-4">
               <div className="text-2xl font-bold text-red-700 dark:text-red-300">🇺🇸🇬🇧 Western Life</div>
               <div className="text-sm text-muted-foreground">Making $3,500/month</div>
@@ -131,7 +131,7 @@ export function MotivationSection() {
                 <span>Total Expenses</span>
                 <span className="text-red-600">${thailandFacts.costComparison.western.total}</span>
               </div>
-              <div className="bg-red-100 dark:bg-red-900 p-3 rounded text-center">
+              <div className="bg-frosted-bg-glass border border-frosted-border-primary p-3 rounded text-center">
                 <div className="text-2xl font-bold text-red-700 dark:text-red-300">${3500 - thailandFacts.costComparison.western.total}</div>
                 <div className="text-sm text-red-600 dark:text-red-400">Left after expenses</div>
               </div>
@@ -139,7 +139,7 @@ export function MotivationSection() {
           </Card>
 
           {/* Thailand Costs */}
-          <Card className="p-6 glass">
+          <Card className="p-6">
             <div className="text-center mb-4">
               <div className="text-2xl font-bold text-green-700 dark:text-green-300">🇹🇭 Thailand Life</div>
               <div className="text-sm text-muted-foreground">Making $2,000/month</div>
@@ -169,7 +169,7 @@ export function MotivationSection() {
                 <span>Total Expenses</span>
                 <span className="text-green-600">${thailandFacts.costComparison.thailand.total}</span>
               </div>
-              <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center">
+              <div className="bg-frosted-bg-glass border border-frosted-border-primary p-3 rounded text-center">
                 <div className="text-2xl font-bold text-green-700 dark:text-green-300">${2000 - thailandFacts.costComparison.thailand.total}</div>
                 <div className="text-sm text-green-600 dark:text-green-400">Left after expenses</div>
               </div>
@@ -178,7 +178,7 @@ export function MotivationSection() {
         </div>
         
         <div className="text-center mt-8">
-          <div className="bg-gradient-to-r from-green-500 to-blue-500 text-white p-4 rounded-lg inline-block">
+          <div className="glass-elevated text-frosted-text-primary p-4 rounded-lg inline-block">
             <div className="text-2xl font-bold">🎯 You save $390+ per month moving to Thailand</div>
             <div className="text-sm opacity-90">That's $4,680+ extra per year in your pocket!</div>
           </div>
@@ -186,14 +186,14 @@ export function MotivationSection() {
       </div>
 
       {/* Millionaire Migration FOMO */}
-      <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950 dark:to-pink-950 p-8 rounded-xl mb-12">
+      <div className="glass-elevated p-8 rounded-xl mb-12">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold mb-4">📈 The Great Wealth Migration</h2>
           <p className="text-xl text-muted-foreground">Smart money is moving to Thailand. Don't get left behind.</p>
         </div>
         
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          <Card className="p-6 text-center border-red-200">
+          <Card className="p-6 text-center">
             <div className="mb-4">
               <TrendingDown className="w-12 h-12 mx-auto text-red-500 mb-2" />
               <h3 className="text-xl font-bold text-red-700">🇬🇧 UK Exodus</h3>
@@ -201,13 +201,13 @@ export function MotivationSection() {
             <div className="space-y-2">
               <div className="text-3xl font-bold text-red-600">-8,500</div>
               <div className="text-sm text-muted-foreground">Net millionaire outflow (2023)</div>
-              <div className="text-xs bg-red-100 dark:bg-red-900 p-2 rounded">
+              <div className="text-xs bg-frosted-bg-glass border border-frosted-border-primary p-2 rounded">
                 9,500 left • Only 1,000 arrived
               </div>
             </div>
           </Card>
           
-          <Card className="p-6 text-center border-green-200">
+          <Card className="p-6 text-center">
             <div className="mb-4">
               <TrendingUpIcon className="w-12 h-12 mx-auto text-green-500 mb-2" />
               <h3 className="text-xl font-bold text-green-700">🇹🇭 Thailand Influx</h3>
@@ -215,7 +215,7 @@ export function MotivationSection() {
             <div className="space-y-2">
               <div className="text-3xl font-bold text-green-600">+3,000</div>
               <div className="text-sm text-muted-foreground">Net millionaire inflow (2023)</div>
-              <div className="text-xs bg-green-100 dark:bg-green-900 p-2 rounded">
+              <div className="text-xs bg-frosted-bg-glass border border-frosted-border-primary p-2 rounded">
                 3,200 arrived • Only 200 left
               </div>
             </div>
@@ -223,14 +223,14 @@ export function MotivationSection() {
         </div>
         
         <div className="text-center mt-6">
-          <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2">
+          <Badge variant="glass-primary" className="px-4 py-2">
             💡 Millionaires are voting with their feet - and choosing Thailand
           </Badge>
         </div>
       </div>
 
       {/* Thailand Achievements */}
-      <div className="bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-950 dark:to-orange-950 p-8 rounded-xl mb-12">
+      <div className="glass-elevated p-8 rounded-xl mb-12">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold mb-4">🏆 Thailand: World's #1 Choice</h2>
         </div>
@@ -262,11 +262,7 @@ export function MotivationSection() {
       {/* Urgency Triggers */}
       <div className="grid md:grid-cols-3 gap-6 mb-12">
         {urgencyTriggers.map((trigger, index) => (
-          <Card key={index} className={`p-6 border-l-4 ${
-            trigger.color === 'red' ? 'glass text-red-400' :
-            trigger.color === 'orange' ? 'border-orange-500 bg-orange-50 dark:bg-orange-950' :
-            'glass text-yellow-400'
-          }`}>
+          <Card key={index} className="p-6">
             <div className="flex items-start gap-3">
               <AlertTriangle className={`w-5 h-5 mt-1 ${
                 trigger.color === 'red' ? 'text-red-500' :
@@ -290,7 +286,8 @@ export function MotivationSection() {
       <div className="text-center">
         <Button 
           size="lg" 
-          className="bg-gradient-to-r from-green-500 to-blue-500 text-white px-8 py-4 text-lg font-semibold hover:scale-105 transition-transform"
+          variant="glass-primary"
+          className="px-8 py-4 text-lg font-semibold hover:scale-105 transition-transform"
           onClick={() => navigate('/roadmap')}
         >
           <Zap className="w-6 h-6 mr-2" />

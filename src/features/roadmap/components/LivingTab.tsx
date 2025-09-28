@@ -193,7 +193,7 @@ export default function LivingTab({ compact = false }: LivingTabProps) {
             {selectedTab === 'community' && (
               <div>
                 {/* Discord Invite Section */}
-                <Card className="p-6 mb-8 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-950/20 dark:to-purple-950/20 border-indigo-200 dark:border-indigo-800">
+                <Card className="p-6 mb-8">
                   <div className="text-center">
                     <div className="w-16 h-16 rounded-full bg-indigo-500 flex items-center justify-center mx-auto mb-4">
                       <Users className="w-8 h-8 text-white" />
@@ -214,7 +214,7 @@ export default function LivingTab({ compact = false }: LivingTabProps) {
                 </Card>
 
                 {/* Coming Soon Banner */}
-                <Card className="p-8 bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-950/20 dark:to-yellow-950/20 border-orange-200 dark:border-orange-800">
+                <Card className="p-8">
                   <div className="text-center">
                     <div className="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center mx-auto mb-4">
                       <Calendar className="w-6 h-6 text-white" />
@@ -269,7 +269,7 @@ export default function LivingTab({ compact = false }: LivingTabProps) {
             {selectedTab === 'community' && (
               <div>
                 {/* Discord Invite Section */}
-                <Card className="p-6 mb-8 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-950/20 dark:to-purple-950/20 border-indigo-200 dark:border-indigo-800">
+                <Card className="p-6 mb-8">
                   <div className="text-center">
                     <div className="w-16 h-16 rounded-full bg-indigo-500 flex items-center justify-center mx-auto mb-4">
                       <Users className="w-8 h-8 text-white" />
@@ -290,7 +290,7 @@ export default function LivingTab({ compact = false }: LivingTabProps) {
                 </Card>
 
                 {/* Coming Soon Banner */}
-                <Card className="p-8 bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-950/20 dark:to-yellow-950/20 border-orange-200 dark:border-orange-800">
+                <Card className="p-8">
                   <div className="text-center">
                     <div className="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center mx-auto mb-4">
                       <Calendar className="w-6 h-6 text-white" />
@@ -329,7 +329,7 @@ export default function LivingTab({ compact = false }: LivingTabProps) {
             {selectedTab === 'community' && (
               <div>
                 {/* Discord Invite Section */}
-                <Card className="p-6 mb-8 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-950/20 dark:to-purple-950/20 border-indigo-200 dark:border-indigo-800">
+                <Card className="p-6 mb-8">
                   <div className="text-center">
                     <div className="w-16 h-16 rounded-full bg-indigo-500 flex items-center justify-center mx-auto mb-4">
                       <Users className="w-8 h-8 text-white" />
@@ -350,7 +350,7 @@ export default function LivingTab({ compact = false }: LivingTabProps) {
                 </Card>
 
                 {/* Coming Soon Banner */}
-                <Card className="p-8 bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-950/20 dark:to-yellow-950/20 border-orange-200 dark:border-orange-800">
+                <Card className="p-8">
                   <div className="text-center">
                     <div className="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center mx-auto mb-4">
                       <Calendar className="w-6 h-6 text-white" />

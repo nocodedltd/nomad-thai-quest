@@ -171,7 +171,7 @@ export default function TimelineNavigation({ currentStage = "income", onStageCli
   return (
     <div className="w-full">
       {/* Progress Overview */}
-      <Card className="p-4 mb-6 bg-gradient-to-br from-primary/10 to-primary/5">
+      <Card className="p-4 mb-6">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-lg md:text-xl font-bold">Your Thailand Journey</h2>
           <Badge variant="secondary" className="text-xs">{Math.round(totalProgress)}% Complete</Badge>

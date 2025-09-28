@@ -223,7 +223,7 @@ function MotivationalCarousel() {
       </div>
       
       <div className="mt-3 text-center">
-        <div className="bg-green-500 text-white p-2 rounded text-sm font-bold">
+        <div className="bg-frosted-bg-glass border border-frosted-border-primary text-frosted-text-primary p-2 rounded text-sm font-bold">
           {currentSlideData.footer}
         </div>
       </div>
@@ -340,7 +340,7 @@ export default function Home() {
                   </div>
                   <Button 
                     size="sm" 
-                    className="bg-indigo-500 hover:bg-indigo-600"
+                    variant="glass-secondary"
                     onClick={() => window.open('https://discord.com/invite/C4gHpDDqet', '_blank')}
                   >
                     Join
@@ -408,7 +408,7 @@ export default function Home() {
               <div className="text-center">
                 <h3 className="font-bold mb-2">🚀 Unlock Premium</h3>
                 <p className="text-sm text-muted-foreground mb-3">Advanced strategies & support</p>
-                <Button size="sm" className="bg-gradient-to-r from-yellow-500 to-orange-500">
+                <Button size="sm" variant="glass-primary">
                   <Crown className="w-4 h-4 mr-1" />
                   Upgrade
                 </Button>
@@ -465,7 +465,7 @@ export default function Home() {
                   </div>
                   <Button 
                     size="sm" 
-                    className="bg-indigo-500 hover:bg-indigo-600"
+                    variant="glass-secondary"
                     onClick={() => window.open('https://discord.com/invite/C4gHpDDqet', '_blank')}
                   >
                     Join

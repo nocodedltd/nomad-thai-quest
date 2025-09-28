@@ -38,7 +38,7 @@ export function HeroSection() {
           <div className="mb-6">
             <h1 className="text-4xl md:text-6xl font-display font-bold mb-4 leading-tight">
               <span className="text-futuristic-text-primary">MOVE TO THAILAND</span>
-              <span className="block bg-gradient-futuristic-hero bg-clip-text text-transparent animate-neon-pulse">
+              <span className="block text-futuristic-text-primary">
                 IN 9 MONTHS
               </span>
             </h1>
